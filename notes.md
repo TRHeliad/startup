@@ -3,3 +3,6 @@ This notes file will contain references to notes taken for CS260 along with some
 
 # HTTPS and TLS
 HTTPS is a secure version of HTTP which uses the TLS protocol to secure and encrypt the connection.
+
+# Web Applications
+The ability of web interfaces to reconfigure themselves according to screen size and orientation is called responsive design.
