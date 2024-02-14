@@ -1,6 +1,6 @@
 @font-face {
 	font-family: "Cascadia Code";
-	src: local("CascadiaCode.ttf");
+	src: local("assets/CascadiaCode.ttf");
 }
 
 :root {
@@ -20,6 +20,32 @@
 
 body {
 	background-color: var(--back-color);
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+header {
+	flex: 0 80px;
+}
+
+footer {
+	background-color: var(--back2-color);
+	flex: 0 60px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+footer p {
+	font-size: 30px;
+	margin: 15px 15px;
+}
+
+main {
+	flex: 1 0;
 }
 
 input {
