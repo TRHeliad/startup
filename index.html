@@ -1,27 +1,27 @@
-
-
-<body>
+<!DOCTYPE html>
+<html lang="en">
 	<head>
 		<link rel="stylesheet" href="main.css"/>
 		<script type="text/javascript" src="headerfooter.js"></script>
 	</head>
+	<body>
+		<header id="header"></header>
 
-	<header id="header"></header>
-
-	<main>
-		<h2>LOGIN</h2>
-		<form action="formSubmit.html" method="post">
-			<div class="input">
-				<label for="text">Username: </label>
-				<input type="username" id="username" name="varUsername" placeholder="" required pattern="\w{3-20}" />
-			</div>
-			<div class="input">
-				<label for="text">Password: </label>
-				<input type="password" id="password" name="varPassword" placeholder="" required pattern="\w{3-20}" />
-			</div>
-			<div><button type="submit">Submit</button></div>
-		</form>
-	</main>
-	
-	<footer id="footer"></footer>
-</body>
+		<main>
+			<h2>LOGIN</h2>
+			<form action="formSubmit.html" method="post">
+				<div class="input">
+					<label for="text">Username: </label>
+					<input type="username" id="username" name="varUsername" placeholder="" required pattern="\w{3-20}" />
+				</div>
+				<div class="input">
+					<label for="text">Password: </label>
+					<input type="password" id="password" name="varPassword" placeholder="" required pattern="\w{3-20}" />
+				</div>
+				<div><button type="submit">Submit</button></div>
+			</form>
+		</main>
+		
+		<footer id="footer"></footer>
+	</body>
+</html>
