@@ -54,3 +54,12 @@ input {
 	border: 2px solid var(--tertiary-color);
 	padding: 3px 5px;
 }
+
+.github {
+	justify-content: center;
+	margin: 15px 15px;
+}
+
+path {
+	fill: var(--tertiary-color);
+}
