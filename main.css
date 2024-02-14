@@ -10,7 +10,6 @@
 	--primary-color: #f17754;
 	--secondary-color: #ffbc90;
 	--tertiary-color: #ffe4bc;
-	background-color: var(--back-color);
 }
 
 * {
@@ -62,4 +61,9 @@ input {
 
 path {
 	fill: var(--tertiary-color);
+}
+
+button {
+	background-color: var(--back2-color);
+	color: var(--back-color);
 }
