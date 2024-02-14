@@ -1,0 +1,17 @@
+:root {
+	/* Color Palette */
+	--back-color: #081426;
+	--primary-color: #f17754;
+	--secondary-color: #ffbc90;
+	--tertiary-color: #ffe4bc;
+	background-color: var(--back-color);
+}
+
+* {
+	color: var(--primary-color);
+
+}
+
+body {
+	background-color: var(--back-color);
+}
