@@ -1,6 +1,12 @@
+@font-face {
+	font-family: "Cascadia Code";
+	src: local("CascadiaCode.ttf");
+}
+
 :root {
 	/* Color Palette */
 	--back-color: #081426;
+	--back2-color: #040e1d;
 	--primary-color: #f17754;
 	--secondary-color: #ffbc90;
 	--tertiary-color: #ffe4bc;
@@ -9,7 +15,7 @@
 
 * {
 	color: var(--secondary-color);
-
+	font-family: "Cascadia Code";
 }
 
 body {
