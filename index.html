@@ -3,30 +3,25 @@
 <body>
 	<head>
 		<link rel="stylesheet" href="main.css"/>
+		<script type="text/javascript" src="headerfooter.js"></script>
 	</head>
-	<h1>TODO List</h1>
-	<header>
-		<nav>
-			<div><a href="index.html">Home</a></div>
-			<div><a href="lists.html">Lists</a></div>
-		</nav>
-	</header>
 
-	<hr>
+	<header id="header"></header>
 
 	<main>
 		<h2>LOGIN</h2>
 		<form action="formSubmit.html" method="post">
-			<label for="text">Username: </label>
-			<input type="username" id="username" name="varUsername" placeholder="" required pattern="[Aa].*" />
+			<div class="input">
+				<label for="text">Username: </label>
+				<input type="username" id="username" name="varUsername" placeholder="" required pattern="\w{3-20}" />
+			</div>
+			<div class="input">
+				<label for="text">Password: </label>
+				<input type="password" id="password" name="varPassword" placeholder="" required pattern="\w{3-20}" />
+			</div>
 			<div><button type="submit">Submit</button></div>
 		</form>
 	</main>
-
-	<hr>
-
-	<footer>
-		<div>Ben Madsen</div>
-		<a href="https://github.com/TRHeliad/startup">Github</a>
-	</footer>
+	
+	<footer id="footer"></footer>
 </body>
