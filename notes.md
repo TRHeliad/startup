@@ -25,5 +25,37 @@ Here is an example of some basic HTML structure:
 </html>
 ```
 
+# CSS Syntax
+Here is an example of some basic CSS syntax:
+```css
+* {
+	border: thick solid blue;
+	box-sizing: border-box;
+	padding: 0.2em;
+	font-size: 24px;
+	font-family: Arial;
+}
+  
+html {
+	height: 100%;
+}
+  
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	overflow: hidden;
+}
+  
+p {
+	width: 50%;
+	height: 50%;
+	display: flex;
+	align-items: center;
+	text-align: center;
+}
+```
+
 # Deploying
 When we use the deployment script, it SSHs into our server and updates a service which runs our web server for the startup application.
