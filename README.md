@@ -9,11 +9,11 @@ Why is it that collaborative task management always has to be so complicated? Ha
 ### Design
 This is the screen which lists which todo lists you have.
 
-![Alt text](image.png)
+![Alt text](assets/image.png)
 
 This screen is where you can assign yourself to tasks, add more, or check them off.
 
-![Alt text](image-1.png)
+![Alt text](assets/image-1.png)
 
 ### Key Features
 - Accounts with secure login and encrypted passwords
