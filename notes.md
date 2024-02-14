@@ -9,3 +9,18 @@ HTTPS is a secure version of HTTP which uses the TLS protocol to secure and encr
 
 # Web Applications
 The ability of web interfaces to reconfigure themselves according to screen size and orientation is called responsive design.
+
+# HTML Structure
+Here is an example of some basic HTML structure:
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
+  </head>
+  <body>
+    <p>Center text in centered element</p>
+  </body>
+</html>
+```
