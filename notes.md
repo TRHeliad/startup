@@ -24,3 +24,6 @@ Here is an example of some basic HTML structure:
   </body>
 </html>
 ```
+
+# Deploying
+When we use the deployment script, it SSHs into our server and updates a service which runs our web server for the startup application.
