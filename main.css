@@ -65,5 +65,22 @@ path {
 
 button {
 	background-color: var(--back2-color);
-	color: var(--back-color);
+	color: var(--tertiary-color);
+	border: none;
+	border-radius: 10px;
+	padding: 0.75em 0.75em;
+	animation-name: button_hover;
+	animation-duration: 100ms;
+	animation-play-state: paused;
+}
+
+button:hover {
+	/*animation-play-state: running;*/
+	background-color: var(--tertiary-color);
+	color: var(--back2-color);
+}
+
+button:active {
+	background-color: var(--secondary-color);
+	color: var(--back2-color);
 }
