@@ -36,3 +36,27 @@ The required technologies will be used as such:
 - **Persistence/Accounts** - Use a database to store account information and allow logins.
 - **WebSocket** - Communicate with the clients when you or other users make changes to or invite others to todo lists.
 
+# CSS Deliverable
+- Prerequisite: Simon CSS deployed to your production environment
+	- Done
+- Prerequisite: A link to your GitHub startup repository prominently displayed on your application's home page
+	- Bottom right corner GitHub icon
+- Prerequisite: Notes in your startup Git repository README.md file documenting what you modified and added with this deliverable. The TAs will only grade things that have been clearly described as being completed. Review the voter app as an example.
+	- Information here
+- Prerequisite: At least 10 git commits spread consistently throughout the assignment period.
+	- Done
+- Properly styled CSS
+	- Header, footer, and main content body
+		- Header and footer styled and stored in separate files to avoid repeating
+		- Each page uses a flex display for the body which includes these three elements
+	- Navigation elements
+		- Nav links at top
+	- Responsive to window resizing
+		- Element sizes mostly based on viewport size
+	- Application elements
+		- There are styled tables for the list of lists and the TODO lists themselves
+	- Application text content
+		- Done
+	- Application images
+		- There is an image in the about page that scales with viewport
+		- The GitHub logo and checkbox images are SVGs which are styled to adjust with the current theme pallette
