@@ -1,0 +1,21 @@
+main {
+	display: flex;
+	flex-direction: column;
+}
+
+main > h2 {
+	flex: 0 60px;
+}
+
+tr:nth-child(odd) {
+	background-color: var(--back2-color);
+}
+
+tr:nth-child(1) {
+	background-color: var(--back3-color);
+}
+
+td {
+	text-align: center;
+	cursor: pointer;
+}
