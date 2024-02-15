@@ -2,19 +2,36 @@
 <html lang="en">
 	<head>
 		<link rel="stylesheet" href="main.css"/>
+		<link rel="stylesheet" href="lists.css"/>
 		<script type="text/javascript" src="htmlsnippetloader.js"></script>
 	</head>
 	<body>
 		<header id="header"></header>
 
 		<main>
-			<h2>Lists</h2>
-			<ul>
-				<li><a href="list.html">Christmas Shopping</a></li>
-				<li><a href="list.html">CS 260 HW</a></li>
-				<li><a href="list.html">Cleaning List</a></li>
-				<li><a href="list.html">Game Update</a></li>
-			</ul>
+			<h1>Lists</h1>
+			<table>
+				<tr>
+					<th>Name</th>
+					<th>Creator</th>
+				</tr>
+				<tr onclick="window.location='list.html'">
+					<td>Christmas Shopping</td>
+					<td>You</td>
+				</tr>
+				<tr onclick="window.location='list.html'">
+					<td>CS 260 HW</td>
+					<td>Jeff123</td>
+				</tr>
+				<tr onclick="window.location='list.html'">
+					<td>Cleaning List</td>
+					<td>You</td>
+				</tr>
+				<tr onclick="window.location='list.html'">
+					<td>Game Update</td>
+					<td>onlytwentycharacters</td>
+				</tr>
+			</table>
 		</main>
 
 		<footer id="footer"></footer>
