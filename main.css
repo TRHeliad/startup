@@ -95,7 +95,7 @@ input {
 	background-color: var(--back-color);
 	border-radius: 10px;
 	border: 2px solid var(--tertiary-color);
-	padding: 3px 5px;
+	padding: 0.3vmin 0.5vmin;
 }
 
 .github {
@@ -111,8 +111,8 @@ button {
 	background-color: var(--back2-color);
 	color: var(--tertiary-color);
 	border: none;
-	border-radius: 10px;
-	padding: 0.75em 0.75em;
+	border-radius: 1vmin;
+	padding: 0.75vmin 0.75vmin;
 	animation-name: button_hover;
 	animation-duration: 100ms;
 	animation-play-state: paused;
