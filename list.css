@@ -1,0 +1,11 @@
+main {
+	display: flex;
+	flex-direction: column;
+}
+
+main > h1 {
+	flex: 0 3vmin;
+	font-size: 3vmin;
+	text-align: center;
+	margin: 1vmin 0;
+}
