@@ -1,0 +1,17 @@
+main {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+main p {
+	font-size: 3vmin;
+	text-align: center;
+	color: var(--primary-color)
+}
+
+main img {
+	height: 30vmin;
+	width: 30vmin;
+}
