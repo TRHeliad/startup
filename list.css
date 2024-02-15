@@ -9,3 +9,44 @@ main > h1 {
 	text-align: center;
 	margin: 1vmin 0;
 }
+
+tr {
+	height: 5ex;
+}
+
+tr:nth-child(odd) {
+	background-color: var(--back2-color);
+}
+
+tr:nth-child(1) {
+	background-color: var(--back3-color);
+	height: 6ex;
+}
+
+th {
+	font-size: 2em;
+	color: var(--primary-color)
+}
+
+th:nth-child(1) {
+	width: 60%;
+}
+th:nth-child(2) {
+	width: 30%;
+}
+
+td {
+	font-size: 1.5em;
+	text-align: center;
+}
+
+td.assignee {
+	cursor: pointer;
+}
+
+td svg.checked-box, svg.unchecked-box {
+	width: 1.2em;
+	height: 1.2em;
+	vertical-align: middle;
+	cursor: pointer;
+}
