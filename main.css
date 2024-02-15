@@ -5,11 +5,11 @@
 
 :root {
 	/* Color Palette */
-	--back-color: #081426;
-	--back2-color: #040e1d;
-	--primary-color: #f17754;
-	--secondary-color: #ffbc90;
-	--tertiary-color: #ffe4bc;
+	--back-color: #091f2c;
+	--back2-color: #071823;
+	--primary-color: #f5b1cc;
+	--secondary-color: #93e8d3;
+	--tertiary-color: #a288d9;
 }
 
 * {
@@ -104,7 +104,11 @@ input {
 }
 
 path {
-	fill: var(--tertiary-color);
+	fill: var(--primary-color);
+}
+
+h1,h2 {
+	color: var(--secondary-color);
 }
 
 button {
