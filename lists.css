@@ -7,15 +7,30 @@ main > h2 {
 	flex: 0 60px;
 }
 
+tr {
+	height: 5ex;
+}
+
 tr:nth-child(odd) {
 	background-color: var(--back2-color);
 }
 
 tr:nth-child(1) {
 	background-color: var(--back3-color);
+	height: 6ex;
+}
+
+th {
+	font-size: 2em;
+	color: var(--primary-color)
+}
+
+th:nth-child(1) {
+	width: 60%;
 }
 
 td {
+	font-size: 1.5em;
 	text-align: center;
 	cursor: pointer;
 }
