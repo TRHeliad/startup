@@ -11,38 +11,40 @@
 		<main>
 			<h1>Cleaning List</h1>
 
-			<table>
-				<tr>
-					<th>Task</th>
-					<th>Assignee</th>
-					<th>Done</th>
-				</tr>
-				<tr>
-					<td>Inside Fridge</td>
-					<td class="assignee">bmadsenonpc</td>
-					<td><div class="unchecked-box" /></td>
-				</tr>
-				<tr>
-					<td>Wipe down windows</td>
-					<td class="assignee">-</td>
-					<td><div class="unchecked-box" /></td>
-				</tr>
-				<tr>
-					<td>Inside Fridge</td>
-					<td class="assignee">-</td>
-					<td><div class="unchecked-box" /></td>
-				</tr>
-				<tr>
-					<td>Toilet</td>
-					<td class="assignee">Jeff123</td>
-					<td><div class="checked-box" /></td>
-				</tr>
-			</table>
+			<div class="table-container">
+				<table>
+					<tr>
+						<th>Task</th>
+						<th>Assignee</th>
+						<th>Done</th>
+					</tr>
+					<tr>
+						<td>Inside Fridge</td>
+						<td class="assignee">bmadsenonpc</td>
+						<td><div class="unchecked-box" /></td>
+					</tr>
+					<tr>
+						<td>Wipe down windows</td>
+						<td class="assignee">-</td>
+						<td><div class="unchecked-box" /></td>
+					</tr>
+					<tr>
+						<td>Inside Fridge</td>
+						<td class="assignee">-</td>
+						<td><div class="unchecked-box" /></td>
+					</tr>
+					<tr>
+						<td>Toilet</td>
+						<td class="assignee">Jeff123</td>
+						<td><div class="checked-box" /></td>
+					</tr>
+				</table>
+			</div>
 
 			<form action="addItemForm.html" method="post">
 				<label for="text">New item: </label>
 				<input type="newItem" id="newItem" name="varNewItem" />
-				<div><button type="submit">Add </button></div>
+				<button type="submit">Add </button>
 			</form>
 		</main>
 

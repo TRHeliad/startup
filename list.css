@@ -1,6 +1,8 @@
 main {
 	display: flex;
 	flex-direction: column;
+	justify-content: start;
+	align-items: center;
 }
 
 main > h1 {
@@ -8,6 +10,15 @@ main > h1 {
 	font-size: 3vmin;
 	text-align: center;
 	margin: 1vmin 0;
+}
+
+div.table-container {
+	flex: 1 0;
+	width: 100%;
+}
+
+table {
+	width: 100%;
 }
 
 tr {
@@ -49,4 +60,34 @@ td svg.checked-box, svg.unchecked-box {
 	height: 1.2em;
 	vertical-align: middle;
 	cursor: pointer;
+}
+
+form {
+	flex: 0 7vmin;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+form label {
+	flex: 0 13vmin;
+	margin-left: 15px;
+	color: var(--secondary-color);
+	font-size: 2vmin;
+}
+
+form input {
+	flex: 1 0;
+	height: 60%;
+	font-size: 2vmin;
+}
+
+form button {
+	flex: 0 13vmin;
+	margin: 0 15px;
+	height: 60%;
+	font-size: 2vmin;
 }
