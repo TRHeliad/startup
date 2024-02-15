@@ -10,29 +10,38 @@
 
 		<main>
 			<h1>Cleaning List</h1>
-			<ul>
-				<li>
-					<span align="left">Inside Fridge</span>
-					<img src="assets/uncheck-box.png" height="15" align="right"/>
-					<img src="assets/person_icon.png" height="15" align="right"/>
-				</li>
-				<li>
-					<span align="left">Wipe down windows</span>
-					<img src="assets/uncheck-box.png" height="15" align="right"/>
-				</li>
-				<li>
-					<span align="left">Inside Fridge</span>
-					<img src="assets/uncheck-box.png" height="15" align="right"/>
-				</li>
-				<li>
-					<span align="left">Toilet</span>
-					<img src="assets/check-box.png" height="15" align="right"/>
-					<img src="assets/person_icon.png" height="15" align="right"/>
-				</li>
-			</ul>
+
+			<table>
+				<tr>
+					<th>Task</th>
+					<th>Assignee</th>
+					<th>Completed</th>
+				</tr>
+				<tr>
+					<td>Inside Fridge</td>
+					<td>bmadsenonpc</td>
+					<td><div class="unchecked-box" /></td>
+				</tr>
+				<tr>
+					<td>Wipe down windows</td>
+					<td>-</td>
+					<td><div class="unchecked-box" /></td>
+				</tr>
+				<tr>
+					<td>Inside Fridge</td>
+					<td>-</td>
+					<td><div class="unchecked-box" /></td>
+				</tr>
+				<tr>
+					<td>Toilet</td>
+					<td>Jeff123</td>
+					<td><div class="checked-box" /></td>
+				</tr>
+			</table>
+
 			<form action="addItemForm.html" method="post">
 				<label for="text">New item: </label>
-				<input type="newItem" id="newItem" name="varNewItem" placeholder="New task"/>
+				<input type="newItem" id="newItem" name="varNewItem" />
 				<div><button type="submit">Add </button></div>
 			</form>
 		</main>
