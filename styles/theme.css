@@ -4,3 +4,25 @@ main {
 	justify-content: center;
 	align-items: center;
 }
+
+.theme-container {
+	position: relative;
+	width: 70vmin;
+}
+
+label {
+	color: var(--secondary-color)
+}
+
+.input {
+	margin: 2vmin;
+	font-size: 3vmin;
+}
+
+input {
+	position: absolute;
+	right: 0;
+	font-size: 3vmin;
+	width: 8ex;
+	text-align: right;
+}
