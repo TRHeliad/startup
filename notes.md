@@ -74,3 +74,9 @@ console.log(join('Hello', 'world'));
 ```
 
 It is not usually necessary, but it is good form to use semicolons(`;`) to separate statements.
+
+## Debugging
+You can use the console object to perform different debugging functions. `console.log()` lets you print out a string. You can use formatting like this: `console.log("this string %s", "is formatted")`.
+The `console.time(id)` and `console.timeEnd(id)` functions let you specify a timer identifier string and then print the elapsed time on end.
+
+Similarly, you can use `console.count(id)` with a string identifier and it will print out an incremented count along with the identifier each time.
