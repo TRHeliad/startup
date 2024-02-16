@@ -80,3 +80,17 @@ You can use the console object to perform different debugging functions. `consol
 The `console.time(id)` and `console.timeEnd(id)` functions let you specify a timer identifier string and then print the elapsed time on end.
 
 Similarly, you can use `console.count(id)` with a string identifier and it will print out an incremented count along with the identifier each time.
+
+## Using in HTML
+You can include JavaScript in HTML by using the `<script>` element and including it in the content or referencing a separate file using the `src` attribute.
+You can then reference functions declared in the JavaScript or run any code in the scope of the script from special attributes like the `onclick` attribute. E.g.
+```html
+<body>
+  <button onclick="sayGoodbye()">Say Goodbye</button>
+  <script>
+    function sayGoodbye() {
+      alert('Goodbye');
+    }
+  </script>
+</body>
+```
