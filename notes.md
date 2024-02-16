@@ -129,3 +129,16 @@ Common boolean operators: `&&`, `||`, and `!`.
 
 Common looping constructs: `for`, `for in`, `for of`, `while`, `do while`, and `switch`.
 Where `for in` iterates over keys and `for of` iterates over values.
+
+## Strings
+When declaring literals, the ' and " are equivalent, but the ` can contain javascript that will be evaluated and concatenated into the string.
+
+Common functions:
+|Function|Meaning|
+|---|---|
+|length|The number of characters in the string|
+|indexOf()|The starting index of a given substring|
+|split()|Split the string into an array on the given delimiter string|
+|startsWith()|True if the string has a given prefix|
+|endsWith()|True if the string has a given suffix|
+|toLowerCase()|Converts all characters to lowercase|
