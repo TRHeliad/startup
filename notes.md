@@ -59,3 +59,18 @@ p {
 
 # Deploying
 When we use the deployment script, it SSHs into our server and updates a service which runs our web server for the startup application.
+
+# JavaScript
+This is a weakly typed language. Since there are so many browser versions running different versions of JavaScript, it is important to keep this in mind when choosing whether or not you will use some feature.
+
+Here is an example of some syntax with a function that concatenates strings:
+```javascript
+function join(a, b) {
+  return a + ' ' + b;
+}
+
+console.log(join('Hello', 'world'));
+// OUTPUT: Hello world
+```
+
+It is not usually necessary, but it is good form to use semicolons(`;`) to separate statements.
