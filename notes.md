@@ -94,3 +94,38 @@ You can then reference functions declared in the JavaScript or run any code in t
   </script>
 </body>
 ```
+
+## Variables and types
+Here are some primitive types: `Null`, `Undefined`, `Boolean`, `Number`, `BigInt`, `String`, `Symbol`.
+Here are some object types:
+| Type | Use | Example |
+| ---- | ---- | ---- |
+| `Object` | A collection of properties represented by name-value pairs. Values can be of any type. | `{a:3, b:'fish'}` |
+| `Function` | An object that has the ability to be called. | `function a() {}` |
+| `Date` | Calendar dates and times. | `new Date('1995-12-17')` |
+| `Array` | An ordered sequence of any type. | `[3, 'fish']` |
+| `Map` | A collection of key-value pairs that support efficient lookups. | `new Map()` |
+| `JSON` | A lightweight data-interchange format used to share information across programs. | `{"a":3, "b":"fish"}` |
+
+Equality operations will perform type conversion before making any actual comparison. You can avoid this using the strict equality and inequality operators `===` and `!==`.
+
+If statement syntax:
+```javascript
+if (a === 1) {
+  //...
+} else if (b === 2) {
+  //...
+} else {
+  //...
+}
+```
+
+Ternary operator:
+```javascript
+a === 1 ? console.log(1) : console.log('not 1');
+```
+
+Common boolean operators: `&&`, `||`, and `!`.
+
+Common looping constructs: `for`, `for in`, `for of`, `while`, `do while`, and `switch`.
+Where `for in` iterates over keys and `for of` iterates over values.
