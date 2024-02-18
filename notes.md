@@ -326,3 +326,18 @@ const e = new Employee('Eich', 'programmer');
 console.log(e.print());
 // OUTPUT: My name is Eich. I am a programmer
 ```
+
+## Regular Expressions
+You can create regular expressions using Object construction or a literal:
+```javascript
+const objRegex = new RegExp('ab*', 'i');
+const literalRegex = /ab*/i;
+```
+The `string` class can accept regular expressions for several functions.
+| Function  | Description                                                       |
+| --------- | ----------------------------------------------------------------- |
+| `match`   | Returns an array of substrings which match the expression         |
+| `replace` | Replaced substrings which match the expression with a new string  |
+| `search`  | Returns the index of the first match of the expression            |
+| `split`   | Returns an array of substrings which were split by the expression |
+| `test`          | Returns true if there is at least one match of the expression in a string                                                                  |
