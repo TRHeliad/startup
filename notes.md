@@ -374,3 +374,37 @@ try {
 ```
 
 It is common to use the **fallback pattern** when using try catch blocks. This is where the primar feature path is in the try block and then there is some fallback method of still returning something in the catch block such as returning cached data when the network is not available.
+
+## Destructuring
+You can use destructuring to pull certain parts out of arrays or objects.
+```javascript
+const a = [1, 2, 4, 5];
+
+const [b, c] = a;
+console.log(b, c);
+// OUTPUT: 1, 2
+
+const [b, c, ...others] = a;
+console.log(b, c, others);
+// OUTPUT: 1, 2, [4,5]
+
+const o = { a: 1, b: 'animals', c: ['fish', 'cats'] };
+
+const { a, c } = o;
+console.log(a, c);
+// OUTPUT 1, ['fish', 'cats']
+
+const { a: count, b: type } = o;
+console.log(count, type);
+// OUTPUT 1, animals
+```
+
+You can also provide default values for ones that do not exist.
+```javascript
+const { a, b = 22 } = {};
+const [c = 44] = [];
+console.log(a, b, c);
+// OUTPUT: undefined, 22, 44
+```
+
+You can use destructuring to assign to existing variables as well.
