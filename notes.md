@@ -341,3 +341,18 @@ The `string` class can accept regular expressions for several functions.
 | `search`  | Returns the index of the first match of the expression            |
 | `split`   | Returns an array of substrings which were split by the expression |
 | `test`          | Returns true if there is at least one match of the expression in a string                                                                  |
+
+## Rest and spread
+You can turn remaining parameters of a function into an array using the `...name` syntax. You can also expand an array into function parameters using the spread syntax. Each are as follows:
+```javascript
+// Rest syntax
+function hasNumber(test, ...numbers) {
+  return numbers.some((i) => i === test);
+}
+
+// Spread syntax
+function person(firstName, lastName) {
+  return { first: firstName, last: lastName };
+}
+const p = person(...['Ryan', 'Dahl']);
+```
