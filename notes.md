@@ -167,3 +167,36 @@ console.log(
 ```
 
 You can also create inner functions, function declared within other functions.
+
+### Arrow Functions
+To quickly create anonymous functions, you can use arrow functions.
+The returned value is the right statement when no curly braces are present, otherwise it uses the return statement.
+```javascript
+(a, b) => a + b;
+// RETURNS: a + b
+
+(a, b) => {
+  a + b;
+};
+// RETURNS: undefined
+
+(a, b) => {
+  return a + b;
+};
+// RETURNS: a + b
+```
+
+Arrow functions inherit the this pointer and the scope in which they were created. This creates a `closure` which is basically a snapshot of the scope which is preserved for the function.
+
+### Timeout
+The function `setTimeout(func, timeMs)` will run a function after the given amount of time has passed and returns an ID. You can call `clearTimeout(id)` on the id to cancel the scheduled running of the function.
+```javascript
+function debounce(windowMs, windowFunc) {
+  let timeout;
+  return function () {
+    console.log('scroll event');
+    clearTimeout(timeout);
+    timeout = setTimeout(() => windowFunc(), windowMs);
+  };
+}
+```
