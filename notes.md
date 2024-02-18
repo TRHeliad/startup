@@ -218,3 +218,29 @@ Here are some common functions:
 | filter | Run a function to remove items | `a.filter(i => i%2)` |
 | every | Run a function to test if all items match | `a.every(i => i < 3)` |
 | some | Run a function to test if any items match | `a.some(i => 1 < 1)` |
+
+## JSON
+JavaScript Object Notation is primarily used for the storing of serialized objects.
+It has only these data types:
+|Type|Example|
+|---|---|
+|string|"crockford"|
+|number|42|
+|boolean|true|
+|array|[null,42,"crockford"]|
+|object|{"a":1,"b":"crockford"}|
+|null|null|
+
+You can convert to and from JSON using these functions:
+```javascript
+const obj = { a: 2, b: 'crockford', c: undefined };
+const json = JSON.stringify(obj);
+const objFromJson = JSON.parse(json);
+
+console.log(obj, json, objFromJson);
+
+// OUTPUT:
+// {a: 2, b: 'crockford', c: undefined}
+// {"a":2, "b":"crockford"}
+// {a: 2, b: 'crockford'}
+```
