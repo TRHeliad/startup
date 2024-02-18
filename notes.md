@@ -142,3 +142,28 @@ Common functions:
 |startsWith()|True if the string has a given prefix|
 |endsWith()|True if the string has a given suffix|
 |toLowerCase()|Converts all characters to lowercase|
+
+## Functions
+Functions are first class objects, so they can be passed as a parameter, returned as a result, or referenced in arrays and other objects.
+
+With parameters, if a value is not passed to the function, then the parameter's value will be `undefined`. Parameters can also have default values like so:
+```javascript
+function labeler(value, title = 'title') {
+  console.log(`${title}=${value}`);
+}
+```
+
+You can defined anonymous functions to be passed as parameters or assigned to objects. e.g.:
+```javascript
+console.log(
+  doMath(
+    function (a, b) {
+      return a - b;
+    },
+    5,
+    3
+  )
+);
+```
+
+You can also create inner functions, function declared within other functions.
