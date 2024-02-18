@@ -356,3 +356,21 @@ function person(firstName, lastName) {
 }
 const p = person(...['Ryan', 'Dahl']);
 ```
+
+## Exceptions
+Exceptions should only be used in situations that are actually exceptional and not expected to be common. For example a configuration file is missing.
+You use the `try`, `catch`, and `finally` syntax to handle exceptions that are sent using `throw`.
+```javascript
+function connectDatabase() {
+  throw new Error('connection error');
+}
+try {
+  // normal execution code
+} catch (err) {
+  // exception handling code
+} finally {
+  // always called code
+}
+```
+
+It is common to use the **fallback pattern** when using try catch blocks. This is where the primar feature path is in the try block and then there is some fallback method of still returning something in the catch block such as returning cached data when the network is not available.
