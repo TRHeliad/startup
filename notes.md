@@ -244,3 +244,85 @@ console.log(obj, json, objFromJson);
 // {"a":2, "b":"crockford"}
 // {a: 2, b: 'crockford'}
 ```
+
+## Objects and classes
+You can create objects in these two ways:
+```javascript
+const obj = new Object({ a: 3 });
+const obj = {
+  a: 3,
+  b: 'fish',
+};
+```
+The second way in the example is called `object-literal` syntax.
+Objects have a this pointer which can be referenced by functions who are members of the object.
+The `Object` object itself has some static functions which can be performed on object instances like so:
+```javascript
+const obj = {
+  a: 3,
+  b: 'fish',
+};
+
+console.log(Object.entries(obj));
+// OUTPUT: [['a', 3], ['b', 'fish']]
+console.log(Object.keys(obj));
+// OUTPUT: ['a', 'b']
+console.log(Object.values(obj));
+// OUTPUT: [3, 'fish']
+```
+
+Functions that return an object are considered **constructors** and can be invoked using the `new` operator.
+```javascript
+function Person(name) {
+  return {
+    name: name,
+  };
+}
+const p = new Person('Eich');
+```
+
+### Classes
+While the above methods of creating objects were for more arbitrary usage, you can use the `class` keyword to create a reusable component for creating objects with a common structure.
+```javascript
+class Person {
+  #name;
+  constructor(name) {
+    this.name = name;
+  }
+  log() {
+    console.log('My name is ' + this.name);
+  }
+}
+const p = new Person('Eich');
+```
+
+As shown above, you can prefix properties and functions is `#` to make them private.
+
+### Inheritance
+You can use the `extends` keyword to define inheritance for a class. You can then use super to access properties and functions of the parent class.
+```javascript
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+
+  print() {
+    return 'My name is ' + this.name;
+  }
+}
+
+class Employee extends Person {
+  constructor(name, position) {
+    super(name);
+    this.position = position;
+  }
+
+  print() {
+    return super.print() + '. I am a ' + this.position;
+  }
+}
+
+const e = new Employee('Eich', 'programmer');
+console.log(e.print());
+// OUTPUT: My name is Eich. I am a programmer
+```
