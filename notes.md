@@ -408,3 +408,41 @@ console.log(a, b, c);
 ```
 
 You can use destructuring to assign to existing variables as well.
+
+## Scope
+These are the four different types of scope:
+1. Global - Visible to all code
+2. Module - Visible to all code running in a module
+3. Function - Visible within a function
+4. Block - Visible within a block of code delimited by curly braces
+
+The problem with `var` is that it always refers to variables in the global scope.
+
+### This pointer
+The `this` pointer is a reference to an object which contains the context of the current scope. If this scope is global, then it refers to the `globalThis` object. If it is in a function, then it refers to the object for which the function is a member. When referenced from an object it refers to that object.
+*JavaScript strict mode will make it so the `this` pointer does not refer to `globalThis` in global functions and is instead `undefined`.*
+
+A **closure** is a function and its surrounding state. Arrow functions inherit the `this` pointer from their creation context instead of from the object which they are a member of.
+```javascript
+globalThis.x = 'global';
+const obj = {
+  x: 'object',
+  f: () => console.log(this.x),
+};
+obj.f();
+// OUTPUT: global
+```
+
+But if we use the arrow function within a method of the object, then it will reference the `this` pointer of the method function which will be the object that it is a method to.
+
+```javascript
+globalThis.x = 'global';
+const obj = {
+  x: 'object',
+  make: function () {
+    return () => console.log(this.x);
+  },
+};
+const f = obj.make();
+f();
+// OUTPUT: object
