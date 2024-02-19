@@ -503,3 +503,15 @@ Event listeners can be added from the HTML as well:
 ```javascript
 <button onclick='alert("clicked")'>click me</button>
 ```
+
+## Local Storage
+Browsers have a `localStorage` API that allows you to persist data between HTML pages and sessions.
+Here are the four main functions:
+|Function|Meaning|
+|---|---|
+|setItem(name, value)|Sets a named item's value into local storage|
+|getItem(name)|Gets a named item's value from local storage|
+|removeItem(name)|Removes a named item from local storage|
+|clear()|Clears all items in local storage|
+
+Local storage supports values of type `string`, `number`, and `boolean`. You can convert objects to JSON to store them as a string in local storage. You can do this with the `JSON.stringify()` function and then convert it back to an object using `JSON.parse()`.
