@@ -446,3 +446,18 @@ const obj = {
 const f = obj.make();
 f();
 // OUTPUT: object
+```
+
+## Modules
+Modules allow you to store pieces of code in separate files. You can `export` objects from the module and then `import` them in another module. You import modules into non-module scripts.
+```javascript
+// one file
+export function alertDisplay(msg) {
+  alert(msg);
+}
+
+// another file
+import { alertDisplay } from './alert.js';
+alertDisplay('called from main.js');
+```
+Module scripts have a separate scope from the global scope in other scripts. In order to use modules in the global scope of our HTML, we have to leak it through the window object using event handlers to setting properties of the window object. `window.btnClick = alertDisplay`.
