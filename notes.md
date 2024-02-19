@@ -461,3 +461,45 @@ import { alertDisplay } from './alert.js';
 alertDisplay('called from main.js');
 ```
 Module scripts have a separate scope from the global scope in other scripts. In order to use modules in the global scope of our HTML, we have to leak it through the window object using event handlers to setting properties of the window object. `window.btnClick = alertDisplay`.
+
+## The Document Object Model (DOM)
+The DOM creates an object representation of the HTML elements that a browser is using to render a page. It is exposed to external code so that you can dynamically manipulate the appearance of the page. You can access the DOM from JavaScript using the `document` pointer.
+
+The DOM acts like an object hierarchy. You can iterate through the children of the `document` which will show all the highest level elements in the page using the `children` property.
+You can use `document.querySelectorAll('selector')` to use a CSS selector to select HTML elements.
+You can get the content of an element using the `textContent` property and you can get the actual text for the HTML content using the `innerHTML` property.
+
+You can add elements by first creating them and then appending them to an existing element as so:
+```javascript
+function insertChild(parentSelector, text) {
+  const newChild = document.createElement('div');
+  newChild.textContent = text;
+
+  const parentElement = document.querySelector(parentSelector);
+  parentElement.appendChild(newChild);
+}
+insertChild('#courses', 'new course');
+```
+You remove elements by calling `removeChild` on the parent element.
+```javascript
+function deleteElement(elementSelector) {
+  const el = document.querySelector(elementSelector);
+  el.parentElement.removeChild(el);
+}
+deleteElement('#courses div');
+```
+
+You could change the HTML of an element using the `innerHTML` property, but you have to be careful because it is an attack vector. You have to make sure that the HTML you are injecting cannot be manipulated by the user.
+
+### Event listeners
+You can attach functions to any event that occurs on an element. These are called **event listeners**.
+```javascript
+const submitDataEl = document.querySelector('#submitData');
+submitDataEl.addEventListener('click', function (event) {
+  console.log(event.type);
+});
+```
+Event listeners can be added from the HTML as well:
+```javascript
+<button onclick='alert("clicked")'>click me</button>
+```
