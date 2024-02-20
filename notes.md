@@ -515,3 +515,28 @@ Here are the four main functions:
 |clear()|Clears all items in local storage|
 
 Local storage supports values of type `string`, `number`, and `boolean`. You can convert objects to JSON to store them as a string in local storage. You can do this with the `JSON.stringify()` function and then convert it back to an object using `JSON.parse()`.
+
+## Promises
+A promise can be in one of three states at any point of time:
+1. pending - Currently running asynchronously
+2. fulfilled - Completed successfully
+3. rejected - Failed to complete
+
+We can use a promise to execute code asynchronously like so:
+```javascript
+new Promise((resolve, reject) => {
+  // Asynchronously executed code here
+});
+```
+
+The set the completed state of the promise, you call the function `resolve` (set to filfilled) or `reject` (set to rejected). You can pass a message into both of these functions when you call them.
+There are then three functions, `then`, `catch`, and `finally`, which allow you to handle different outcomes of the promise. When the promise resolves, it will call the function passed to `then`. When the promise rejects, it will call the function passed to `catch`. The function passed to `finally` will always be called after either of those functions.
+e.g.
+```javascript
+coinToss
+  .then((result) => console.log(`Coin toss result: ${result}`))
+  .catch((err) => console.log(`Error: ${err}`))
+  .finally(() => console.log('Toss completed'));
+```
+
+As you can see, each of these functions returns the same promise allowing you to run another of the functions in the same statement.
