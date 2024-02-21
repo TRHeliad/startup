@@ -540,3 +540,36 @@ coinToss
 ```
 
 As you can see, each of these functions returns the same promise allowing you to run another of the functions in the same statement.
+
+## async & await
+### await
+You can use the `await` keyword in front of a promise to wait for it to finish executing. It then returns the result of the resolve or throws an error if the promise rejected.
+```javascript
+try {
+  const result = await promise;
+  console.log(`Promise result ${result}`);
+} catch (err) {
+  console.error(`Error: ${err}`);
+} finally {
+  console.log(`Always runs`);
+}
+```
+`await` can only be used either at the top level of the JavaScript or inside a function that was created with the `async` keyword.
+
+### async
+The `async` keyword indicates that a function returns a promise. If the function does not return a promise, then one is automatically generated which is immediately resolved to the return value of the original function.
+
+## In combination
+Using async and await together allow more normal flow of code without the need of callbacks. It makes statements involving promises more concise.
+
+```javascript
+const httpPromise = fetch('https://simon.cs260.click/api/user/me');
+const jsonPromise = httpPromise.then((r) => r.json());
+jsonPromise.then((j) => console.log(j));
+console.log('done');
+// vs
+const httpResponse = await fetch('https://simon.cs260.click/api/user/me');
+const jsonResponse = await httpResponse.json();
+console.log(jsonResponse));
+console.log('done');
+```
