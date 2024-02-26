@@ -28,7 +28,8 @@ Here is an example of some basic HTML structure:
 
 
 
-# CSS Syntax
+# CSS
+## Basic syntax
 Here is an example of some basic CSS syntax:
 ```css
 * {
@@ -59,6 +60,27 @@ p {
 	text-align: center;
 }
 ```
+
+## Selectors
+Example of a selector:
+```css
+section h2 {
+  color: #004400;
+}
+```
+
+There are different types of selectors and waits of combining them into one. Here is a list of combinators:
+
+| Combinator       | Meaning                    | Example        | Description                                |
+| ---------------- | -------------------------- | -------------- | ------------------------------------------ |
+| Descendant       | A list of descendants      | `body section` | Any section that is a descendant of a body |
+| Child            | A list of direct children  | `section > p`  | Any p that is a direct child of a section  |
+| General sibling  | A list of siblings         | `div ~ p`      | Any p that has a div sibling               |
+| Adjacent sibling | A list of adjacent sibling | `div + p`      | Any p that has an adjacent div sibling     |
+
+There are class selectors (`.class-name`), ID selectors (`#id-name`), and attribute selectors (`p[class='class-name']`).
+For the class and id selectors you can put them directly after an element type name to select all elements of that type with that id or class like so: `p.class-name`.
+There are also pseudo selectors which can dynamically change the styling of elements based on relativistic/state properties. An example: `section:hover` is changing the css of `section` elements when the mouse hovers over them.
 
 # Deploying
 When we use the deployment script, it SSHs into our server and updates a service which runs our web server for the startup application.
