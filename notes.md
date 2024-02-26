@@ -10,7 +10,8 @@ HTTPS is a secure version of HTTP which uses the TLS protocol to secure and encr
 # Web Applications
 The ability of web interfaces to reconfigure themselves according to screen size and orientation is called responsive design.
 
-# HTML Structure
+# HTML
+## Basic structure
 Here is an example of some basic HTML structure:
 ```html
 <!DOCTYPE html>
@@ -24,6 +25,8 @@ Here is an example of some basic HTML structure:
   </body>
 </html>
 ```
+
+
 
 # CSS Syntax
 Here is an example of some basic CSS syntax:
@@ -559,7 +562,7 @@ try {
 ### async
 The `async` keyword indicates that a function returns a promise. If the function does not return a promise, then one is automatically generated which is immediately resolved to the return value of the original function.
 
-## In combination
+### In combination
 Using async and await together allow more normal flow of code without the need of callbacks. It makes statements involving promises more concise.
 
 ```javascript
@@ -573,3 +576,17 @@ const jsonResponse = await httpResponse.json();
 console.log(jsonResponse));
 console.log('done');
 ```
+
+## Debugging
+Beyond just using `console.log` to print out information on the status of your program at different points, you can also check the current value of variables in the console by simply entering the variable name and pressing enter.
+
+You could also use a debugger in the browser. For chrome, you can go to the sources tab in the inspect view and then select the script you want to debug. You can then set breakpoints and refresh the browser so the script will start from the beginning with the breakpoints you have set.
+
+# Domain names
+You can use the console command `dig` to find the ip addresses associated with a domain name.
+A root domain is a seconary level domain and a top level domain. Top level domains are things like `com`, `edu` and `net`. Example root domain: `amazon.com`. After that, there are subdomains of which there can be multiple. Like the `cs` in `cs.byu.edu`. Or you could have `react.simon.cs260.click`.
+You can use the `whois` command to get information about a domain name.
+
+There are certain DNS database records that allow you to map domain names to IP addresses. Two main records: `A` records and `CNAME` records. `A` records map a domain name straight to an IP address. `CNAME` records map one domain name to another domain name. A domain name "alias".
+
+In the pipeline for DNS information, there is a cache in the browser and a cache in the DNS. If the DNS doesn't have the name in the cache, then it will request it from the `authoritative name server`. When you are updating the information for your domain name, you can set the `time to live` (`TTL`) which will tell caches how long they should last.
