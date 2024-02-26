@@ -26,7 +26,9 @@ Here is an example of some basic HTML structure:
 </html>
 ```
 
-
+## Elements
+Here are some common element types: `body`, `header`, `footer`, `main`, `section`, `aside`, `p`, `table`, `ol`/`ul`, `div`, and `span`.
+There are block elements and inline elements. Inline elements do not interrupt the content flow of a block element. Block elements are meant to be distinct sections of content.
 
 # CSS
 ## Basic syntax
