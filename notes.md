@@ -125,6 +125,28 @@ In order to add a font to the CSS:
 @import url('https://fonts.googleapis.com/css2?family=Rubik Microbe&display=swap'); 
 ```
 
+## Animations
+To describe an animation, you create keyframes:
+```css
+@keyframes demo {
+  from {
+    font-size: 0vh;
+  }
+
+  to {
+    font-size: 20vh;
+  }
+}
+```
+
+and then assign it to an element:
+```css
+p {
+  animation-name: demo;
+  animation-duration: 3s;
+}
+```
+
 # Deploying
 When we use the deployment script, it SSHs into our server and updates a service which runs our web server for the startup application.
 
