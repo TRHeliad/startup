@@ -336,6 +336,7 @@ You can create regular expressions using Object construction or a literal:
 const objRegex = new RegExp('ab*', 'i');
 const literalRegex = /ab*/i;
 ```
+The second argument to RegExp is for flags and it was also at the end of the literal version. In this case, `i` was included which means case insensitive.
 The `string` class can accept regular expressions for several functions.
 | Function  | Description                                                       |
 | --------- | ----------------------------------------------------------------- |
