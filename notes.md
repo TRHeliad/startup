@@ -114,6 +114,17 @@ There are also pseudo selectors which can dynamically change the styling of elem
 | width              | unit                               | `25vmin`            | Sets the width of the box                                                      |
 | z-index            | number                             | `100`               | Controls the positioning of the element on the z axis                          |
 
+## Fonts
+In order to add a font to the CSS:
+```css
+@font-face {
+  font-family: 'Quicksand';
+  src: url('https://cs260.click/fonts/quicksand.ttf');
+}
+/* Or import the css */
+@import url('https://fonts.googleapis.com/css2?family=Rubik Microbe&display=swap'); 
+```
+
 # Deploying
 When we use the deployment script, it SSHs into our server and updates a service which runs our web server for the startup application.
 
