@@ -672,6 +672,19 @@ Beyond just using `console.log` to print out information on the status of your p
 
 You could also use a debugger in the browser. For chrome, you can go to the sources tab in the inspect view and then select the script you want to debug. You can then set breakpoints and refresh the browser so the script will start from the beginning with the breakpoints you have set.
 
+# The Internet
+Devices connected to the internet have a public IP address. Symbolic names or domain names can refer to one or more IP addresses. You can use `traceroute` to see the jumps that your connection makes to reach some destination. This path can change dynamically if some devices fail or go offline.
+
+## TCP/IP
+There is the TCP/IP model which is used for sending data across the internet. Its application layer represents user functionality like HTTP, SMTP, FTP, SSH, and IRC. It has a transport layer which actually breaks the information into chunks to sent over the network and internet.
+Simple layout:
+| Layer       | Example         | Purpose                               |
+| ----------- | --------------- | ------------------------------------- |
+| Application | HTTPS           | Functionality like web browsing       |
+| Transport   | TCP             | Moving connection information packets |
+| Internet    | IP              | Establishing connections              |
+| Link        | Fiber, hardware | Physical connections                  |
+
 # Domain names
 You can use the console command `dig` to find the ip addresses associated with a domain name.
 A root domain is a seconary level domain and a top level domain. Top level domains are things like `com`, `edu` and `net`. Example root domain: `amazon.com`. After that, there are subdomains of which there can be multiple. Like the `cs` in `cs.byu.edu`. Or you could have `react.simon.cs260.click`.
@@ -680,3 +693,5 @@ You can use the `whois` command to get information about a domain name.
 There are certain DNS database records that allow you to map domain names to IP addresses. Two main records: `A` records and `CNAME` records. `A` records map a domain name straight to an IP address. `CNAME` records map one domain name to another domain name. A domain name "alias".
 
 In the pipeline for DNS information, there is a cache in the browser and a cache in the DNS. If the DNS doesn't have the name in the cache, then it will request it from the `authoritative name server`. When you are updating the information for your domain name, you can set the `time to live` (`TTL`) which will tell caches how long they should last.
+
+# Web Servers
