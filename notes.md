@@ -685,6 +685,12 @@ Simple layout:
 | Internet    | IP              | Establishing connections              |
 | Link        | Fiber, hardware | Physical connections                  |
 
+# Web Servers
+This is a server that accepts connection over the HTTP application protocol. It used to be that entire servers would be dedicated to one web server application. Now the servers can run multiple web server applications among other things.
+Different *web services* can be hosted on separate ports and then a *web service gateway* can direct the client to one of the ports based on their request. The web service gateway is just hosted on the HTTPS port 443.
+**Microservices** are services which serve a single functional purpose. They are useful because they can be essentially replicated to run in many virtual environments so that you can serve many users at once.
+The **serverless** concept is basically that abstract away the server so that you are just mapping a request directly to a function through the web service gateway.
+
 # Domain names
 You can use the console command `dig` to find the ip addresses associated with a domain name.
 A root domain is a seconary level domain and a top level domain. Top level domains are things like `com`, `edu` and `net`. Example root domain: `amazon.com`. After that, there are subdomains of which there can be multiple. Like the `cs` in `cs.byu.edu`. Or you could have `react.simon.cs260.click`.
