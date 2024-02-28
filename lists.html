@@ -35,8 +35,8 @@
 			</table>
 			<div class="create-list-container">
 				<label for="text">New List: </label>
-				<input id="newList" />
-				<button>Create</button>
+				<input id="newList" required pattern="\w{3-40}"/>
+				<button onclick="createList()">Create</button>
 			</div>
 		</main>
 
