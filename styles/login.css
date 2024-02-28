@@ -5,7 +5,7 @@ main {
 	align-items: center;
 }
 
-form {
+div.login-container {
 	flex: 0.2 0;
 	display: flex;
 	flex-direction: column;
@@ -15,30 +15,30 @@ form {
 	font-size: 3vmin;
 }
 
-form h2 {
+div.login-container h2 {
 	font-size: 5vmin;
 	margin: 2vmin 0;
 	color: var(--secondary-color);
 }
 
-form div.input {
+div.login-container div.input {
 	flex: 0 5vmin;
 	width: 100%;
 	margin-bottom: 1vmin;
 }
 
-form input {
+div.login-container input {
 	height: 70%;
 	width: 100%;
 	font-size: 2.5vmin;
 	box-sizing: border-box;
 }
 
-form label {
+div.login-container label {
 	width: 30%;
 }
 
-form button {
+div.login-container button {
 	flex: 0 5vmin;
 	font-size: 3vmin;
 	padding: 0.75vmin 3vmin;
