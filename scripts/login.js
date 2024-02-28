@@ -4,4 +4,6 @@ function login() {
 	localStorage.setItem("userName", usernameElement.value);
 	console.log("stored")
 	// For now the password will be ignored
+
+	document.location.href = "/lists.html"
 }
