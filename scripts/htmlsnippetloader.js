@@ -7,8 +7,23 @@ function load_svgs() {
 	$( ".unchecked-box" ).load( "unchecked-box.html" );
 }
 
+function load_header() {
+	load_svgs()
+	
+	// Load username
+	const usernameElement = document.querySelector(".username");
+	let username = localStorage.getItem("userName");
+	username = username == null ? "" : username
+	console.log(usernameElement);
+	usernameElement.textContent = username;
+}
+
+function load_footer() {
+	load_svgs()
+}
+
 window.onload = function ()
 {
-	$( "#header" ).load( "header.html", load_svgs );
-	$( "#footer" ).load( "footer.html", load_svgs );
+	$( "#header" ).load( "header.html", load_header );
+	$( "#footer" ).load( "footer.html", load_footer );
 }
