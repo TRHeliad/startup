@@ -96,7 +96,7 @@ td svg.checked-box, svg.unchecked-box {
 }
 
 .assignee-box {
-	visibility: visible;
+	visibility: hidden;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
