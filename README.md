@@ -60,3 +60,12 @@ The required technologies will be used as such:
 	- Application images
 		- There is an image in the about page that scales with viewport
 		- The GitHub logo and checkbox images are SVGs which are styled to adjust with the current theme pallette
+
+# JavaScript Deliverable
+- Represent required technologies
+	- *HTML* and *CSS* are used by *JavaScript* to dynamically change the appearance of the page.
+	- *JavaScript* is used for all the interaction with the lists: adding lists, adding elements to lists, changing the done status of items, changing the assignee of an item, etc.
+	- *Authentication*: The main page allows you to login using a username and password which are then displayed in the header on the top right of the page. Passwords are not yet used due to lack of encryption for storage into a database. The username to assign a creator when creating a list.
+	- *Database data*: Right now the site uses a mock database in the form of localStorage. It stores the username, lists, and list items. Lists contain a name, creator, and items. List items contain a task, assignee, and is done status.
+	- *WebSocket data*: The lists themselves are going to change as other using make changes to shared lists. A mock representation of this is given where the checkboxes change as if from a WebSocket message.
+	- *Colormind*: The site is going to use the external service from colormind to randomly select a color palette to apply to the site. For now you can only manually set the values of the color palette.
