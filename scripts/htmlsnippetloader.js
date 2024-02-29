@@ -3,8 +3,8 @@ script.src = 'https://code.jquery.com/jquery-3.6.3.min.js'; // Check https://jqu
 document.getElementsByTagName('head')[0].appendChild(script);
 
 function load_svgs() {
-	$( ".checked-box" ).load( "checked-box.html" );
-	$( ".unchecked-box" ).load( "unchecked-box.html" );
+	$( "span .checked-box" ).load( "checked-box.html" );
+	$( "span .unchecked-box" ).load( "unchecked-box.html" );
 }
 
 function load_header() {
