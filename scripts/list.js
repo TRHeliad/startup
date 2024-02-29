@@ -14,10 +14,14 @@ function clearList() {
 }
 
 function setCheckboxType(divElement, isChecked) {
-	
+	if (isChecked) {
+		$(divElement).load("checked-box.html")
+	} else {
+		$(divElement).load("unchecked-box.html")
+	}
 }
 
-function createRowFromItem(listItem) {
+function createRowFromItem(listItem, i) {
 	const newTaskCol = document.createElement("td");
 	newTaskCol.textContent = listItem.Task;
 	const newAsigneeCol = document.createElement("td");
@@ -52,7 +56,7 @@ function loadList() {
 		noList = true;
 	} else {
 		lists[selectedListIndex].Items.forEach(function (listItem, i) {
-			const rowElement = createRowFromItem(listItem);
+			const rowElement = createRowFromItem(listItem, i);
 			tbodyElement.appendChild(rowElement);
 		})
 	}
