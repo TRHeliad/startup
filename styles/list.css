@@ -94,3 +94,41 @@ td svg.checked-box, svg.unchecked-box {
 	height: 60%;
 	font-size: 2vmin;
 }
+
+.assignee-box {
+	visibility: visible;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 30vmin;
+	height: 12vmin;
+	background-color: var(--back3-color);
+	text-align: center;
+	border-radius: 6px;
+	padding: 8px 0;
+	position: absolute;
+	z-index: 1;
+	bottom: 50%;
+	left: 50%;
+	margin-left: -15vmin;
+}
+
+.assignee-box label {
+	color: var(--secondary-color);
+	font-size: 2vmin;
+	flex: 1 0;
+}
+
+.assignee-box input {
+	width: 90%;
+	flex: 1 0;
+	margin: 1vmin;
+	font-size: 2vmin;
+}
+
+.assignee-box button {
+	width: 40%;
+	flex: 0.7 0;
+	font-size: 2vmin;
+	padding: 0.5vmin 0.5vmin;
+}
