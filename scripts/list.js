@@ -1,4 +1,5 @@
 let setAssigneeIndex = null;
+let rowElements = null;
 
 function getLists() {
 	let lists = JSON.parse(localStorage.getItem("lists"));
@@ -42,6 +43,7 @@ function updateItemDone(itemIndex, isDone) {
 		const listItem = list.Items[itemIndex];
 		if (listItem !== undefined) {
 			listItem.IsDone = isDone;
+			setCheckboxType(rowElements[itemIndex].querySelector("td > div"), listItem.IsDone);
 			localStorage.setItem("lists", JSON.stringify(lists));
 		}
 	}
@@ -97,9 +99,8 @@ function createRowFromItem(listItem, i) {
 	})
 
 	checkboxElement.addEventListener("click", function(event) {
-		listItem.IsDone = !listItem.IsDone;
-		updateItemDone(i, listItem.IsDone);
-		setCheckboxType(checkboxElement, listItem.IsDone);
+		const listItem = getSelectedList().Items[i];
+		updateItemDone(i, !listItem.IsDone);
 	})
 	
 	const newRowElement = document.createElement("tr");
@@ -117,9 +118,11 @@ function loadList() {
 
 	if (list !== null) {
 		nameLabelElement.textContent = list.Name;
+		rowElements = []
 		list.Items.forEach(function (listItem, i) {
 			const rowElement = createRowFromItem(listItem, i);
 			tbodyElement.appendChild(rowElement);
+			rowElements.push(rowElement);
 		})
 	} else {
 		nameLabelElement.textContent = "No List Selected";
@@ -143,6 +146,18 @@ function addItem() {
 	loadList();
 }
 
+function changeRandomCheckbox() {
+	const list = getSelectedList();
+	const randomRow = Math.floor(Math.random() * list.Items.length);
+	updateItemDone(randomRow, !list.Items[randomRow].IsDone);
+	queueCheckboxChange();
+}
+
+function queueCheckboxChange() {
+	setTimeout(changeRandomCheckbox, 3000);
+}
+
 window.addEventListener("load", function() {
 	loadList();
+	queueCheckboxChange();
 })
