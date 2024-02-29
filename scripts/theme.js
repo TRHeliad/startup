@@ -5,6 +5,7 @@ const colorNames = [
 	"back-color",
 	"back-color-2"
 ]
+const root = document.querySelector(":root");
 
 function getTheme() {
 	let theme = JSON.parse(localStorage.getItem("theme"));
@@ -26,12 +27,26 @@ function updateTheme() {
 			updateColor(colorName, matches[0]);
 		}
 	}
+	loadTheme();
 }
 
 function loadTheme() {
-	
+	const theme = getTheme();
+	for (const colorName of colorNames) {
+		const color = theme[colorName];
+		if (color !== undefined) {
+			root.style.setProperty("--"+colorName, "#"+color);
+		}
+	}
 }
 
 window.addEventListener("load", function() {
-
+	loadTheme();
+	const theme = getTheme();
+	for (const colorName of colorNames) {
+		const color = theme[colorName];
+		if (color !== undefined) {
+			document.querySelector("#"+colorName).value = color;
+		}
+	}
 })
