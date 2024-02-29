@@ -113,6 +113,10 @@ td svg.checked-box, svg.unchecked-box {
 	margin-left: -15vmin;
 }
 
+.assignee-box.show {
+	visibility: visible;
+}
+
 .assignee-box label {
 	color: var(--secondary-color);
 	font-size: 2vmin;

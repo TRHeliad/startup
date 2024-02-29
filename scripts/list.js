@@ -1,3 +1,5 @@
+let setAssigneeIndex = null;
+
 function getLists() {
 	let lists = JSON.parse(localStorage.getItem("lists"));
 	lists = lists === null ? [] : lists;
@@ -45,6 +47,12 @@ function updateItemDone(itemIndex, isDone) {
 	}
 }
 
+function showSetAssigneeBox(assigneeIndex) {
+	setAssigneeIndex = assigneeIndex;
+	document.querySelector(".assignee-box input").value = "";
+	document.querySelector(".assignee-box").classList.add("show");
+}
+
 function createRowFromItem(listItem, i) {
 	const newTaskCol = document.createElement("td");
 	newTaskCol.textContent = listItem.Task;
@@ -57,7 +65,7 @@ function createRowFromItem(listItem, i) {
 	setCheckboxType(checkboxElement, listItem.IsDone);
 
 	newAssigneeCol.addEventListener("click", function(event) {
-
+		showSetAssigneeBox();
 	})
 
 	checkboxElement.addEventListener("click", function(event) {
