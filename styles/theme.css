@@ -26,3 +26,8 @@ input {
 	width: 8ex;
 	text-align: right;
 }
+
+main > button {
+	width: 15vmin;
+	font-size: 3vmin;
+}
