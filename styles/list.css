@@ -65,7 +65,7 @@ td svg.checked-box, svg.unchecked-box {
 	vertical-align: middle;
 }
 
-form {
+.add-item-container {
 	flex: 0 7vmin;
 	display: flex;
 	flex-direction: row;
@@ -75,20 +75,20 @@ form {
 	width: 100%;
 }
 
-form label {
+.add-item-container label {
 	flex: 0 13vmin;
 	margin-left: 15px;
 	color: var(--secondary-color);
 	font-size: 2vmin;
 }
 
-form input {
+.add-item-container input {
 	flex: 1 0;
 	height: 60%;
 	font-size: 2vmin;
 }
 
-form button {
+.add-item-container button {
 	flex: 0 13vmin;
 	margin: 0 15px;
 	height: 60%;
