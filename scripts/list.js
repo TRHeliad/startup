@@ -80,6 +80,7 @@ function loadList() {
 	const list = getSelectedList()
 
 	if (list !== null) {
+		nameLabelElement.textContent = list.Name;
 		list.Items.forEach(function (listItem, i) {
 			const rowElement = createRowFromItem(listItem, i);
 			tbodyElement.appendChild(rowElement);
