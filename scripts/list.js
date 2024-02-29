@@ -94,14 +94,18 @@ function addItem() {
 	const itemTaskElement = document.querySelector(".add-item-container #newItem");
 	const itemTask = itemTaskElement.value;
 	const newItem = { Task: itemTask, Assignee: null, IsDone: false };
-	const lists = getLists()
+	const lists = getLists();
 
 	if (lists[selectedListIndex] === undefined)
 		return;
 	const list = lists[selectedListIndex];
 	
-	list.Items.push(newItem)
+	list.Items.push(newItem);
 	localStorage.setItem("lists", JSON.stringify(lists));
-	clearList()
-	loadList()
+	clearList();
+	loadList();
 }
+
+window.addEventListener("load", function() {
+	loadList();
+})
