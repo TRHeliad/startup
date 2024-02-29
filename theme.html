@@ -4,6 +4,7 @@
 		<link rel="stylesheet" href="styles/main.css"/>
 		<link rel="stylesheet" href="styles/theme.css"/>
 		<script type="text/javascript" src="scripts/htmlsnippetloader.js"></script>
+		<script type="text/javascript" src="scripts/theme.js"></script>
 	</head>
 	<body>
 		<header id="header"></header>
@@ -12,25 +13,26 @@
 			<div class="theme-container">
 				<div class="input">
 					<label for="text">Primary Color: </label>
-					<input id="primary-color" name="varPrimaryColor" required pattern="[a-fA-F0-9]+{6}" value="f5b1cc" />
+					<input id="primary-color" name="varPrimaryColor" required pattern="[a-fA-F0-9]{6}" value="f5b1cc" />
 				</div>
 				<div class="input">
 					<label for="text">Secondary Color: </label>
-					<input id="secondary-color" name="varSecondaryColor" required pattern="[a-fA-F0-9]+{6}" value="93e8d3" />
+					<input id="secondary-color" name="varSecondaryColor" required pattern="[a-fA-F0-9]{6}" value="93e8d3" />
 				</div>
 				<div class="input">
 					<label for="text">Tertiary Color: </label>
-					<input id="tertiary-color" name="varTertiaryColor" required pattern="[a-fA-F0-9]+{6}" value="a288d9" />
+					<input id="tertiary-color" name="varTertiaryColor" required pattern="[a-fA-F0-9]{6}" value="a288d9" />
 				</div>
 				<div class="input">
 					<label for="text">Background Color: </label>
-					<input id="back-color" name="varBackColor" required pattern="[a-fA-F0-9]+{6}" value="091f2c" />
+					<input id="back-color" name="varBackColor" required pattern="[a-fA-F0-9]{6}" value="091f2c" />
 				</div>
 				<div class="input">
 					<label for="text">Background Color 2: </label>
-					<input id="back-color-2" name="varBackColor2" required pattern="[a-fA-F0-9]+{6}" value="071823" />
+					<input id="back-color-2" name="varBackColor2" required pattern="[a-fA-F0-9]{6}" value="071823" />
 				</div>
 			</div>
+			<button onclick="updateTheme()">Update</button>
 		</main>
 		
 		<footer id="footer"></footer>
