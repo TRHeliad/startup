@@ -29,8 +29,20 @@ function setCheckboxType(divElement, isChecked) {
 	}
 }
 
-function updateItemDone(itemIndex) {
-	const list = getLists()
+function updateItemDone(itemIndex, isDone) {
+	const selectedListIndex = localStorage.getItem("selectedList");
+	const lists = getLists();
+	if (lists[selectedListIndex] === undefined)
+		return;
+	const list = lists[selectedListIndex];
+
+	if (list !== null) {
+		const listItem = list.Items[itemIndex];
+		if (listItem !== undefined) {
+			listItem.IsDone = isDone;
+			localStorage.setItem("lists", JSON.stringify(lists));
+		}
+	}
 }
 
 function createRowFromItem(listItem, i) {
@@ -49,7 +61,9 @@ function createRowFromItem(listItem, i) {
 	})
 
 	checkboxElement.addEventListener("click", function(event) {
-
+		const isDone = !listItem.IsDone;
+		updateItemDone(i, isDone);
+		setCheckboxType(checkboxElement, isDone);
 	})
 	
 	const newRowElement = document.createElement("tr");
