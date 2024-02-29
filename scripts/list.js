@@ -53,6 +53,34 @@ function showSetAssigneeBox(assigneeIndex) {
 	document.querySelector(".assignee-box").classList.add("show");
 }
 
+function verifyAssignee(assignee) {
+	// will add verification with database later
+	return assignee
+}
+
+function setAssignee() {
+	if (setAssigneeIndex !== null) {
+		const selectedListIndex = localStorage.getItem("selectedList");
+		const lists = getLists();
+		if (lists[selectedListIndex] === undefined)
+			return;
+		const list = lists[selectedListIndex];
+
+		if (list !== null) {
+			const listItem = list.Items[setAssigneeIndex];
+			if (listItem !== undefined) {
+				listItem.Assignee = verifyAssignee(document.querySelector(".assignee-box input").value);
+				localStorage.setItem("lists", JSON.stringify(lists));
+				clearList();
+				loadList();
+			}
+		}
+
+		document.querySelector(".assignee-box").classList.remove("show");
+		setAssigneeIndex = null
+	}
+}
+
 function createRowFromItem(listItem, i) {
 	const newTaskCol = document.createElement("td");
 	newTaskCol.textContent = listItem.Task;
@@ -65,7 +93,7 @@ function createRowFromItem(listItem, i) {
 	setCheckboxType(checkboxElement, listItem.IsDone);
 
 	newAssigneeCol.addEventListener("click", function(event) {
-		showSetAssigneeBox();
+		showSetAssigneeBox(i);
 	})
 
 	checkboxElement.addEventListener("click", function(event) {
