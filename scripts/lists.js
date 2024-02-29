@@ -46,3 +46,7 @@ function createList() {
 	clearLists()
 	loadLists()
 }
+
+window.addEventListener("load", function() {
+	loadLists();
+})
