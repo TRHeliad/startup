@@ -4,6 +4,14 @@ function getLists() {
 	return lists;
 }
 
+function getSelectedList() {
+	const selectedListIndex = localStorage.getItem("selectedList");
+	const lists = getLists();
+	if (lists[selectedListIndex] === undefined)
+		return null;
+	return lists[selectedListIndex];
+}
+
 function clearList() {
 	const tbodyElement = document.querySelector("tbody");
 	// Clear out lists table
@@ -21,15 +29,24 @@ function setCheckboxType(divElement, isChecked) {
 	}
 }
 
+function updateItemDone(itemIndex) {
+	const list = getLists()
+}
+
 function createRowFromItem(listItem, i) {
 	const newTaskCol = document.createElement("td");
 	newTaskCol.textContent = listItem.Task;
-	const newAsigneeCol = document.createElement("td");
-	newAsigneeCol.textContent = listItem.Asignee === null ? "-" : listItem.Asignee;
+	const newAssigneeCol = document.createElement("td");
+	newAssigneeCol.textContent = listItem.Assignee === null ? "-" : listItem.Assignee;
+	newAssigneeCol.className = "Assignee"
 	const newDoneCol = document.createElement("td");
 	const checkboxElement = document.createElement("div");
 	newDoneCol.appendChild(checkboxElement);
 	setCheckboxType(checkboxElement, listItem.IsDone);
+
+	newAssigneeCol.addEventListener("click", function(event) {
+
+	})
 
 	checkboxElement.addEventListener("click", function(event) {
 
@@ -37,7 +54,7 @@ function createRowFromItem(listItem, i) {
 	
 	const newRowElement = document.createElement("tr");
 	newRowElement.appendChild(newTaskCol);
-	newRowElement.appendChild(newAsigneeCol);
+	newRowElement.appendChild(newAssigneeCol);
 	newRowElement.appendChild(newDoneCol);
 
 	return newRowElement;
@@ -46,21 +63,14 @@ function createRowFromItem(listItem, i) {
 function loadList() {
 	const tbodyElement = document.querySelector("tbody");
 	const nameLabelElement = document.querySelector("main > h1");
-	let noList = false;
-	const selectedListIndex = localStorage.getItem("selectedList");
-	const lists = getLists();
+	const list = getSelectedList()
 
-	if (selectedListIndex === null) {
-		noList = true;
-	} else if (lists[selectedListIndex] === undefined) {
-		noList = true;
-	} else {
-		lists[selectedListIndex].Items.forEach(function (listItem, i) {
+	if (list !== null) {
+		list.Items.forEach(function (listItem, i) {
 			const rowElement = createRowFromItem(listItem, i);
 			tbodyElement.appendChild(rowElement);
 		})
-	}
-	if (noList) {
+	} else {
 		nameLabelElement.textContent = "No List Selected";
 	}
 }

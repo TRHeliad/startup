@@ -55,11 +55,14 @@ td.assignee {
 	cursor: pointer;
 }
 
+td div {
+	cursor: pointer;
+}
+
 td svg.checked-box, svg.unchecked-box {
 	width: 1.2em;
 	height: 1.2em;
 	vertical-align: middle;
-	cursor: pointer;
 }
 
 form {
