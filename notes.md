@@ -687,9 +687,15 @@ Simple layout:
 
 # Web Servers
 This is a server that accepts connection over the HTTP application protocol. It used to be that entire servers would be dedicated to one web server application. Now the servers can run multiple web server applications among other things.
+## Web Services
 Different *web services* can be hosted on separate ports and then a *web service gateway* can direct the client to one of the ports based on their request. The web service gateway is just hosted on the HTTPS port 443.
 **Microservices** are services which serve a single functional purpose. They are useful because they can be essentially replicated to run in many virtual environments so that you can serve many users at once.
 The **serverless** concept is basically that abstract away the server so that you are just mapping a request directly to a function through the web service gateway.
+## The Frontend
+All the files that are running on the browser for a website are the **frontend**. Any requests it makes to the web server are through the HTTPS protocol.
+To make web services requests from the JavaScript in the browser, you use the `fetch` function built into the browser.
+## The Backend
+The functionality provided by web services running on a web server are the **backend**. The functions provided by a web service that you can send `fetch` requests to are called **endpoints**. They might also be called APIs or a group of them might be called an API. A backend web service can also make `fetch` requests to other web services. 
 
 # Domain names
 You can use the console command `dig` to find the ip addresses associated with a domain name.
@@ -699,5 +705,3 @@ You can use the `whois` command to get information about a domain name.
 There are certain DNS database records that allow you to map domain names to IP addresses. Two main records: `A` records and `CNAME` records. `A` records map a domain name straight to an IP address. `CNAME` records map one domain name to another domain name. A domain name "alias".
 
 In the pipeline for DNS information, there is a cache in the browser and a cache in the DNS. If the DNS doesn't have the name in the cache, then it will request it from the `authoritative name server`. When you are updating the information for your domain name, you can set the `time to live` (`TTL`) which will tell caches how long they should last.
-
-# Web Servers
