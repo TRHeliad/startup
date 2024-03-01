@@ -727,3 +727,79 @@ A Uniform Resource Name (URN) does not contain location information and just uni
 # Ports
 Ports allow a single device to host multiple types of services over the network (e.g. HTTP, HTTPS, FTP, SSH).
 The IANA has a list of standard port numbers for certain types of services. Ports 0 to 1023 are reserved for standard protocols.
+
+# HTTP
+This is what the web uses for communication.
+HTTP requests have this syntax:
+```http
+<verb> <url path, parameters, anchor> <version>
+[<header key: value>]*
+[
+
+  <body>
+]
+```
+The headers and body are optional, and the body is separated from the headers by two newlines.
+
+Response syntax:
+```http
+<version> <status code> <status string>
+[<header key: value>]*
+[
+
+  <body>
+]
+```
+
+## Verbs
+| Verb    | Meaning                                                                                                                                                                                                                                                  |
+| ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| GET     | Get the requested resource. This can represent a request to get a single resource or a resource representing a list of resources.                                                                                                                        |
+| POST    | Create a new resource. The body of the request contains the resource. The response should include a unique ID of the newly created resource.                                                                                                             |
+| PUT     | Update a resource. Either the URL path, HTTP header, or body must contain the unique ID of the resource being updated. The body of the request should contain the updated resource. The body of the response may contain the resulting updated resource. |
+| DELETE  | Delete a resource. Either the URL path or HTTP header must contain the unique ID of the resource to delete.                                                                                                                                              |
+| OPTIONS | Get metadata about a resource. Usually only HTTP headers are returned. The resource itself is not returned.                                                                                                                                              |
+
+## Status codes
+- 1xx - Informational.
+- 2xx - Success.
+- 3xx - Redirect to some other location, or that the previously cached resource is still valid.
+- 4xx - Client errors. The request is invalid.
+- 5xx - Server errors. The request cannot be satisfied due to an error on the server.
+
+Common codes:
+| Code | Text                                                                                 | Meaning                                                                                                                           |
+| ---- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| 100  | Continue                                                                             | The service is working on the request                                                                                             |
+| 200  | Success                                                                              | The requested resource was found and returned as appropriate.                                                                     |
+| 201  | Created                                                                              | The request was successful and a new resource was created.                                                                        |
+| 204  | No Content                                                                           | The request was successful but no resource is returned.                                                                           |
+| 304  | Not Modified                                                                         | The cached version of the resource is still valid.                                                                                |
+| 307  | Permanent redirect                                                                   | The resource is no longer at the requested location. The new location is specified in the response location header.               |
+| 308  | Temporary redirect                                                                   | The resource is temporarily located at a different location. The temporary location is specified in the response location header. |
+| 400  | Bad request                                                                          | The request was malformed or invalid.                                                                                             |
+| 401  | Unauthorized                                                                         | The request did not provide a valid authentication token.                                                                         |
+| 403  | Forbidden                                                                            | The provided authentication token is not authorized for the resource.                                                             |
+| 404  | Not found                                                                            | An unknown resource was requested.                                                                                                |
+| 408  | Request timeout                                                                      | The request takes too long.                                                                                                       |
+| 409  | Conflict                                                                             | The provided resource represents an out of date version of the resource.                                                          |
+| 418  | [I'm a teapot](https://en.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol) | The service refuses to brew coffee in a teapot.                                                                                   |
+| 429  | Too many requests                                                                    | The client is making too many requests in too short of a time period.                                                             |
+| 500  | Internal server error                                                                | The server failed to properly process the request.                                                                                |
+| 503  | Service unavailable                                                                  | The server is temporarily down. The client should try again with an exponential back off.                                         |
+
+## Headers
+Headers are used to include metadata about requests or responses. Data about security, caching, data format, etc.
+
+## Cookies
+Cookies are generated by the server and given to the client to cache. Then the client will pass the cookie to the server in subsequent requests.
+Server giving the client a cookie:
+```http
+HTTP/2 200
+Set-Cookie: myAppCookie=tasty; SameSite=Strict; Secure; HttpOnly
+```
+Client sending its cookie to the server:
+```http
+HTTP/2 200
+Cookie: myAppCookie=tasty
+```
