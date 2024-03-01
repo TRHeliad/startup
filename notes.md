@@ -705,3 +705,21 @@ You can use the `whois` command to get information about a domain name.
 There are certain DNS database records that allow you to map domain names to IP addresses. Two main records: `A` records and `CNAME` records. `A` records map a domain name straight to an IP address. `CNAME` records map one domain name to another domain name. A domain name "alias".
 
 In the pipeline for DNS information, there is a cache in the browser and a cache in the DNS. If the DNS doesn't have the name in the cache, then it will request it from the `authoritative name server`. When you are updating the information for your domain name, you can set the `time to live` (`TTL`) which will tell caches how long they should last.
+
+# URL
+"The Uniform Resource Locator (URL) represents the location of a web resource."
+The syntax is as follows:
+```
+<scheme>://<domain name>:<port>/<path>?<parameters>#<anchor>
+```
+The only required parts here are the scheme and domain name.
+The *scheme* is the protocol that will be used to request the resource such as `HTTPS`, `HTTP`, `FTP`, etc.
+The *path* doesn't have to be an actual location on the file system of the destination. It is used by the server to locate the resource.
+The *parameters* are also sometimes called the *query string*. The parameters are a list of key value pairs. Key and value are separated by `=` and parameters are separated by `&`. e.g.
+```
+filter=names&highlight=intro,summary
+```
+The *anchor* is some kind of subpath located within the resource, for example a header to scroll to.
+
+## URL, URN, URI
+A Uniform Resource Name (URN) does not contain location information and just uniquely identifies a resource. A Uniform Resource Identifier (URI) can refer to either a URL or URN. It is just more general.
