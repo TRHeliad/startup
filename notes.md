@@ -723,3 +723,7 @@ The *anchor* is some kind of subpath located within the resource, for example a 
 
 ## URL, URN, URI
 A Uniform Resource Name (URN) does not contain location information and just uniquely identifies a resource. A Uniform Resource Identifier (URI) can refer to either a URL or URN. It is just more general.
+
+# Ports
+Ports allow a single device to host multiple types of services over the network (e.g. HTTP, HTTPS, FTP, SSH).
+The IANA has a list of standard port numbers for certain types of services. Ports 0 to 1023 are reserved for standard protocols.
