@@ -672,6 +672,17 @@ Beyond just using `console.log` to print out information on the status of your p
 
 You could also use a debugger in the browser. For chrome, you can go to the sources tab in the inspect view and then select the script you want to debug. You can then set breakpoints and refresh the browser so the script will start from the beginning with the breakpoints you have set.
 
+## Fetch
+The [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) provides a way to make HTTP requests from JavaScript. It is built into the browser JavaScript runtime. The `fetch` function takes a request and then returns a promise which you can then call `then` on to handle the response.
+```javascript
+fetch('https://api.quotable.io/random')
+	.then((response) => response.json())
+	.then((jsonResponse) => {
+		console.log(jsonResponse);
+	});
+```
+If not specified, the default HTTP method is `GET`.
+
 # The Internet
 Devices connected to the internet have a public IP address. Symbolic names or domain names can refer to one or more IP addresses. You can use `traceroute` to see the jumps that your connection makes to reach some destination. This path can change dynamically if some devices fail or go offline.
 
