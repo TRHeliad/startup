@@ -672,17 +672,6 @@ Beyond just using `console.log` to print out information on the status of your p
 
 You could also use a debugger in the browser. For chrome, you can go to the sources tab in the inspect view and then select the script you want to debug. You can then set breakpoints and refresh the browser so the script will start from the beginning with the breakpoints you have set.
 
-## Fetch
-The [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) provides a way to make HTTP requests from JavaScript. It is built into the browser JavaScript runtime. The `fetch` function takes a request and then returns a promise which you can then call `then` on to handle the response.
-```javascript
-fetch('https://api.quotable.io/random')
-	.then((response) => response.json())
-	.then((jsonResponse) => {
-		console.log(jsonResponse);
-	});
-```
-If not specified, the default HTTP method is `GET`.
-
 # The Internet
 Devices connected to the internet have a public IP address. Symbolic names or domain names can refer to one or more IP addresses. You can use `traceroute` to see the jumps that your connection makes to reach some destination. This path can change dynamically if some devices fail or go offline.
 
@@ -814,3 +803,26 @@ Client sending its cookie to the server:
 HTTP/2 200
 Cookie: myAppCookie=tasty
 ```
+
+# Express
+Express is a node package which provides an easy way to create web services.
+
+You can create a web application using
+```javascript
+const express = require('express');
+const app = express();
+app.listen(8080);
+```
+
+and then you call functions on `app` with the same name as the HTTP verbs in order to route requests through your functions.
+```javascript
+app.get('/store/provo', (req, res, next) => {
+  res.send({name: 'provo'});
+});
+```
+
+If there are multiple functions which have the same match, then the one that was added first will be called and given `next` as a reference to the next match. The route paths can actually also be regular expressions.
+
+## Middleware
+**Middleware** is componentized pieces of functionality. A **mediator** determines the order of execution of middlware components to come up with a result. Express is a mediator.
+You can use built-in or third party middleware. `app.use(express.static('public'));` would add middleware which would host static files in the public directory. If you made a request with no path, it would serve index.html from the public directory.
