@@ -7,6 +7,43 @@ const colorNames = [
 ]
 const root = document.querySelector(":root");
 
+function componentToHex(c) {
+	const hex = c.toString(16);
+	return hex.length == 1 ? "0" + hex : hex;
+}
+  
+function rgbToHex(r, g, b) {
+	return componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+async function requestPalette() {
+	return new Promise(function (resolve, reject) {
+		var url = "https://color.bdm260.click/api/";
+		var data = {
+			model : "default"
+		}
+		
+		var http = new XMLHttpRequest();
+		
+		http.onreadystatechange = function() {
+			if(http.readyState == 4 && http.status == 200) {
+				var palette = JSON.parse(http.responseText).result;
+				resolve(palette);
+			} else if (http.status != 200 && http.status != 0) {
+				reject(http.status);
+			}
+		}
+		
+		http.open("POST", url, true);
+		http.send(JSON.stringify(data));
+	})
+}
+
+async function getRandomPalette() {
+	const rgbPalette = await requestPalette();
+	return rgbPalette.map((rgb) => rgbToHex(...rgb));
+}
+
 function getTheme() {
 	let theme = JSON.parse(localStorage.getItem("theme"));
 	theme = theme === null ? {} : theme;
