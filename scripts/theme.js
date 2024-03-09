@@ -44,6 +44,17 @@ async function getRandomPalette() {
 	return rgbPalette.map((rgb) => rgbToHex(...rgb));
 }
 
+function setRandomTheme() {
+	getRandomPalette().then(function (randomPalette) {
+		randomPalette.forEach(function (hex, i) {
+			const colorName = colorNames[i];
+			updateColor(colorName, hex);
+		})
+		loadTheme();
+		setInputToTheme();
+	})
+}
+
 function getSavedTheme() {
 	let theme = JSON.parse(localStorage.getItem("theme"));
 	theme = theme === null ? {} : theme;
@@ -77,8 +88,7 @@ function loadTheme() {
 	}
 }
 
-window.addEventListener("load", function() {
-	loadTheme();
+function setInputToTheme() {
 	const theme = getSavedTheme();
 	for (const colorName of colorNames) {
 		const color = theme[colorName];
@@ -86,4 +96,9 @@ window.addEventListener("load", function() {
 			document.querySelector("#"+colorName).value = color;
 		}
 	}
+}
+
+window.addEventListener("load", function() {
+	loadTheme();
+	setInputToTheme();
 })
