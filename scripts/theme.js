@@ -70,7 +70,6 @@ function updateColor(colorName, value) {
 function updateTheme() {
 	for (const colorName of colorNames) {
 		const matches = document.querySelector("#"+colorName).value.match(/[a-f0-9]{6}/i);
-		console.log(matches);
 		if (matches.length > 0) {
 			updateColor(colorName, matches[0]);
 		}
