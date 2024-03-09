@@ -32,7 +32,10 @@
 					<input id="back2-color" name="varBackColor2" required pattern="[a-fA-F0-9]{6}" value="071823" />
 				</div>
 			</div>
-			<button onclick="updateTheme()">Update</button>
+			<div class="button-container">
+				<button onclick="updateTheme()" id="updateButton">Update</button>
+				<button onclick="setRandomTheme()" id="randomButton">Random Theme</button>
+			</div>
 		</main>
 		
 		<footer id="footer"></footer>
