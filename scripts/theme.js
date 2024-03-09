@@ -3,7 +3,7 @@ const colorNames = [
 	"secondary-color",
 	"tertiary-color",
 	"back-color",
-	"back-color-2"
+	"back2-color"
 ]
 const root = document.querySelector(":root");
 
@@ -44,14 +44,14 @@ async function getRandomPalette() {
 	return rgbPalette.map((rgb) => rgbToHex(...rgb));
 }
 
-function getTheme() {
+function getSavedTheme() {
 	let theme = JSON.parse(localStorage.getItem("theme"));
 	theme = theme === null ? {} : theme;
 	return theme;
 }
 
 function updateColor(colorName, value) {
-	const theme = getTheme(); 
+	const theme = getSavedTheme(); 
 	theme[colorName] = value.toLowerCase();
 	localStorage.setItem("theme", JSON.stringify(theme));
 }
@@ -68,7 +68,7 @@ function updateTheme() {
 }
 
 function loadTheme() {
-	const theme = getTheme();
+	const theme = getSavedTheme();
 	for (const colorName of colorNames) {
 		const color = theme[colorName];
 		if (color !== undefined) {
@@ -79,7 +79,7 @@ function loadTheme() {
 
 window.addEventListener("load", function() {
 	loadTheme();
-	const theme = getTheme();
+	const theme = getSavedTheme();
 	for (const colorName of colorNames) {
 		const color = theme[colorName];
 		if (color !== undefined) {
