@@ -826,3 +826,23 @@ If there are multiple functions which have the same match, then the one that was
 ## Middleware
 **Middleware** is componentized pieces of functionality. A **mediator** determines the order of execution of middlware components to come up with a result. Express is a mediator.
 You can use built-in or third party middleware. `app.use(express.static('public'));` would add middleware which would host static files in the public directory. If you made a request with no path, it would serve index.html from the public directory.
+
+# Same Origin Policy and Cross Origin Resource Sharing
+SOP makes it so that JavaScript can't make requests to a domain different than the one that it is currently viewing. This prevents attackers from having a fake website that just retrieves that real one from the real website.
+
+CORS makes it possible to still making requests to other domains because it allows the server receiving the request to specify which origins are allowed. In the response, the browser compares the origin of the request to the allowed origins returned by the server and if they do not match, then it discards the response and errors.
+
+Request:
+```http
+GET /api/auth/login HTTP/2
+Host: byu.instructure.com
+Origin: https://byu.iinstructure.com
+```
+Response:
+```http
+HTTP/2 200 OK
+Access-Control-Allow-Origin: https://byu.instructure.com
+```
+and the browser discards it.
+
+Since it is the browser that is protecting the user, the attacker could still just run the request through a proxy which would allow them to bypass the check. For this reason, the host website must implement some protection against attackers using nefarious requests to their platform.
