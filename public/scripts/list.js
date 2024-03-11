@@ -1,9 +1,10 @@
 let setAssigneeIndex = null;
 let rowElements = null;
 let list = null;
+let selectedListID = null
 
 async function getSelectedList() {
-	const selectedListID = localStorage.getItem("selectedListID");
+	selectedListID = localStorage.getItem("selectedListID");
 	const response = await fetch('/api/list/'+selectedListID);
 	list = await response.json();
 	return list;
@@ -27,18 +28,20 @@ function setCheckboxType(divElement, isChecked) {
 }
 
 function updateItemDone(itemIndex, isDone) {
-	const selectedListIndex = localStorage.getItem("selectedList");
-	const lists = getLists();
-	if (lists[selectedListIndex] === undefined)
-		return;
-	const list = lists[selectedListIndex];
-
 	if (list !== null) {
 		const listItem = list.Items[itemIndex];
 		if (listItem !== undefined) {
 			listItem.IsDone = isDone;
 			setCheckboxType(rowElements[itemIndex].querySelector("td > div"), listItem.IsDone);
-			localStorage.setItem("lists", JSON.stringify(lists));
+			fetch('/api/list/item/done', {
+				method: 'POST',
+				headers: {'content-type': 'application/json'},
+				body: JSON.stringify({
+					ListID: selectedListID,
+					ItemIndex: itemIndex,
+					IsDone: isDone
+				})
+			});
 		}
 	}
 }
@@ -93,7 +96,7 @@ function createRowFromItem(listItem, i) {
 	})
 
 	checkboxElement.addEventListener("click", function(event) {
-		const listItem = getSelectedList().Items[i];
+		const listItem = list.Items[i];
 		updateItemDone(i, !listItem.IsDone);
 	})
 	

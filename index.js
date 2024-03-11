@@ -88,9 +88,7 @@ function getLists(username) {
 }
 
 function getList(listID) {
-	console.log(listID);
 	listID = Number(listID)
-	console.log(listID, lists[listID]);
 	return lists[listID]
 }
 
@@ -103,5 +101,9 @@ function setAssignee(reqBody) {
 }
 
 function updateItemDone(reqBody) {
-
+	const list = lists[Number(reqBody.ListID)];
+	if (list) {
+		const item = list.Items[Number(reqBody.ItemIndex)];
+		item.IsDone = reqBody.IsDone;
+	}
 }
