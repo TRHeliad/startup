@@ -31,7 +31,7 @@ apiRouter.post('/list', (req, res) => {
 
 // addListItem
 apiRouter.post('/list/item', (req, res) => {
-	addListItem(req.body);
+	res.send(addListItem(req.body));
 });
 
 // setAssignee
@@ -117,7 +117,17 @@ function addList(reqBody) {
 }
 
 function addListItem(reqBody) {
-	
+	const list = lists[Number(reqBody.ListID)];
+	if (list) {
+		const item = {
+			Task: reqBody.Task,
+			Assignee: null,
+			IsDone: false
+		}
+		list.Items.push(item);
+		return item
+	}
+	return null;
 }
 
 function setAssignee(reqBody) {

@@ -126,19 +126,19 @@ async function loadList() {
 	}
 }
 
-function addItem() {
-	const selectedListIndex = localStorage.getItem("selectedList");
+async function addItem() {
 	const itemTaskElement = document.querySelector(".add-item-container #newItem");
 	const itemTask = itemTaskElement.value;
-	const newItem = { Task: itemTask, Assignee: null, IsDone: false };
-	const lists = getLists();
 
-	if (lists[selectedListIndex] === undefined)
-		return;
-	const list = lists[selectedListIndex];
-	
-	list.Items.push(newItem);
-	localStorage.setItem("lists", JSON.stringify(lists));
+	const response = await fetch('/api/list/item/', {
+		method: 'POST',
+		headers: {'content-type': 'application/json'},
+		body: JSON.stringify({
+			ListID: list.ID,
+			Task: itemTask
+		})
+	});
+
 	clearList();
 	loadList();
 }
