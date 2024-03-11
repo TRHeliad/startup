@@ -54,12 +54,28 @@ app.listen(port, function() {
 	console.log("Listening on port ${port}");
 })
 
-let lists = [];
-let users = {};
+let lists = [
+	{
+		Name: "TestList",
+		ID: 0,
+		Creator: "bmadsenonpc",
+		Items: [{
+			Task: "Example task",
+			Assignee: null,
+			IsDone: false
+		}]
+	}
+];
+let users = {
+	bmadsenonpc: {
+		OwnedLists: [0],
+		SharedLists: []
+	}
+};
 
 function getLists(username) {
 	let userLists = []
-	if (users.hasOwnKey(username)) {
+	if (username in users) {
 		const listIDs = users[username].OwnedLists.concat(users[username].SharedLists);
 		for (const listID of listIDs) {
 			const list = Object.assign({}, lists[listID]);
