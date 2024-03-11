@@ -87,8 +87,11 @@ function getLists(username) {
 		return -1;
 }
 
-function getList(reqBody) {
-	return lists[reqBody.ListID]
+function getList(listID) {
+	console.log(listID);
+	listID = Number(listID)
+	console.log(listID, lists[listID]);
+	return lists[listID]
 }
 
 function addListItem(reqBody) {

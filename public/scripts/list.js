@@ -1,18 +1,12 @@
 let setAssigneeIndex = null;
 let rowElements = null;
+let list = null;
 
-function getLists() {
-	let lists = JSON.parse(localStorage.getItem("lists"));
-	lists = lists === null ? [] : lists;
-	return lists;
-}
-
-function getSelectedList() {
-	const selectedListIndex = localStorage.getItem("selectedList");
-	const lists = getLists();
-	if (lists[selectedListIndex] === undefined)
-		return null;
-	return lists[selectedListIndex];
+async function getSelectedList() {
+	const selectedListID = localStorage.getItem("selectedListID");
+	const response = await fetch('/api/list/'+selectedListID);
+	list = await response.json();
+	return list;
 }
 
 function clearList() {
@@ -111,10 +105,10 @@ function createRowFromItem(listItem, i) {
 	return newRowElement;
 }
 
-function loadList() {
+async function loadList() {
 	const tbodyElement = document.querySelector("tbody");
 	const nameLabelElement = document.querySelector("main > h1");
-	const list = getSelectedList()
+	const list = await getSelectedList()
 
 	if (list !== null) {
 		nameLabelElement.textContent = list.Name;
