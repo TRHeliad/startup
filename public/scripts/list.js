@@ -145,8 +145,10 @@ async function addItem() {
 }
 
 function changeRandomCheckbox() {
-	const randomRow = Math.floor(Math.random() * list.Items.length);
-	updateItemDone(randomRow, !list.Items[randomRow].IsDone);
+	if (list.Items.length > 0) {
+		const randomRow = Math.floor(Math.random() * list.Items.length);
+		updateItemDone(randomRow, !list.Items[randomRow].IsDone);
+	}
 	queueCheckboxChange();
 }
 
