@@ -54,24 +54,8 @@ app.listen(port, function() {
 	console.log("Listening on port ${port}");
 });
 
-let lists = [
-	{
-		Name: "TestList",
-		ID: 0,
-		Creator: "bmadsenonpc",
-		Items: [{
-			Task: "Example task",
-			Assignee: null,
-			IsDone: false
-		}]
-	}
-];
-let users = {
-	bmadsenonpc: {
-		OwnedLists: [0],
-		SharedLists: []
-	}
-};
+let lists = [];
+let users = {};
 
 function getLists(username) {
 	let userLists = [];
