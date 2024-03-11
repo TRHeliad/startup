@@ -59,17 +59,18 @@ function verifyAssignee(assignee) {
 
 function setAssignee() {
 	if (setAssigneeIndex !== null) {
-		const selectedListIndex = localStorage.getItem("selectedList");
-		const lists = getLists();
-		if (lists[selectedListIndex] === undefined)
-			return;
-		const list = lists[selectedListIndex];
-
 		if (list !== null) {
 			const listItem = list.Items[setAssigneeIndex];
 			if (listItem !== undefined) {
-				listItem.Assignee = verifyAssignee(document.querySelector(".assignee-box input").value);
-				localStorage.setItem("lists", JSON.stringify(lists));
+				fetch('/api/list/item/assignee', {
+					method: 'POST',
+					headers: {'content-type': 'application/json'},
+					body: JSON.stringify({
+						ListID: selectedListID,
+						ItemIndex: setAssigneeIndex,
+						Assignee: document.querySelector(".assignee-box input").value
+					})
+				});
 				clearList();
 				loadList();
 			}

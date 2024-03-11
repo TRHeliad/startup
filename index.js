@@ -131,7 +131,11 @@ function addListItem(reqBody) {
 }
 
 function setAssignee(reqBody) {
-	
+	const list = lists[Number(reqBody.ListID)];
+	if (list) {
+		const item = list.Items[Number(reqBody.ItemIndex)];
+		item.Assignee = reqBody.Assignee;
+	}
 }
 
 function updateItemDone(reqBody) {
