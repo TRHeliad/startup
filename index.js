@@ -49,7 +49,7 @@ app.use(function (err, req, res, next) {
 	res.status(500).send({type: err.name, message: err.message});
 });
 
-const port = 8080;
+const port = 4000;
 app.listen(port, function() {
 	console.log("Listening on port ${port}");
 });
