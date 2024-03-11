@@ -69,3 +69,16 @@ The required technologies will be used as such:
 	- *Database data*: Right now the site uses a mock database in the form of localStorage. It stores the username, lists, and list items. Lists contain a name, creator, and items. List items contain a task, assignee, and is done status.
 	- *WebSocket data*: The lists themselves are going to change as other using make changes to shared lists. A mock representation of this is given where the checkboxes change as if from a WebSocket message.
 	- *Colormind*: The site is going to use the external service from colormind to randomly select a color palette to apply to the site. For now you can only manually set the values of the color palette.
+
+# Service Deliverable
+- **Create an HTTP service using Node.js and Express**
+	- Site is statically hosted and endpoints were made with express
+- **Frontend served up using Express static middleware**
+	- done
+- **Your frontend calls third party service endpoints**
+	- If you navigate to the Theme page using the link at the top, you can now press a button to choose theme based on a "random" palette. This palette is retrieved from `colormind.io` using their api endpoint.
+	- In the frontend code it references `color.bdm260.click`, but this is a proxy for the actual `colormind.io` endpoint due to it being http instead of https.
+- **Your backend provides service endpoints**
+	- I created service endpoints for getting lists, getting items of a list, adding lists, adding items to lists, updating the done state of items, and changing the assignee of items.
+- **Your frontend calls your service endpoints**
+	- The frontend code uses all the endpoints listed above to populate dynamic html elements and enable functionality.
