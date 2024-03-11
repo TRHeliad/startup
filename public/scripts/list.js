@@ -144,7 +144,6 @@ function addItem() {
 }
 
 function changeRandomCheckbox() {
-	const list = getSelectedList();
 	const randomRow = Math.floor(Math.random() * list.Items.length);
 	updateItemDone(randomRow, !list.Items[randomRow].IsDone);
 	queueCheckboxChange();

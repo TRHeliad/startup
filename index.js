@@ -26,7 +26,7 @@ apiRouter.get('/list/:listID', (req, res) => {
 
 // addList
 apiRouter.post('/list', (req, res) => {
-	res.send(getList(req.body));
+	res.send(addList(req.body));
 });
 
 // addListItem
@@ -52,7 +52,7 @@ app.use(function (err, req, res, next) {
 const port = 8080;
 app.listen(port, function() {
 	console.log("Listening on port ${port}");
-})
+});
 
 let lists = [
 	{
@@ -74,7 +74,7 @@ let users = {
 };
 
 function getLists(username) {
-	let userLists = []
+	let userLists = [];
 	if (username in users) {
 		const listIDs = users[username].OwnedLists.concat(users[username].SharedLists);
 		for (const listID of listIDs) {
@@ -88,8 +88,32 @@ function getLists(username) {
 }
 
 function getList(listID) {
-	listID = Number(listID)
-	return lists[listID]
+	listID = Number(listID);
+	return lists[listID];
+}
+
+function getUser(username) {
+	if (!(username in users)) {
+		users[username] = {
+			OwnedLists: [],
+			SharedLists: []
+		}
+	}
+	return users[username];
+}
+
+function addList(reqBody) {
+	const listID = lists.length;
+	const list = {
+		Name: reqBody.ListName,
+		ID: listID,
+		Creator: reqBody.Username,
+		Items: []
+	};
+	lists.push(list);
+	const user = getUser(reqBody.Username);
+	user.OwnedLists.push(listID);
+	return list;
 }
 
 function addListItem(reqBody) {
