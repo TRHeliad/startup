@@ -92,7 +92,9 @@ function setInputToTheme() {
 	for (const colorName of colorNames) {
 		const color = theme[colorName];
 		if (color !== undefined) {
-			document.querySelector("#"+colorName).value = color;
+			const inputElement = document.querySelector("#"+colorName);
+			if (inputElement !== null)
+				inputElement.value = color;
 		}
 	}
 }
