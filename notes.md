@@ -846,3 +846,35 @@ Access-Control-Allow-Origin: https://byu.instructure.com
 and the browser discards it.
 
 Since it is the browser that is protecting the user, the attacker could still just run the request through a proxy which would allow them to bypass the check. For this reason, the host website must implement some protection against attackers using nefarious requests to their platform.
+
+# Process Manager 2
+If you want something to run even after you close your console, you need to register it as a *daemon*. Daemon just means something that is always there running in the background. We use PM2 to start and stop processes running in the background.
+
+## Common Commands
+| Command                                                    | Purpose                                                                          |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| **pm2 ls**                                                 | List all of the hosted node processes                                            |
+| **pm2 monit**                                              | Visual monitor                                                                   |
+| **pm2 start index.js -n simon**                            | Add a new process with an explicit name                                          |
+| **pm2 start index.js -n startup -- 4000**                  | Add a new process with an explicit name and port parameter                       |
+| **pm2 stop simon**                                         | Stop a process                                                                   |
+| **pm2 restart simon**                                      | Restart a process                                                                |
+| **pm2 delete simon**                                       | Delete a process from being hosted                                               |
+| **pm2 delete all**                                         | Delete all processes                                                             |
+| **pm2 save**                                               | Save the current processes across reboot                                         |
+| **pm2 restart all**                                        | Reload all of the processes                                                      |
+| **pm2 restart simon --update-env**                         | Reload process and update the node version to the current environment definition |
+| **pm2 update**                                             | Reload pm2                                                                       |
+| **pm2 start env.js --watch --ignore-watch="node_modules"** | Automatically reload service when index.js changes                               |
+| **pm2 describe simon**                                     | Describe detailed process information                                            |
+| **pm2 startup**                                            | Displays the command to run to keep PM2 running after a reboot.                  |
+| **pm2 logs simon**                                         | Display process logs                                                             |
+| **pm2 env 0**                                              | Display environment variables for process. Use `pm2 ls` to get the process ID    |
+
+## Creating a new web service
+If we wanted to host a new web service using PM2, we could create a new folder with the necessary files under ~/services/ and then use
+```bash
+pm2 start index.js -n serviceName -- 5000
+pm2 save
+```
+This would make PM2 run the index script in the background with the name `serviceName` and parameters to the script following `--`.
