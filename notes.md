@@ -911,3 +911,18 @@ app.post('/upload', upload.single('file'), (req, res) => {
   }
 });
 ```
+
+# Storage Services
+Much of the time a database will actually be overkill and we can get away with just using a storage service which stores files. 
+
+## AWS S3
+This is a common service and has these advantages:
+It has unlimited capacity
+1. You only pay for the storage that you use
+1. It is optimized for global access
+1. It keeps multiple redundant copies of every file
+1. You can version the files
+1. It is performant
+1. It supports metadata tags
+1. You can make your files publicly available directly from S3
+1. You can keep your files private and only accessible to your application
