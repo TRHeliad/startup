@@ -878,3 +878,7 @@ pm2 start index.js -n serviceName -- 5000
 pm2 save
 ```
 This would make PM2 run the index script in the background with the name `serviceName` and parameters to the script following `--`.
+
+# Development and Production Environments
+For commercial applications, you always want to have a separation between your development and production environments. For this class, our development environment is our local files on our computers and our production environment is our AWS server. The deployment of our application to the production environment should happen from an automated continuous integration (CI) processes.
+The process of deploying a project is often complex and creating a script will help you avoid human error and encourage you to iterate faster.
