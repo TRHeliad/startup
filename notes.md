@@ -882,3 +882,32 @@ This would make PM2 run the index script in the background with the name `servic
 # Development and Production Environments
 For commercial applications, you always want to have a separation between your development and production environments. For this class, our development environment is our local files on our computers and our production environment is our AWS server. The deployment of our application to the production environment should happen from an automated continuous integration (CI) processes.
 The process of deploying a project is often complex and creating a script will help you avoid human error and encourage you to iterate faster.
+
+# Uploading files
+You can use a form with an input element of type file. The frontend can then send a request to an upload service which is handled by the `Multer` NPM package. Multer can restrict the size of uploads a return an error if they are too large.
+
+```javascript
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: 'uploads/',
+    filename: (req, file, cb) => {
+      const filetype = file.originalname.split('.').pop();
+      const id = Math.round(Math.random() * 1e9);
+      const filename = `${id}.${filetype}`;
+      cb(null, filename);
+    },
+  }),
+  limits: { fileSize: 64000 },
+});
+
+app.post('/upload', upload.single('file'), (req, res) => {
+  if (req.file) {
+    res.send({
+      message: 'Uploaded succeeded',
+      file: req.file.filename,
+    });
+  } else {
+    res.status(400).send({ message: 'Upload failed' });
+  }
+});
+```
