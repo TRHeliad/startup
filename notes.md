@@ -926,3 +926,61 @@ It has unlimited capacity
 1. It supports metadata tags
 1. You can make your files publicly available directly from S3
 1. You can keep your files private and only accessible to your application
+
+# Data Services
+For a while the main service for storing data were SQL databases. Later there rose solutions to various types of data storage called NoSQL solutions.
+Popular data services:
+
+| Service       | Specialty             |
+| ------------- | --------------------- |
+| MySQL         | Relational queries    |
+| Redis         | Memory cached objects |
+| ElasticSearch | Ranked free text      |
+| MongoDB       | JSON objects          |
+| DynamoDB      | Key value pairs       |
+| Neo4J         | Graph based data      |
+| InfluxDB      | Time series data      |
+
+## MongoDB
+We are going to use MongoDB for the projects in our class. It is designed to increase developer productivity by using JSON objects as the core data model.
+It has collections which are basically arrays of objects with varying fields.
+Here are some examples of queries on a collections:
+```javascript
+// find all houses
+db.house.find();
+
+// find houses with two or more bedrooms
+db.house.find({ beds: { $gte: 2 } });
+
+// find houses that are available with less than three beds
+db.house.find({ status: 'available', beds: { $lt: 3 } });
+
+// find houses with either less than three beds or less than $1000 a night
+db.house.find({ $or: [(beds: { $lt: 3 }), (price: { $lt: 1000 })] });
+
+// find houses with the text 'modern' or 'beach' in the summary
+db.house.find({ summary: /(modern|beach)/i });
+```
+
+You can use the `mongodb` package to access a database from javascript. You create a client object using the package and from the object you can retrieve a database object from which you can retrieve a collection object.
+Here is an example of accessing a database:
+```javascript
+const { MongoClient } = require('mongodb');
+
+const userName = 'holowaychuk';
+const password = 'express';
+const hostname = 'mongodb.com';
+
+const url = `mongodb+srv://${userName}:${password}@${hostname}`;
+
+const client = new MongoClient(url);
+
+const cursor = collection.find();
+const rentals = await cursor.toArray();
+rentals.forEach((i) => console.log(i));
+```
+
+When inserting an object, MongoDB wil automatically assign a unique ID to it.
+
+## Managed services
+Managed services are ones that are hosted by companies and will automatically scale with the requirements of your software. All the maintenance is handled by the company hosting it for you which takes the burden off your team.
