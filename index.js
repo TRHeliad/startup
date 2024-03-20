@@ -5,6 +5,12 @@ const cookieParser = require('cookie-parser');
 const express = require('express')
 const app = express();
 
+// Setup database
+const dbConfig = require('./dbConfig.json');
+const url = `mongodb+srv://${dbConfig.userName}:${dbConfig.password}@${dbConfig.hostname}`;
+const client = new MongoClient(url);
+const collection = client.db('auth').collection('user');
+
 // JSON request body parsing using built-in middleware
 app.use(express.json());
 
