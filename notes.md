@@ -984,3 +984,10 @@ When inserting an object, MongoDB wil automatically assign a unique ID to it.
 
 ## Managed services
 Managed services are ones that are hosted by companies and will automatically scale with the requirements of your software. All the maintenance is handled by the company hosting it for you which takes the burden off your team.
+
+# Authorization Services
+Web applications often use authentication tokens to manage a users access to application resources. A user will get the token by passing some information to the server and then they can send the token with requests and the server can decide whether or not they have access.
+Single Sign On (SSO) is when you use the same credentials for multiple web appications. For example using google to sign into GitHub. Federated Login is when you sign in to one application and then use the same token for other websites like gmail and youtube.
+
+## Using Endpoints
+We can create an endpoint which creates authentication and we can create an endpoint which logs in using existing credentials.
