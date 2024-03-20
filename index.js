@@ -55,7 +55,7 @@ app.use(function (err, req, res, next) {
 
 const port = 4000;
 app.listen(port, function() {
-	console.log("Listening on port ${port}");
+	console.log(`Listening on port ${port}`);
 });
 
 let lists = [];
