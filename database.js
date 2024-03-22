@@ -28,17 +28,19 @@ function getUserByToken(token) {
 	return userCollection.findOne({ token: token });
 }
 
-function getUserLists(username) {
+async function getUserLists(username) {
 	const user = getUser(username);
 	const listIDs = user.ownedLists.concat(user.sharedLists);
 	const projection = { name: 1, creator: 1 };
 	const lists = [];
 	for (const listID of listIDs)
-		lists.push(listCollection.findOne({ _id: listID }));
+		lists.push(await listCollection.findOne({ _id: listID }, projection));
 	return lists;
 }
 
-function getList(listID) {}
+function getList(listID) {
+	return listCollection.findOne({ _id: listID });
+}
 
 async function createUser(username, password) {
 	// Hash the password before we insert it into the database
@@ -51,12 +53,13 @@ async function createUser(username, password) {
 		sharedLists: [],
 		token: uuid.v4(),
 	};
-	await userCollection.insertOne(user);
+	const result = await userCollection.insertOne(user);
+	user._id = result.insertedId;
 
 	return user;
 }
 
-function createList(listName, creatorUsername) {}
+async function createList(listName, creatorUsername) {}
 
 function setAssignee(listID, itemIndex, assignee) {}
 
