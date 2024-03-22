@@ -125,4 +125,9 @@ module.exports = {
 	getUser,
 	getUserByToken,
 	createUser,
+	getUserLists,
+	createList,
+	addListItem,
+	setAssignee,
+	updateItemDone
 };
