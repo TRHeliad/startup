@@ -1,20 +1,22 @@
-const { MongoClient } = require('mongodb');
-const uuid = require('uuid');
-const bcrypt = require('bcrypt');
-const dbConfig = require('./dbConfig.json');
+const { MongoClient } = require("mongodb");
+const uuid = require("uuid");
+const bcrypt = require("bcrypt");
+const dbConfig = require("./dbConfig.json");
 
 const url = `mongodb+srv://${dbConfig.userName}:${dbConfig.password}@${dbConfig.hostname}`;
 const client = new MongoClient(url);
-const db = client.db('startup');
-const userCollection = db.collection('user');
-const listCollection = db.collection('list');
+const db = client.db("startup");
+const userCollection = db.collection("user");
+const listCollection = db.collection("list");
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
 	await client.connect();
 	await db.command({ ping: 1 });
 })().catch((ex) => {
-	console.log(`Unable to connect to database with ${url} because ${ex.message}`);
+	console.log(
+		`Unable to connect to database with ${url} because ${ex.message}`
+	);
 	process.exit(1);
 });
 
@@ -26,14 +28,17 @@ function getUserByToken(token) {
 	return userCollection.findOne({ token: token });
 }
 
-
 function getUserLists(username) {
-	
+	const user = getUser(username);
+	const listIDs = user.ownedLists.concat(user.sharedLists);
+	const projection = { name: 1, creator: 1 };
+	const lists = [];
+	for (const listID of listIDs)
+		lists.push(listCollection.findOne({ _id: listID }));
+	return lists;
 }
 
-function getList(listID) {
-	
-}
+function getList(listID) {}
 
 async function createUser(username, password) {
 	// Hash the password before we insert it into the database
@@ -51,20 +56,14 @@ async function createUser(username, password) {
 	return user;
 }
 
-function createList(listName, creatorUsername) {
-	
-}
+function createList(listName, creatorUsername) {}
 
-function setAssignee(listID, itemIndex, assignee) {
-	
-}
+function setAssignee(listID, itemIndex, assignee) {}
 
-function updateItemDone(listID, itemIndex, isDone) {
-	
-}
+function updateItemDone(listID, itemIndex, isDone) {}
 
 module.exports = {
 	getUser,
 	getUserByToken,
-	createUser
+	createUser,
 };
