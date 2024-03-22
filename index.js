@@ -72,9 +72,16 @@ apiRouter.get("/list/:listID", async (req, res) => {
 	}
 });
 
-// addList
-apiRouter.post("/list", (req, res) => {
-	res.send(addList(req.body));
+// createList
+apiRouter.post("/list", async (req, res) => {
+	try {
+		res.send(await createList(req.body));
+	} catch (e) {
+		res.status(400).send({
+			type: "bad request",
+			message: "invalid parameters",
+		});
+	}
 });
 
 // addListItem
@@ -137,18 +144,8 @@ function getUser(username) {
 	return users[username];
 }
 
-function addList(reqBody) {
-	const listID = lists.length;
-	const list = {
-		Name: reqBody.ListName,
-		ID: listID,
-		Creator: reqBody.Username,
-		Items: [],
-	};
-	lists.push(list);
-	const user = getUser(reqBody.Username);
-	user.OwnedLists.push(listID);
-	return list;
+function createList(reqBody) {
+	return DB.createList(reqBody.ListName, reqBody.Username);
 }
 
 function addListItem(reqBody) {
