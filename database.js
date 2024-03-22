@@ -59,7 +59,22 @@ async function createUser(username, password) {
 	return user;
 }
 
-async function createList(listName, creatorUsername) {}
+async function createList(listName, creatorUsername) {
+	const list = {
+		name: listName,
+		creator: creatorUsername,
+		items: []
+	}
+
+	const result = await listCollection.insertOne();
+	list._id = result.insertedId;
+
+	const user = await getUser(creatorUsername);
+	user.ownedLists.push(list._id);
+	await userCollection.updateOne({ username: creatorUsername }, user);
+
+	return list;
+}
 
 function setAssignee(listID, itemIndex, assignee) {}
 
