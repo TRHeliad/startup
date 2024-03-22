@@ -49,19 +49,27 @@ apiRouter.delete("/auth/logout", (_req, res) => {
 });
 
 // getLists
-apiRouter.get("/lists/:username", (req, res) => {
-	const userLists = getLists(req.params.username);
-	if (userLists === -1)
+apiRouter.get("/lists/:username", async (req, res) => {
+	try {
+		res.send(await getLists(req.params.username));
+	} catch (e) {
 		res.status(400).send({
 			type: "bad request",
 			message: "invalid username",
 		});
-	else res.send(userLists);
+	}
 });
 
 // getList
-apiRouter.get("/list/:listID", (req, res) => {
-	res.send(getList(req.params.listID));
+apiRouter.get("/list/:listID", async (req, res) => {
+	try {
+		res.send(await getList(req.params.listID));
+	} catch (e) {
+		res.status(400).send({
+			type: "bad request",
+			message: "invalid listID",
+		});
+	}
 });
 
 // addList
@@ -112,23 +120,11 @@ let lists = [];
 let users = {};
 
 function getLists(username) {
-	let userLists = [];
-	if (username in users) {
-		const listIDs = users[username].OwnedLists.concat(
-			users[username].SharedLists
-		);
-		for (const listID of listIDs) {
-			const list = Object.assign({}, lists[listID]);
-			delete list.Items;
-			userLists.push(list);
-		}
-		return userLists;
-	} else return -1;
+	return DB.getUserLists(username);
 }
 
 function getList(listID) {
-	listID = Number(listID);
-	return lists[listID];
+	return DB.getList(listID);
 }
 
 function getUser(username) {
