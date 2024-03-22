@@ -64,7 +64,7 @@ async function createList(listName, creatorUsername) {
 		name: listName,
 		creator: creatorUsername,
 		items: []
-	}
+	};
 
 	try {
 		const result = await listCollection.insertOne();
@@ -80,6 +80,27 @@ async function createList(listName, creatorUsername) {
 	return list;
 }
 
+async function addListItem(listID, task) {
+	const itemIndex = null;
+	
+	try {
+		const item = {
+			task: task,
+			assignee: null,
+			isDone: false
+		};
+
+		const list = await getList(listID);
+		itemIndex = list.items.length;
+		list.items.push(item);
+		listCollection.updateOne({ _id: listID }, list);
+	} catch (e) {
+		console.error(e);
+	}
+
+	return itemIndex
+}
+
 async function setAssignee(listID, itemIndex, assignee) {
 	try {
 		const list = await getList(listID);
@@ -90,7 +111,15 @@ async function setAssignee(listID, itemIndex, assignee) {
 	}
 }
 
-function updateItemDone(listID, itemIndex, isDone) {}
+async function updateItemDone(listID, itemIndex, isDone) {
+	try {
+		const list = await getList(listID);
+		list.items[itemIndex].isDone = isDone;
+		await listCollection.updateOne({ _id: listID }, list);
+	} catch (e) {
+		console.error(e);
+	}
+}
 
 module.exports = {
 	getUser,
