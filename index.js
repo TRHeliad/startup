@@ -48,8 +48,21 @@ apiRouter.delete("/auth/logout", (_req, res) => {
 	res.status(204).end();
 });
 
+var secureApiRouter = express.Router();
+apiRouter.use(secureApiRouter);
+
+secureApiRouter.use(async (req, res, next) => {
+	authToken = req.cookies[authCookieName];
+	const user = await DB.getUserByToken(authToken);
+	if (user) {
+		next();
+	} else {
+		res.status(401).send({ msg: "Unauthorized" });
+	}
+});
+
 // getLists
-apiRouter.get("/lists/:username", async (req, res) => {
+secureApiRouter.get("/lists/:username", async (req, res) => {
 	try {
 		res.send(await DB.getUserLists(req.params.username));
 	} catch (e) {
@@ -61,7 +74,7 @@ apiRouter.get("/lists/:username", async (req, res) => {
 });
 
 // getList
-apiRouter.get("/list/:listID", async (req, res) => {
+secureApiRouter.get("/list/:listID", async (req, res) => {
 	try {
 		res.send(await DB.getList(req.params.listID));
 	} catch (e) {
@@ -73,7 +86,7 @@ apiRouter.get("/list/:listID", async (req, res) => {
 });
 
 // createList
-apiRouter.post("/list", async (req, res) => {
+secureApiRouter.post("/list", async (req, res) => {
 	try {
 		res.send(await DB.createList(req.body.ListName, req.body.Username));
 	} catch (e) {
@@ -85,7 +98,7 @@ apiRouter.post("/list", async (req, res) => {
 });
 
 // addListItem
-apiRouter.post("/list/item", async (req, res) => {
+secureApiRouter.post("/list/item", async (req, res) => {
 	try {
 		res.send(await DB.addListItem(req.body.ListID, req.body.Task));
 	} catch (e) {
@@ -97,7 +110,7 @@ apiRouter.post("/list/item", async (req, res) => {
 });
 
 // setAssignee
-apiRouter.post("/list/item/assignee", async (req, res) => {
+secureApiRouter.post("/list/item/assignee", async (req, res) => {
 	try {
 		await DB.setAssignee(
 			req.body.ListID,
@@ -113,7 +126,7 @@ apiRouter.post("/list/item/assignee", async (req, res) => {
 });
 
 // updateItemDone
-apiRouter.post("/list/item/done", async (req, res) => {
+secureApiRouter.post("/list/item/done", async (req, res) => {
 	try {
 		await DB.updateItemDone(
 			req.body.ListID,
