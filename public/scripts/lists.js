@@ -57,5 +57,9 @@ async function createList() {
 }
 
 window.addEventListener("load", function() {
+	const username = localStorage.getItem('userName');
+	if (!username) {
+		document.location.href = "index.html"
+	}
 	loadLists();
 })
