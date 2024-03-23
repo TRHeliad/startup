@@ -15,18 +15,18 @@
 				<h2>LOGIN</h2>
 				<div class="input">
 					<div><label for="text">Username: </label></div>
-					<div><input type="username" id="username" name="varUsername" placeholder="" required pattern="\w{3-20}" /></div>
+					<div><input type="username" id="username" name="varUsername" placeholder="" required pattern="\w{3,20}" /></div>
 				</div>
 				<div class="input">
 					<div><label for="text">Password: </label></div>
-					<div><input type="password" id="password" name="varPassword" placeholder="" required pattern="\w{3-20}" /></div>
+					<div><input type="password" id="password" name="varPassword" placeholder="" required pattern="\w{3,20}" /></div>
 				</div>
 				<div class="button-container">
 					<button onclick="login()" id="loginButton">Login</button>
 					<button onclick="register()" id="registerButton">Register</button>
 				</div>
 			</div>
-			<div class="welcome-container show">
+			<div class="welcome-container">
 				<h2>WELCOME</h2>
 				<h3 class="username">OnlyTwentyCharacters</h3>
 				<div class="button-container">

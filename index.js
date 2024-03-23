@@ -1,7 +1,10 @@
 const cookieParser = require("cookie-parser");
 const express = require("express");
+const bcrypt = require("bcrypt");
 const app = express();
 const DB = require("./database.js");
+
+const authCookieName = 'token';
 
 app.use(cookieParser());
 // JSON request body parsing using built-in middleware
