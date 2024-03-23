@@ -42,4 +42,12 @@ function logout() {
 	}).then(() => (window.location.href = "/"));
 }
 
-window.addEventListener("load", function () {});
+window.addEventListener("load", function () {
+	const username = localStorage.getItem('userName');
+	if (username) {
+		document.querySelector(".welcome-container").classList.add("show");
+		document.querySelector('.username').textContent = username;
+	} else {
+		document.querySelector(".login-container").classList.add("show");
+	}
+});
