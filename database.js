@@ -29,7 +29,7 @@ function getUserByToken(token) {
 }
 
 async function getUserLists(username) {
-	const user = getUser(username);
+	const user = await getUser(username);
 	const listIDs = user.ownedLists.concat(user.sharedLists);
 	const projection = { name: 1, creator: 1 };
 	const lists = [];
