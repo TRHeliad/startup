@@ -109,8 +109,15 @@ apiRouter.post("/list/item/assignee", async (req, res) => {
 });
 
 // updateItemDone
-apiRouter.post("/list/item/done", (req, res) => {
-	updateItemDone(req.body);
+apiRouter.post("/list/item/done", async (req, res) => {
+	try {
+		await updateItemDone(req.body);;
+	} catch (e) {
+		res.status(400).send({
+			type: "bad request",
+			message: "invalid parameters",
+		});
+	}
 });
 
 // server errors
@@ -171,9 +178,5 @@ function setAssignee(reqBody) {
 }
 
 function updateItemDone(reqBody) {
-	const list = lists[Number(reqBody.ListID)];
-	if (list) {
-		const item = list.Items[Number(reqBody.ItemIndex)];
-		item.IsDone = reqBody.IsDone;
-	}
+	return DB.updateItemDone(reqBody.ListID, reqBody.ItemIndex, reqBody.IsDone);
 }
