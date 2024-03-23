@@ -51,7 +51,7 @@ apiRouter.delete("/auth/logout", (_req, res) => {
 // getLists
 apiRouter.get("/lists/:username", async (req, res) => {
 	try {
-		res.send(await getLists(req.params.username));
+		res.send(await DB.getUserLists(req.params.username));
 	} catch (e) {
 		res.status(400).send({
 			type: "bad request",
@@ -63,7 +63,7 @@ apiRouter.get("/lists/:username", async (req, res) => {
 // getList
 apiRouter.get("/list/:listID", async (req, res) => {
 	try {
-		res.send(await getList(req.params.listID));
+		res.send(await DB.getList(req.params.listID));
 	} catch (e) {
 		res.status(400).send({
 			type: "bad request",
@@ -75,7 +75,7 @@ apiRouter.get("/list/:listID", async (req, res) => {
 // createList
 apiRouter.post("/list", async (req, res) => {
 	try {
-		res.send(await createList(req.body));
+		res.send(await DB.createList(req.body.ListName, req.body.Username));
 	} catch (e) {
 		res.status(400).send({
 			type: "bad request",
@@ -87,7 +87,7 @@ apiRouter.post("/list", async (req, res) => {
 // addListItem
 apiRouter.post("/list/item", async (req, res) => {
 	try {
-		res.send(await addListItem(req.body));
+		res.send(await DB.addListItem(req.body.ListID, req.body.Task));
 	} catch (e) {
 		res.status(400).send({
 			type: "bad request",
@@ -99,7 +99,11 @@ apiRouter.post("/list/item", async (req, res) => {
 // setAssignee
 apiRouter.post("/list/item/assignee", async (req, res) => {
 	try {
-		await setAssignee(req.body);
+		await DB.setAssignee(
+			req.body.ListID,
+			req.body.ItemIndex,
+			req.body.Assignee
+		);
 	} catch (e) {
 		res.status(400).send({
 			type: "bad request",
@@ -111,7 +115,11 @@ apiRouter.post("/list/item/assignee", async (req, res) => {
 // updateItemDone
 apiRouter.post("/list/item/done", async (req, res) => {
 	try {
-		await updateItemDone(req.body);;
+		await DB.updateItemDone(
+			req.body.ListID,
+			req.body.ItemIndex,
+			req.body.IsDone
+		);
 	} catch (e) {
 		res.status(400).send({
 			type: "bad request",
@@ -127,7 +135,7 @@ app.use(function (err, req, res, next) {
 
 // Return the application's default page if the path is unknown
 app.use((_req, res) => {
-	res.sendFile('index.html', { root: 'public' });
+	res.sendFile("index.html", { root: "public" });
 });
 
 const port = 4000;
@@ -142,31 +150,4 @@ function setAuthCookie(res, authToken) {
 		httpOnly: true,
 		sameSite: "strict",
 	});
-}
-
-let lists = [];
-let users = {};
-
-function getLists(username) {
-	return DB.getUserLists(username);
-}
-
-function getList(listID) {
-	return DB.getList(listID);
-}
-
-function createList(reqBody) {
-	return DB.createList(reqBody.ListName, reqBody.Username);
-}
-
-function addListItem(reqBody) {
-	return DB.addListItem(reqBody.ListID, reqBody.Task);
-}
-
-function setAssignee(reqBody) {
-	return DB.setAssignee(reqBody.ListID, reqBody.ItemIndex, reqBody.Assignee);
-}
-
-function updateItemDone(reqBody) {
-	return DB.updateItemDone(reqBody.ListID, reqBody.ItemIndex, reqBody.IsDone);
 }
