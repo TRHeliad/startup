@@ -108,7 +108,7 @@ async function setAssignee(listID, itemIndex, assignee) {
 	try {
 		await listCollection.updateOne({
 			_id: new ObjectId(listID) },
-			{ $set: { assignee: assignee } }
+			{ $set: { [`items.${itemIndex}.assignee`]: assignee } }
 		);
 	} catch (e) {
 		console.error(e);
@@ -119,7 +119,7 @@ async function updateItemDone(listID, itemIndex, isDone) {
 	try {
 		await listCollection.updateOne({
 			_id: new ObjectId(listID) },
-			{ $set: { isDone: isDone } }
+			{ $set: { [`items.${itemIndex}.isDone`]: isDone } }
 		);
 	} catch (e) {
 		console.error(e);

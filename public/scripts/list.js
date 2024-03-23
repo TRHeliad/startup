@@ -5,10 +5,8 @@ let selectedListID = null
 
 async function getSelectedList() {
 	selectedListID = localStorage.getItem("selectedListID");
-	console.log(selectedListID)
 	const response = await fetch('/api/list/'+selectedListID);
 	list = await response.json();
-	console.log(list);
 	return list;
 }
 
@@ -160,5 +158,5 @@ function queueCheckboxChange() {
 
 window.addEventListener("load", function() {
 	loadList();
-	//queueCheckboxChange();
+	queueCheckboxChange();
 })

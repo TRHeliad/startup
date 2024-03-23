@@ -14,7 +14,6 @@ function load_header() {
 	const usernameElement = document.querySelector(".username");
 	let username = localStorage.getItem("userName");
 	username = username == null ? "" : username
-	console.log(usernameElement);
 	usernameElement.textContent = username;
 }
 
