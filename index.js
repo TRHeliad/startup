@@ -155,16 +155,6 @@ function getList(listID) {
 	return DB.getList(listID);
 }
 
-function getUser(username) {
-	if (!(username in users)) {
-		users[username] = {
-			OwnedLists: [],
-			SharedLists: [],
-		};
-	}
-	return users[username];
-}
-
 function createList(reqBody) {
 	return DB.createList(reqBody.ListName, reqBody.Username);
 }
