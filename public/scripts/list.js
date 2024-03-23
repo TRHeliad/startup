@@ -5,8 +5,10 @@ let selectedListID = null
 
 async function getSelectedList() {
 	selectedListID = localStorage.getItem("selectedListID");
+	console.log(selectedListID)
 	const response = await fetch('/api/list/'+selectedListID);
 	list = await response.json();
+	console.log(list);
 	return list;
 }
 
@@ -29,10 +31,10 @@ function setCheckboxType(divElement, isChecked) {
 
 function updateItemDone(itemIndex, isDone) {
 	if (list !== null) {
-		const listItem = list.Items[itemIndex];
+		const listItem = list.items[itemIndex];
 		if (listItem !== undefined) {
-			listItem.IsDone = isDone;
-			setCheckboxType(rowElements[itemIndex].querySelector("td > div"), listItem.IsDone);
+			listItem.isDone = isDone;
+			setCheckboxType(rowElements[itemIndex].querySelector("td > div"), listItem.isDone);
 			fetch('/api/list/item/done', {
 				method: 'POST',
 				headers: {'content-type': 'application/json'},
@@ -60,7 +62,7 @@ function verifyAssignee(assignee) {
 function setAssignee() {
 	if (setAssigneeIndex !== null) {
 		if (list !== null) {
-			const listItem = list.Items[setAssigneeIndex];
+			const listItem = list.items[setAssigneeIndex];
 			if (listItem !== undefined) {
 				fetch('/api/list/item/assignee', {
 					method: 'POST',
@@ -83,22 +85,22 @@ function setAssignee() {
 
 function createRowFromItem(listItem, i) {
 	const newTaskCol = document.createElement("td");
-	newTaskCol.textContent = listItem.Task;
+	newTaskCol.textContent = listItem.task;
 	const newAssigneeCol = document.createElement("td");
-	newAssigneeCol.textContent = listItem.Assignee === null ? "-" : listItem.Assignee;
+	newAssigneeCol.textContent = listItem.assignee === null ? "-" : listItem.assignee;
 	newAssigneeCol.className = "assignee"
 	const newDoneCol = document.createElement("td");
 	const checkboxElement = document.createElement("div");
 	newDoneCol.appendChild(checkboxElement);
-	setCheckboxType(checkboxElement, listItem.IsDone);
+	setCheckboxType(checkboxElement, listItem.isDone);
 
 	newAssigneeCol.addEventListener("click", function(event) {
 		showSetAssigneeBox(i);
 	})
 
 	checkboxElement.addEventListener("click", function(event) {
-		const listItem = list.Items[i];
-		updateItemDone(i, !listItem.IsDone);
+		const listItem = list.items[i];
+		updateItemDone(i, !listItem.isDone);
 	})
 	
 	const newRowElement = document.createElement("tr");
@@ -115,9 +117,9 @@ async function loadList() {
 	const list = await getSelectedList()
 
 	if (list !== null) {
-		nameLabelElement.textContent = list.Name;
+		nameLabelElement.textContent = list.name;
 		rowElements = []
-		list.Items.forEach(function (listItem, i) {
+		list.items.forEach(function (listItem, i) {
 			const rowElement = createRowFromItem(listItem, i);
 			tbodyElement.appendChild(rowElement);
 			rowElements.push(rowElement);
@@ -135,7 +137,7 @@ async function addItem() {
 		method: 'POST',
 		headers: {'content-type': 'application/json'},
 		body: JSON.stringify({
-			ListID: list.ID,
+			ListID: list._id,
 			Task: itemTask
 		})
 	});
@@ -145,9 +147,9 @@ async function addItem() {
 }
 
 function changeRandomCheckbox() {
-	if (list.Items.length > 0) {
-		const randomRow = Math.floor(Math.random() * list.Items.length);
-		updateItemDone(randomRow, !list.Items[randomRow].IsDone);
+	if (list.items.length > 0) {
+		const randomRow = Math.floor(Math.random() * list.items.length);
+		updateItemDone(randomRow, !list.items[randomRow].isDone);
 	}
 	queueCheckboxChange();
 }
@@ -158,5 +160,5 @@ function queueCheckboxChange() {
 
 window.addEventListener("load", function() {
 	loadList();
-	queueCheckboxChange();
+	//queueCheckboxChange();
 })

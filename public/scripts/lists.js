@@ -18,13 +18,14 @@ function clearLists() {
 
 async function loadLists() {
 	const lists = await getLists();
+	console.log(lists);
 	const tbodyElement = document.querySelector("tbody");
 	// Add new lists
 	lists.forEach(function (list, i) {
 		const newNameCol = document.createElement("td");
-		newNameCol.textContent = list.Name;
+		newNameCol.textContent = list.name;
 		const newCreatorCol = document.createElement("td");
-		newCreatorCol.textContent = list.Creator;
+		newCreatorCol.textContent = list.creator;
 		
 		const newRowElement = document.createElement("tr");
 		tbodyElement.appendChild(newRowElement);
@@ -32,7 +33,7 @@ async function loadLists() {
 		newRowElement.appendChild(newCreatorCol);
 
 		newRowElement.addEventListener("click", function(event) {
-			localStorage.setItem("selectedListID", list.ID)
+			localStorage.setItem("selectedListID", list._id)
 			document.location.href = "/list.html"
 		})
 	})
