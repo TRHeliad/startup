@@ -85,9 +85,9 @@ apiRouter.post("/list", async (req, res) => {
 });
 
 // addListItem
-apiRouter.post("/list/item", (req, res) => {
+apiRouter.post("/list/item", async (req, res) => {
 	try {
-		res.send(addListItem(req.body));
+		res.send(await addListItem(req.body));
 	} catch (e) {
 		res.status(400).send({
 			type: "bad request",
@@ -97,8 +97,15 @@ apiRouter.post("/list/item", (req, res) => {
 });
 
 // setAssignee
-apiRouter.post("/list/item/assignee", (req, res) => {
-	setAssignee(req.body);
+apiRouter.post("/list/item/assignee", async (req, res) => {
+	try {
+		await setAssignee(req.body);
+	} catch (e) {
+		res.status(400).send({
+			type: "bad request",
+			message: "invalid parameters",
+		});
+	}
 });
 
 // updateItemDone
@@ -160,11 +167,7 @@ function addListItem(reqBody) {
 }
 
 function setAssignee(reqBody) {
-	const list = lists[Number(reqBody.ListID)];
-	if (list) {
-		const item = list.Items[Number(reqBody.ItemIndex)];
-		item.Assignee = reqBody.Assignee;
-	}
+	return DB.setAssignee(reqBody.ListID, reqBody.ItemIndex, reqBody.Assignee);
 }
 
 function updateItemDone(reqBody) {
