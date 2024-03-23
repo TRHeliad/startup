@@ -93,7 +93,7 @@ async function addListItem(listID, task) {
 		const list = await getList(listID);
 		itemIndex = list.items.length;
 		list.items.push(item);
-		listCollection.updateOne({ _id: listID }, list);
+		await listCollection.updateOne({ _id: listID }, list);
 	} catch (e) {
 		console.error(e);
 	}

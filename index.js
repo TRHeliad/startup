@@ -86,7 +86,14 @@ apiRouter.post("/list", async (req, res) => {
 
 // addListItem
 apiRouter.post("/list/item", (req, res) => {
-	res.send(addListItem(req.body));
+	try {
+		res.send(addListItem(req.body));
+	} catch (e) {
+		res.status(400).send({
+			type: "bad request",
+			message: "invalid parameters",
+		});
+	}
 });
 
 // setAssignee
@@ -149,17 +156,7 @@ function createList(reqBody) {
 }
 
 function addListItem(reqBody) {
-	const list = lists[Number(reqBody.ListID)];
-	if (list) {
-		const item = {
-			Task: reqBody.Task,
-			Assignee: null,
-			IsDone: false,
-		};
-		list.Items.push(item);
-		return item;
-	}
-	return null;
+	return DB.addListItem(reqBody.ListID, reqBody.Task);
 }
 
 function setAssignee(reqBody) {
