@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const uuid = require("uuid");
 const bcrypt = require("bcrypt");
 const dbConfig = require("./dbConfig.json");
@@ -34,12 +34,12 @@ async function getUserLists(username) {
 	const projection = { name: 1, creator: 1 };
 	const lists = [];
 	for (const listID of listIDs)
-		lists.push(await listCollection.findOne({ _id: listID }, projection));
+		lists.push(await listCollection.findOne({ _id: new ObjectId(listID) }, projection));
 	return lists;
 }
 
 function getList(listID) {
-	return listCollection.findOne({ _id: listID });
+	return listCollection.findOne({ _id: new ObjectId(listID) });
 }
 
 async function createUser(username, password) {
@@ -82,7 +82,7 @@ async function createList(listName, creatorUsername) {
 }
 
 async function addListItem(listID, task) {
-	const itemIndex = null;
+	let itemIndex = null;
 	
 	try {
 		const item = {
@@ -93,8 +93,10 @@ async function addListItem(listID, task) {
 
 		const list = await getList(listID);
 		itemIndex = list.items.length;
-		list.items.push(item);
-		await listCollection.updateOne({ _id: listID }, list);
+		await listCollection.updateOne({
+			_id: new ObjectId(listID) },
+			{ $push: { items: item } }
+		);
 	} catch (e) {
 		console.error(e);
 	}
@@ -104,9 +106,10 @@ async function addListItem(listID, task) {
 
 async function setAssignee(listID, itemIndex, assignee) {
 	try {
-		const list = await getList(listID);
-		list.items[itemIndex].assignee = assignee;
-		await listCollection.updateOne({ _id: listID }, list);
+		await listCollection.updateOne({
+			_id: new ObjectId(listID) },
+			{ $set: { assignee: assignee } }
+		);
 	} catch (e) {
 		console.error(e);
 	}
@@ -114,9 +117,10 @@ async function setAssignee(listID, itemIndex, assignee) {
 
 async function updateItemDone(listID, itemIndex, isDone) {
 	try {
-		const list = await getList(listID);
-		list.items[itemIndex].isDone = isDone;
-		await listCollection.updateOne({ _id: listID }, list);
+		await listCollection.updateOne({
+			_id: new ObjectId(listID) },
+			{ $set: { isDone: isDone } }
+		);
 	} catch (e) {
 		console.error(e);
 	}
@@ -127,6 +131,7 @@ module.exports = {
 	getUserByToken,
 	createUser,
 	getUserLists,
+	getList,
 	createList,
 	addListItem,
 	setAssignee,
