@@ -7,6 +7,14 @@ function login() {
 	document.location.href = "/lists.html";
 }
 
+async function login() {
+	loginOrCreate(`/api/auth/login`);
+}
+
+async function register() {
+	loginOrCreate(`/api/auth/create`);
+}
+
 async function loginOrCreate(endpoint) {
 	const username = document.querySelector("#username")?.value;
 	const password = document.querySelector("#password")?.value;
@@ -25,6 +33,13 @@ async function loginOrCreate(endpoint) {
 	} else {
 		// error display
 	}
+}
+
+function logout() {
+	localStorage.removeItem("userName");
+	fetch(`/api/auth/logout`, {
+		method: "delete",
+	}).then(() => (window.location.href = "/"));
 }
 
 window.addEventListener("load", function () {});
