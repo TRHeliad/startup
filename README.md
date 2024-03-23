@@ -82,3 +82,10 @@ The required technologies will be used as such:
 	- I created service endpoints for getting lists, getting items of a list, adding lists, adding items to lists, updating the done state of items, and changing the assignee of items.
 - **Your frontend calls your service endpoints**
 	- The frontend code uses all the endpoints listed above to populate dynamic html elements and enable functionality.
+
+# Login Deliverable
+- User registration
+	- You can register, login, and logout
+	- Data stored in MongoDB
+- API requests not related to user require an authentication token from logging in. Attempting to access the list related pages will redirect to home if not logged in.
+- User and list data is stored in MongoDB
