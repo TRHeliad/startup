@@ -67,12 +67,13 @@ async function createList(listName, creatorUsername) {
 	};
 
 	try {
-		const result = await listCollection.insertOne();
+		const result = await listCollection.insertOne(list);
 		list._id = result.insertedId;
 
-		const user = await getUser(creatorUsername);
-		user.ownedLists.push(list._id);
-		await userCollection.updateOne({ username: creatorUsername }, user);
+		await userCollection.updateOne(
+			{ username: creatorUsername },
+			{ $push: {ownedLists: list._id } }
+		);
 	} catch (e) {
 		console.error(e);
 	}
