@@ -21,7 +21,18 @@
 					<div><label for="text">Password: </label></div>
 					<div><input type="password" id="password" name="varPassword" placeholder="" required pattern="\w{3-20}" /></div>
 				</div>
-				<button onclick="login()">Submit</button>
+				<div class="button-container">
+					<button onclick="login()" id="loginButton">Login</button>
+					<button onclick="register()" id="registerButton">Register</button>
+				</div>
+			</div>
+			<div class="welcome-container show">
+				<h2>WELCOME</h2>
+				<h3 class="username">OnlyTwentyCharacters</h3>
+				<div class="button-container">
+					<a href="lists.html"><button id="listsButton">Lists</button></a>
+					<button onclick="logout()" id="logoutButton">Logout</button>
+				</div>
 			</div>
 		</main>
 		
