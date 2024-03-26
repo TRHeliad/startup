@@ -5,11 +5,24 @@ main {
 	align-items: center;
 }
 
-main > h1 {
-	flex: 0 3vmin;
+.list-header {
+	flex: 0 0;
+	display: flex;
+	flex-direction: row;
+	width: 100%
+}
+
+.list-header > h1 {
+	flex: 1 1;
 	font-size: 3vmin;
-	text-align: center;
-	margin: 1vmin 0;
+	text-align: left;
+	margin: 1vmin 0.5vmin;
+}
+
+.list-header > button {
+	flex: 0 10vmin;
+	font-size: 2vmin;
+	margin: 1vmin 0.5vmin;
 }
 
 div.table-container {
