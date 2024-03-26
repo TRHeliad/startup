@@ -991,3 +991,31 @@ Single Sign On (SSO) is when you use the same credentials for multiple web appic
 
 ## Using Endpoints
 We can create an endpoint which creates authentication and we can create an endpoint which logs in using existing credentials.
+
+# WebSocket
+WebSocket is a fully duplex connection. This means that communication can be sent from either party at any time.
+## JavaScript
+You can create a WebSocket on the client like so:
+```javascript
+const socket = new WebSocket('ws://localhost:9900');
+socket.onmessage = (event) => {
+  console.log('received: ', event.data);
+};
+socket.send('I am listening');
+```
+As you can see the port chosen in this example is 9900. The server can be listening for a WebSocket connection request on the same port like so:
+```javascript
+const { WebSocketServer } = require('ws');
+const wss = new WebSocketServer({ port: 9900 });
+
+wss.on('connection', (ws) => {
+  ws.on('message', (data) => {
+    const msg = String.fromCharCode(...data);
+    console.log('received: %s', msg);
+
+    ws.send(`I heard you say "${msg}"`);
+  });
+
+  ws.send('Hello webSocket');
+});
+```
