@@ -108,7 +108,7 @@ td svg.checked-box, svg.unchecked-box {
 	font-size: 2vmin;
 }
 
-.assignee-box {
+.input-modal {
 	visibility: hidden;
 	display: flex;
 	flex-direction: column;
@@ -126,24 +126,24 @@ td svg.checked-box, svg.unchecked-box {
 	margin-left: -15vmin;
 }
 
-.assignee-box.show {
+.input-modal.show {
 	visibility: visible;
 }
 
-.assignee-box label {
+.input-modal label {
 	color: var(--secondary-color);
 	font-size: 2vmin;
 	flex: 1 0;
 }
 
-.assignee-box input {
+.input-modal input {
 	width: 90%;
 	flex: 1 0;
 	margin: 1vmin;
 	font-size: 2vmin;
 }
 
-.assignee-box button {
+.input-modal button {
 	width: 40%;
 	flex: 0.7 0;
 	font-size: 2vmin;

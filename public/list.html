@@ -13,7 +13,7 @@
 		<main>
 			<div class="list-header">
 				<h1>Cleaning List</h1>
-				<button onclick="openShare()">Share</button>
+				<button onclick="toggleShareBox()">Share</button>
 			</div>
 
 			<div class="table-container">
@@ -32,10 +32,16 @@
 				<button onclick="addItem()">Add</button>
 			</div>
 
-			<div class="assignee-box">
+			<div class="assignee-box input-modal">
 				<label for="text">Set Assignee</label>
 				<input id="assignee" />
 				<button onclick="setAssignee()">Set</button>
+			</div>
+
+			<div class="share-box input-modal">
+				<label for="text">Share list</label>
+				<input id="shareUsername" />
+				<button onclick="shareList()">Share</button>
 			</div>
 		</main>
 

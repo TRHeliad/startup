@@ -109,6 +109,23 @@ function createRowFromItem(listItem, i) {
 	return newRowElement;
 }
 
+let shareOpened = false
+function openShare() {
+	document.querySelector(".share-box input").value = "";
+	document.querySelector(".share-box").classList.add("show");
+	shareOpened = true
+}
+
+function closeShare() {
+	document.querySelector(".share-box").classList.remove("show");
+	shareOpened = false
+}
+
+function toggleShareBox() {
+	(shareOpened ? closeShare : openShare)()
+}
+
+
 async function loadList() {
 	const tbodyElement = document.querySelector("tbody");
 	const nameLabelElement = document.querySelector("main > h1");
