@@ -143,7 +143,7 @@ async function shareList() {
 		createModalMessage("Success", `Shared with ${shareUsername}`, 2);
 	} else {
 		const body = await response.json();
-		createModalMessage("⚠ Error", body.msg, 3);
+		createModalMessage(body.type, body.message, 3);
 	}
 
 	closeShare();
@@ -197,6 +197,4 @@ window.addEventListener("load", function() {
 	document.querySelector(".assignee-box > button").addEventListener("click", setAssignee);
 	document.querySelector(".list-header > button").addEventListener("click", toggleShareBox);
 	document.querySelector(".share-box > button").addEventListener("click", shareList);
-
-	createModalMessage("This", "is a message I will use for testing", 5);
 })

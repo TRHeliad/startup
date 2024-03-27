@@ -115,7 +115,13 @@ secureApiRouter.post("/list/item", async (req, res) => {
 // shareList
 secureApiRouter.post("/list/share", async (req, res) => {
 	try {
-		res.send(await DB.shareList(req.body.ListID, req.body.ShareUsername));
+		const [success, message] = await DB.shareList(req.body.ListID, req.body.ShareUsername);
+		if (success < 0) {
+			res.status(400).send({
+				type: "bad request",
+				message: message,
+			});
+		}
 	} catch (e) {
 		res.status(400).send({
 			type: "bad request",

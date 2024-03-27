@@ -110,17 +110,20 @@ async function shareList(listID, shareUsername) {
 	try {
 		const list = await getList(listID);
 		if (list === null)
-			throw "List ID invalid";
+			return [-1, "List ID invalid"];
 
-		await userCollection.updateOne(
+		const result = await userCollection.updateOne(
 			{ username: shareUsername },
 			{ $push: {sharedLists: listID } }
 		);
+		
+		if (result.matchedCount > 0)
+			return [0, ""];
+		else
+			return [-1, "Username invalid"]
 	} catch (e) {
 		console.error(e);
 	}
-
-	return itemIndex
 }
 
 async function setAssignee(listID, itemIndex, assignee) {
