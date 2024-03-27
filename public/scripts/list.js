@@ -30,7 +30,7 @@ function setCheckboxType(divElement, isChecked) {
 	}
 }
 
-function updateItemDone(itemIndex, isDone) {
+function updateItemDone(itemIndex, isDone, localOnly) {
 	if (list !== null) {
 		const listItem = list.items[itemIndex];
 		if (listItem !== undefined) {
@@ -39,15 +39,17 @@ function updateItemDone(itemIndex, isDone) {
 				rowElements[itemIndex].querySelector("td > div"),
 				listItem.isDone
 			);
-			fetch("/api/list/item/done", {
-				method: "POST",
-				headers: { "content-type": "application/json" },
-				body: JSON.stringify({
-					ListID: selectedListID,
-					ItemIndex: itemIndex,
-					IsDone: isDone,
-				}),
-			});
+			if (!localOnly) {
+				fetch("/api/list/item/done", {
+					method: "POST",
+					headers: { "content-type": "application/json" },
+					body: JSON.stringify({
+						ListID: selectedListID,
+						ItemIndex: itemIndex,
+						IsDone: isDone,
+					}),
+				});
+			}
 		}
 	}
 }
@@ -63,28 +65,31 @@ function verifyAssignee(assignee) {
 	return assignee;
 }
 
-function setAssignee() {
-	if (setAssigneeIndex !== null) {
+function setAssignee(itemIndex, assignee, localOnly) {
+	if (itemIndex !== null) {
 		if (list !== null) {
-			const listItem = list.items[setAssigneeIndex];
+			const listItem = list.items[itemIndex];
 			if (listItem !== undefined) {
-				fetch("/api/list/item/assignee", {
-					method: "POST",
-					headers: { "content-type": "application/json" },
-					body: JSON.stringify({
-						ListID: selectedListID,
-						ItemIndex: setAssigneeIndex,
-						Assignee: document.querySelector(".assignee-box input")
-							.value,
-					}),
-				});
-				clearList();
-				loadList();
+				listItem.Assignee = assignee
+				if (!localOnly) {
+					fetch("/api/list/item/assignee", {
+						method: "POST",
+						headers: { "content-type": "application/json" },
+						body: JSON.stringify({
+							ListID: selectedListID,
+							ItemIndex: itemIndex,
+							Assignee: document.querySelector(".assignee-box input")
+								.value,
+						}),
+					});
+				}
+				const assigneeElement = document.querySelector(`#row${itemIndex} .assignee`);
+				if (assigneeElement)
+					assigneeElement.textContent = assignee;
+				// clearList();
+				// loadList();
 			}
 		}
-
-		document.querySelector(".assignee-box").classList.remove("show");
-		setAssigneeIndex = null;
 	}
 }
 
@@ -106,17 +111,20 @@ function createRowFromItem(listItem, i) {
 
 	checkboxElement.addEventListener("click", function (event) {
 		const listItem = list.items[i];
-		const isDone = !listItem.isDone
-		updateItemDone(i, isDone);
-		socket.send(JSON.stringify({
-			type: "setIsDone",
-			listID: selectedListID,
-			itemIndex: i,
-			isDone: isDone
-		}))
+		const isDone = !listItem.isDone;
+		updateItemDone(i, isDone, false);
+		socket.send(
+			JSON.stringify({
+				type: "setIsDone",
+				listID: selectedListID,
+				itemIndex: i,
+				isDone: isDone,
+			})
+		);
 	});
 
 	const newRowElement = document.createElement("tr");
+	newRowElement.id = `row${i}`;
 	newRowElement.appendChild(newTaskCol);
 	newRowElement.appendChild(newAssigneeCol);
 	newRowElement.appendChild(newDoneCol);
@@ -202,10 +210,12 @@ function configureWebSocket() {
 	const protocol = window.location.protocol === "http:" ? "ws" : "wss";
 	socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 	socket.onopen = (event) => {
-		socket.send(JSON.stringify({
-			type: "joinList",
-			listID: selectedListID
-		}))
+		socket.send(
+			JSON.stringify({
+				type: "joinList",
+				listID: selectedListID,
+			})
+		);
 	};
 	socket.onclose = (event) => {
 		createModalMessage("error", "socket disconnected", 3);
@@ -213,11 +223,10 @@ function configureWebSocket() {
 	socket.onmessage = async (event) => {
 		const msg = JSON.parse(await event.data.text());
 		if (msg.type === "setIsDone") {
-			updateItemDone(msg.itemIndex, msg.isDone);
+			updateItemDone(msg.itemIndex, msg.isDone, true);
 		} else if (msg.type === "setAssignee") {
-			
+			setAssignee(msg.itemIndex, msg.assignee, true);
 		} else if (msg.type === "addItem") {
-			
 		}
 	};
 }
@@ -235,7 +244,24 @@ window.addEventListener("load", function () {
 		.addEventListener("click", addItem);
 	document
 		.querySelector(".assignee-box > button")
-		.addEventListener("click", setAssignee);
+		.addEventListener("click", () => {
+			const assignee = document.querySelector(".assignee-box input").value;
+			setAssignee(
+				setAssigneeIndex,
+				assignee,
+				false
+			);
+			socket.send(
+				JSON.stringify({
+					type: "setAssignee",
+					listID: selectedListID,
+					itemIndex: setAssigneeIndex,
+					assignee: assignee
+				})
+			);
+			setAssigneeIndex = null;
+			document.querySelector(".assignee-box").classList.remove("show");
+		});
 	document
 		.querySelector(".list-header > button")
 		.addEventListener("click", toggleShareBox);
