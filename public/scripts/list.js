@@ -127,8 +127,26 @@ function toggleShareBox() {
 	(shareOpened ? closeShare : openShare)()
 }
 
-function shareList() {
-	
+async function shareList() {
+	console.log("going to send request");
+	const shareUsername = document.querySelector(".share-box input").value;
+	const response = await fetch('/api/list/share', {
+		method: 'POST',
+		headers: {'content-type': 'application/json'},
+		body: JSON.stringify({
+			ListID: selectedListID,
+			ShareUsername: shareUsername
+		})
+	});
+
+	if (response.ok) {
+		createModalMessage("Success", `Shared with ${shareUsername}`, 2);
+	} else {
+		const body = await response.json();
+		createModalMessage("⚠ Error", body.msg, 3);
+	}
+
+	closeShare();
 }
 
 
