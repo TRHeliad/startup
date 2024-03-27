@@ -185,20 +185,6 @@ async function addItem() {
 	loadList();
 }
 
-function changeRandomCheckbox() {
-	if (list.items.length > 0) {
-		const randomRow = Math.floor(Math.random() * list.items.length);
-		updateItemDone(randomRow, !list.items[randomRow].isDone);
-	}
-	queueCheckboxChange();
-}
-
-function queueCheckboxChange() {
-	setTimeout(changeRandomCheckbox, 3000);
-}
-
-
-
 window.addEventListener("load", function() {
 	const username = localStorage.getItem('userName');
 	if (!username) {
@@ -206,7 +192,6 @@ window.addEventListener("load", function() {
 	}
 
 	loadList();
-	queueCheckboxChange();
 	
 	document.querySelector(".add-item-container > button").addEventListener("click", addItem);
 	document.querySelector(".assignee-box > button").addEventListener("click", setAssignee);
