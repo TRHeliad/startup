@@ -1035,3 +1035,8 @@ wss.on('connection', (ws) => {
 
 **Successful attack mitigation:**
 Sanitize input, Logging, Traps, Educate, Reduce attack surfaces, Layered Security (diversity of method), Least required access, Safeguard credentials, Public review.
+
+## OWASP
+> The Open Web Application Security Project (OWASP) is a non-profit research entity that manages the Top Ten > list of the most important web application security risks. Understanding, and periodically reviewing, this > list will help to keep your web applications secure.
+
+You can see the most recent list [here](https://owasp.org/www-project-top-ten/).
