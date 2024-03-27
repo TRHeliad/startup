@@ -104,6 +104,25 @@ async function addListItem(listID, task) {
 	return itemIndex
 }
 
+async function shareList(listID, shareUsername) {
+	let itemIndex = null;
+	
+	try {
+		const list = await getList(listID);
+		if (list === null)
+			throw "List ID invalid";
+
+		await userCollection.updateOne(
+			{ username: shareUsername },
+			{ $push: {sharedLists: listID } }
+		);
+	} catch (e) {
+		console.error(e);
+	}
+
+	return itemIndex
+}
+
 async function setAssignee(listID, itemIndex, assignee) {
 	try {
 		await listCollection.updateOne({
@@ -134,6 +153,7 @@ module.exports = {
 	getList,
 	createList,
 	addListItem,
+	shareList,
 	setAssignee,
 	updateItemDone
 };

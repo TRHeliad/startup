@@ -112,6 +112,18 @@ secureApiRouter.post("/list/item", async (req, res) => {
 	}
 });
 
+// shareList
+secureApiRouter.post("/list/share", async (req, res) => {
+	try {
+		res.send(await DB.shareList(req.body.ListID, req.body.ShareUsername));
+	} catch (e) {
+		res.status(400).send({
+			type: "bad request",
+			message: "invalid parameters",
+		});
+	}
+});
+
 // setAssignee
 secureApiRouter.post("/list/item/assignee", async (req, res) => {
 	try {
