@@ -104,7 +104,8 @@ secureApiRouter.post("/list", async (req, res) => {
 // addListItem
 secureApiRouter.post("/list/item", async (req, res) => {
 	try {
-		res.send(await DB.addListItem(req.body.ListID, req.body.Task));
+		const itemIndex = await DB.addListItem(req.body.ListID, req.body.Task);
+		res.send(`${itemIndex}`);
 	} catch (e) {
 		res.status(400).send({
 			type: "bad request",

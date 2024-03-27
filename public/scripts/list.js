@@ -70,7 +70,7 @@ function setAssignee(itemIndex, assignee, localOnly) {
 		if (list !== null) {
 			const listItem = list.items[itemIndex];
 			if (listItem !== undefined) {
-				listItem.Assignee = assignee
+				listItem.Assignee = assignee;
 				if (!localOnly) {
 					fetch("/api/list/item/assignee", {
 						method: "POST",
@@ -78,14 +78,16 @@ function setAssignee(itemIndex, assignee, localOnly) {
 						body: JSON.stringify({
 							ListID: selectedListID,
 							ItemIndex: itemIndex,
-							Assignee: document.querySelector(".assignee-box input")
-								.value,
+							Assignee: document.querySelector(
+								".assignee-box input"
+							).value,
 						}),
 					});
 				}
-				const assigneeElement = document.querySelector(`#row${itemIndex} .assignee`);
-				if (assigneeElement)
-					assigneeElement.textContent = assignee;
+				const assigneeElement = document.querySelector(
+					`#row${itemIndex} .assignee`
+				);
+				if (assigneeElement) assigneeElement.textContent = assignee;
 				// clearList();
 				// loadList();
 			}
@@ -187,20 +189,17 @@ async function loadList() {
 	}
 }
 
-async function addItem() {
-	const itemTaskElement = document.querySelector(
-		".add-item-container #newItem"
-	);
-	const itemTask = itemTaskElement.value;
-
-	const response = await fetch("/api/list/item/", {
-		method: "POST",
-		headers: { "content-type": "application/json" },
-		body: JSON.stringify({
-			ListID: list._id,
-			Task: itemTask,
-		}),
-	});
+async function addItem(task, localOnly) {
+	if (!localOnly) {
+		const response = await fetch("/api/list/item/", {
+			method: "POST",
+			headers: { "content-type": "application/json" },
+			body: JSON.stringify({
+				ListID: list._id,
+				Task: task,
+			}),
+		});
+	}
 
 	clearList();
 	loadList();
@@ -227,6 +226,7 @@ function configureWebSocket() {
 		} else if (msg.type === "setAssignee") {
 			setAssignee(msg.itemIndex, msg.assignee, true);
 		} else if (msg.type === "addItem") {
+			addItem(msg.task, true);
 		}
 	};
 }
@@ -241,22 +241,32 @@ window.addEventListener("load", function () {
 
 	document
 		.querySelector(".add-item-container > button")
-		.addEventListener("click", addItem);
+		.addEventListener("click", () => {
+			const task = document.querySelector(
+				".add-item-container #newItem"
+			)?.value;
+			addItem(task, false);
+			socket.send(
+				JSON.stringify({
+					type: "addItem",
+					listID: selectedListID,
+					task: task,
+				})
+			);
+		});
 	document
 		.querySelector(".assignee-box > button")
 		.addEventListener("click", () => {
-			const assignee = document.querySelector(".assignee-box input").value;
-			setAssignee(
-				setAssigneeIndex,
-				assignee,
-				false
-			);
+			const assignee = document.querySelector(
+				".assignee-box input"
+			).value;
+			setAssignee(setAssigneeIndex, assignee, false);
 			socket.send(
 				JSON.stringify({
 					type: "setAssignee",
 					listID: selectedListID,
 					itemIndex: setAssigneeIndex,
-					assignee: assignee
+					assignee: assignee,
 				})
 			);
 			setAssigneeIndex = null;
