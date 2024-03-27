@@ -127,6 +127,10 @@ function toggleShareBox() {
 	(shareOpened ? closeShare : openShare)()
 }
 
+function shareList() {
+	
+}
+
 
 async function loadList() {
 	const tbodyElement = document.querySelector("tbody");
@@ -182,7 +186,14 @@ window.addEventListener("load", function() {
 	if (!username) {
 		document.location.href = "index.html"
 	}
+
 	loadList();
 	queueCheckboxChange();
+	
+	document.querySelector(".add-item-container > button").addEventListener("click", addItem);
+	document.querySelector(".assignee-box > button").addEventListener("click", setAssignee);
+	document.querySelector(".list-header > button").addEventListener("click", toggleShareBox);
+	document.querySelector(".share-box > button").addEventListener("click", shareList);
+
 	createModalMessage("This", "is a message I will use for testing", 5);
 })
