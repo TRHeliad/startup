@@ -71,6 +71,13 @@ export function test(title, description) {
 
 
 export function createModalMessage(title, description, duration) {
+	if (!styleInserted) {
+		styleInserted = true
+		var styleSheet = document.createElement("style");
+		styleSheet.innerHTML = styles;
+		document.head.appendChild(styleSheet);
+	}
+
 	const messageContainer = document.createElement("div");
 	messageContainer.className = "message-modal";
 	const background = document.createElement("div");
@@ -89,10 +96,10 @@ export function createModalMessage(title, description, duration) {
 	messageBox.appendChild(descriptionLabel);
 	document.querySelector("body").appendChild(messageContainer);
 
-	if (!styleInserted) {
-		styleInserted = true
-		var styleSheet = document.createElement("style");
-		styleSheet.innerHTML = styles;
-		document.head.appendChild(styleSheet);
-	}
+	setTimeout(() => {
+		document.querySelector(".message-modal").classList.add("hide");
+	}, duration * 1000);
+	setTimeout(() => {
+		document.querySelector("body").removeChild(messageContainer);
+	}, duration * 1000 + 500);
 }

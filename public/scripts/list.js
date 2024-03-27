@@ -184,5 +184,5 @@ window.addEventListener("load", function() {
 	}
 	loadList();
 	queueCheckboxChange();
-	createModalMessage("test", "message", 10);
+	createModalMessage("This", "is a message I will use for testing", 5);
 })
