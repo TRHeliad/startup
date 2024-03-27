@@ -1,7 +1,9 @@
+import { createModalMessage } from "./modalmessage.js";
+
 let setAssigneeIndex = null;
 let rowElements = null;
 let list = null;
-let selectedListID = null
+let selectedListID = null;
 
 async function getSelectedList() {
 	selectedListID = localStorage.getItem("selectedListID");
@@ -128,7 +130,7 @@ function toggleShareBox() {
 
 async function loadList() {
 	const tbodyElement = document.querySelector("tbody");
-	const nameLabelElement = document.querySelector("main > h1");
+	const nameLabelElement = document.querySelector(".list-header > h1");
 	const list = await getSelectedList()
 
 	if (list !== null) {
@@ -173,6 +175,8 @@ function queueCheckboxChange() {
 	setTimeout(changeRandomCheckbox, 3000);
 }
 
+
+
 window.addEventListener("load", function() {
 	const username = localStorage.getItem('userName');
 	if (!username) {
@@ -180,4 +184,5 @@ window.addEventListener("load", function() {
 	}
 	loadList();
 	queueCheckboxChange();
+	createModalMessage("test", "message", 10);
 })
