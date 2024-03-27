@@ -89,3 +89,13 @@ The required technologies will be used as such:
 	- Data stored in MongoDB
 - API requests not related to user require an authentication token from logging in. Attempting to access the list related pages will redirect to home if not logged in.
 - User and list data is stored in MongoDB
+
+# WebSocket Deliverable
+- You can now share lists with other users using the button in the top right of the list page. This enables WebSocket update messages when multiple users are viewing the same list.
+- Backend listens to requests from the client and redirects some to other clients
+	- It receives `joinList` messages which will tell the server which connections to direct list-related messages to.
+	- It receives other messages related to list changes which it will then redirect to clients within that list group.
+- Frontend sends the `joinList` message and listens for list change messages
+	- When the WebSocket connection is made, the clint sends a `joinList` message to the server.
+	- The client sends messages `setAssignee`, `setIsDone`, and `addItem` for list changes.
+	- When the client receives these list change messages, it updates the data in the application interface.
