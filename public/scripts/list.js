@@ -106,7 +106,14 @@ function createRowFromItem(listItem, i) {
 
 	checkboxElement.addEventListener("click", function (event) {
 		const listItem = list.items[i];
-		updateItemDone(i, !listItem.isDone);
+		const isDone = !listItem.isDone
+		updateItemDone(i, isDone);
+		socket.send(JSON.stringify({
+			type: "setIsDone",
+			listID: selectedListID,
+			itemIndex: i,
+			isDone: isDone
+		}))
 	});
 
 	const newRowElement = document.createElement("tr");
@@ -206,7 +213,7 @@ function configureWebSocket() {
 	socket.onmessage = async (event) => {
 		const msg = JSON.parse(await event.data.text());
 		if (msg.type === "setIsDone") {
-			
+			updateItemDone(msg.itemIndex, msg.isDone);
 		} else if (msg.type === "setAssignee") {
 			
 		} else if (msg.type === "addItem") {
