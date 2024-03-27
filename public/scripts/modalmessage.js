@@ -65,11 +65,6 @@ var styles = `
 }
 `
 
-export function test(title, description) {
-	console.log("test message")
-}
-
-
 export function createModalMessage(title, description, duration) {
 	if (!styleInserted) {
 		styleInserted = true
