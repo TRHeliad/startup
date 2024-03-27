@@ -4,10 +4,11 @@ let setAssigneeIndex = null;
 let rowElements = null;
 let list = null;
 let selectedListID = null;
+let socket = null;
 
 async function getSelectedList() {
 	selectedListID = localStorage.getItem("selectedListID");
-	const response = await fetch('/api/list/'+selectedListID);
+	const response = await fetch("/api/list/" + selectedListID);
 	list = await response.json();
 	return list;
 }
@@ -17,15 +18,15 @@ function clearList() {
 	// Clear out lists table
 	const listElements = document.querySelectorAll("tr:not(#table-header)");
 	for (const rowElement of listElements) {
-		tbodyElement.removeChild(rowElement)
+		tbodyElement.removeChild(rowElement);
 	}
 }
 
 function setCheckboxType(divElement, isChecked) {
 	if (isChecked) {
-		$(divElement).load("checked-box.html")
+		$(divElement).load("checked-box.html");
 	} else {
-		$(divElement).load("unchecked-box.html")
+		$(divElement).load("unchecked-box.html");
 	}
 }
 
@@ -34,15 +35,18 @@ function updateItemDone(itemIndex, isDone) {
 		const listItem = list.items[itemIndex];
 		if (listItem !== undefined) {
 			listItem.isDone = isDone;
-			setCheckboxType(rowElements[itemIndex].querySelector("td > div"), listItem.isDone);
-			fetch('/api/list/item/done', {
-				method: 'POST',
-				headers: {'content-type': 'application/json'},
+			setCheckboxType(
+				rowElements[itemIndex].querySelector("td > div"),
+				listItem.isDone
+			);
+			fetch("/api/list/item/done", {
+				method: "POST",
+				headers: { "content-type": "application/json" },
 				body: JSON.stringify({
 					ListID: selectedListID,
 					ItemIndex: itemIndex,
-					IsDone: isDone
-				})
+					IsDone: isDone,
+				}),
 			});
 		}
 	}
@@ -56,7 +60,7 @@ function showSetAssigneeBox(assigneeIndex) {
 
 function verifyAssignee(assignee) {
 	// will add verification with database later
-	return assignee
+	return assignee;
 }
 
 function setAssignee() {
@@ -64,14 +68,15 @@ function setAssignee() {
 		if (list !== null) {
 			const listItem = list.items[setAssigneeIndex];
 			if (listItem !== undefined) {
-				fetch('/api/list/item/assignee', {
-					method: 'POST',
-					headers: {'content-type': 'application/json'},
+				fetch("/api/list/item/assignee", {
+					method: "POST",
+					headers: { "content-type": "application/json" },
 					body: JSON.stringify({
 						ListID: selectedListID,
 						ItemIndex: setAssigneeIndex,
-						Assignee: document.querySelector(".assignee-box input").value
-					})
+						Assignee: document.querySelector(".assignee-box input")
+							.value,
+					}),
 				});
 				clearList();
 				loadList();
@@ -79,7 +84,7 @@ function setAssignee() {
 		}
 
 		document.querySelector(".assignee-box").classList.remove("show");
-		setAssigneeIndex = null
+		setAssigneeIndex = null;
 	}
 }
 
@@ -87,22 +92,23 @@ function createRowFromItem(listItem, i) {
 	const newTaskCol = document.createElement("td");
 	newTaskCol.textContent = listItem.task;
 	const newAssigneeCol = document.createElement("td");
-	newAssigneeCol.textContent = listItem.assignee === null ? "-" : listItem.assignee;
-	newAssigneeCol.className = "assignee"
+	newAssigneeCol.textContent =
+		listItem.assignee === null ? "-" : listItem.assignee;
+	newAssigneeCol.className = "assignee";
 	const newDoneCol = document.createElement("td");
 	const checkboxElement = document.createElement("div");
 	newDoneCol.appendChild(checkboxElement);
 	setCheckboxType(checkboxElement, listItem.isDone);
 
-	newAssigneeCol.addEventListener("click", function(event) {
+	newAssigneeCol.addEventListener("click", function (event) {
 		showSetAssigneeBox(i);
-	})
+	});
 
-	checkboxElement.addEventListener("click", function(event) {
+	checkboxElement.addEventListener("click", function (event) {
 		const listItem = list.items[i];
 		updateItemDone(i, !listItem.isDone);
-	})
-	
+	});
+
 	const newRowElement = document.createElement("tr");
 	newRowElement.appendChild(newTaskCol);
 	newRowElement.appendChild(newAssigneeCol);
@@ -111,32 +117,31 @@ function createRowFromItem(listItem, i) {
 	return newRowElement;
 }
 
-let shareOpened = false
+let shareOpened = false;
 function openShare() {
 	document.querySelector(".share-box input").value = "";
 	document.querySelector(".share-box").classList.add("show");
-	shareOpened = true
+	shareOpened = true;
 }
 
 function closeShare() {
 	document.querySelector(".share-box").classList.remove("show");
-	shareOpened = false
+	shareOpened = false;
 }
 
 function toggleShareBox() {
-	(shareOpened ? closeShare : openShare)()
+	(shareOpened ? closeShare : openShare)();
 }
 
 async function shareList() {
-	console.log("going to send request");
 	const shareUsername = document.querySelector(".share-box input").value;
-	const response = await fetch('/api/list/share', {
-		method: 'POST',
-		headers: {'content-type': 'application/json'},
+	const response = await fetch("/api/list/share", {
+		method: "POST",
+		headers: { "content-type": "application/json" },
 		body: JSON.stringify({
 			ListID: selectedListID,
-			ShareUsername: shareUsername
-		})
+			ShareUsername: shareUsername,
+		}),
 	});
 
 	if (response.ok) {
@@ -149,52 +154,87 @@ async function shareList() {
 	closeShare();
 }
 
-
 async function loadList() {
 	const tbodyElement = document.querySelector("tbody");
 	const nameLabelElement = document.querySelector(".list-header > h1");
-	const list = await getSelectedList()
+	const list = await getSelectedList();
 
 	if (list !== null) {
 		nameLabelElement.textContent = list.name;
-		rowElements = []
+		rowElements = [];
 		list.items.forEach(function (listItem, i) {
 			const rowElement = createRowFromItem(listItem, i);
 			tbodyElement.appendChild(rowElement);
 			rowElements.push(rowElement);
-		})
+		});
 	} else {
 		nameLabelElement.textContent = "No List Selected";
 	}
 }
 
 async function addItem() {
-	const itemTaskElement = document.querySelector(".add-item-container #newItem");
+	const itemTaskElement = document.querySelector(
+		".add-item-container #newItem"
+	);
 	const itemTask = itemTaskElement.value;
 
-	const response = await fetch('/api/list/item/', {
-		method: 'POST',
-		headers: {'content-type': 'application/json'},
+	const response = await fetch("/api/list/item/", {
+		method: "POST",
+		headers: { "content-type": "application/json" },
 		body: JSON.stringify({
 			ListID: list._id,
-			Task: itemTask
-		})
+			Task: itemTask,
+		}),
 	});
 
 	clearList();
 	loadList();
 }
 
-window.addEventListener("load", function() {
-	const username = localStorage.getItem('userName');
+function configureWebSocket() {
+	const protocol = window.location.protocol === "http:" ? "ws" : "wss";
+	socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+	socket.onopen = (event) => {
+		socket.send(JSON.stringify({
+			type: "joinList",
+			listID: selectedListID
+		}))
+	};
+	socket.onclose = (event) => {
+		createModalMessage("error", "socket disconnected", 3);
+	};
+	socket.onmessage = async (event) => {
+		const msg = JSON.parse(await event.data.text());
+		if (msg.type === "setIsDone") {
+			
+		} else if (msg.type === "setAssignee") {
+			
+		} else if (msg.type === "addItem") {
+			
+		}
+	};
+}
+
+window.addEventListener("load", function () {
+	const username = localStorage.getItem("userName");
 	if (!username) {
-		document.location.href = "index.html"
+		document.location.href = "index.html";
 	}
 
 	loadList();
-	
-	document.querySelector(".add-item-container > button").addEventListener("click", addItem);
-	document.querySelector(".assignee-box > button").addEventListener("click", setAssignee);
-	document.querySelector(".list-header > button").addEventListener("click", toggleShareBox);
-	document.querySelector(".share-box > button").addEventListener("click", shareList);
-})
+
+	document
+		.querySelector(".add-item-container > button")
+		.addEventListener("click", addItem);
+	document
+		.querySelector(".assignee-box > button")
+		.addEventListener("click", setAssignee);
+	document
+		.querySelector(".list-header > button")
+		.addEventListener("click", toggleShareBox);
+	document
+		.querySelector(".share-box > button")
+		.addEventListener("click", shareList);
+
+	configureWebSocket();
+});

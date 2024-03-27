@@ -18,7 +18,6 @@ function clearLists() {
 
 async function loadLists() {
 	const lists = await getLists();
-	console.log(lists);
 	const tbodyElement = document.querySelector("tbody");
 	// Add new lists
 	lists.forEach(function (list, i) {

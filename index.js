@@ -3,6 +3,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const app = express();
 const DB = require("./database.js");
+const { peerProxy } = require('./peerProxy.js');
 
 const authCookieName = 'token';
 
@@ -172,11 +173,6 @@ app.use((_req, res) => {
 	res.sendFile("index.html", { root: "public" });
 });
 
-const port = 4000;
-app.listen(port, function () {
-	console.log(`Listening on port ${port}`);
-});
-
 // setAuthCookie in the HTTP response
 function setAuthCookie(res, authToken) {
 	res.cookie(authCookieName, authToken, {
@@ -185,3 +181,10 @@ function setAuthCookie(res, authToken) {
 		sameSite: "strict",
 	});
 }
+
+const port = 4000;
+const httpService = app.listen(port, function () {
+	console.log(`Listening on port ${port}`);
+});
+
+peerProxy(httpService);
