@@ -1040,3 +1040,20 @@ Sanitize input, Logging, Traps, Educate, Reduce attack surfaces, Layered Securit
 > The Open Web Application Security Project (OWASP) is a non-profit research entity that manages the Top Ten > list of the most important web application security risks. Understanding, and periodically reviewing, this > list will help to keep your web applications secure.
 
 You can see the most recent list [here](https://owasp.org/www-project-top-ten/).
+
+# Web Frameworks
+Web frameworks simplify the process of creating web application by providing a lot of tools to handle common application tasks. Some create new hybrid file formats that combine the functionality of HTML, CSS, and JavaScript.
+
+## React
+React is a web framework. The name comes from the focus on making reactive components that automatically update based on user interactions or changes to underlying data.
+It uses a file format called [JSX](https://reactjs.org/docs/introducing-jsx.html) which combines both HTML and JavaScript. It is converted into valid HTML and JavaScript by a preprocessor called *Babel*.
+e.g.:
+```jsx
+const i = 3;
+const list = (
+  <ol class='big'>
+    <li>Item {i}</li>
+    <li>Item {3 + i}</li>
+  </ol>
+);
+```
