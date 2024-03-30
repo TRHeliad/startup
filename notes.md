@@ -1057,3 +1057,45 @@ const list = (
   </ol>
 );
 ```
+
+### Components
+Components allow you to modularize application functionality.
+You have JSX defining the structure and also the component itself:
+```jsx
+<div>
+  Component: <Demo />
+</div>
+
+function Demo() {
+  const who = 'world';
+  return <b>Hello {who}</b>;
+}
+```
+And the resulting html is:
+```html
+<div>Component: <b>Hello world</b></div>
+```
+
+React components have properties:
+```jsx
+<div>Component: <Demo who="Walke" /><div>
+
+function Demo(props) {
+  return <b>Hello {props.who}</b>;
+}
+```
+
+and state:
+```jsx
+const Clicker = () => {
+  const [clicked, updateClicked] = React.useState(false);
+
+  const onClicked = (e) => {
+    updateClicked(!clicked);
+  };
+
+  return <p onClick={(e) => onClicked(e)}>clicked: {`${clicked}`}</p>;
+};
+```
+
+*both of which will rerender the component when changed*. This is reactivity.
