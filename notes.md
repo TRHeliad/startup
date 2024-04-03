@@ -1113,7 +1113,7 @@ Here are some common pieces in a web application tool chain:
 **Deployment** - Automated packaging and delivery of code from the development environment to the production environment.
 
 ## Vite
-Vite is a toolchain that creates a development environment for quick iteration. You can configure it to work with JSX.
+Vite is a toolchain that creates a development environment for quick iteration. You can configure it to work with react.
 To setup a new environment, all you have to do is use
 ```bash
 npm create vite@latest demoVite -- --template react
@@ -1121,3 +1121,35 @@ cd demoVite
 npm install
 ```
 and then if you want to open the test CLI, you can use `npm run dev`. Once you are in the cli, you can enter `o` and it will open the hosted dev site in your browser. You can use `npm run build` to build a production distribution in the `dist` directory.
+
+# Router
+There are many components of web applications which are found in many of the pages like headers, footers, and navigation. What happens with a *router* is you create a single HTML page which is then manipulated using the DOM so that it displays different components according to the selected *route*.
+
+Here is an example using `react-router-dom`.
+```jsx
+// Inject the router into the application root DOM element
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  // BrowserRouter component that controls what is rendered
+  // NavLink component captures user navigation requests
+  // Routes component defines what component is routed to
+  <BrowserRouter>
+    <div className='app'>
+      <nav>
+        <NavLink to='/'>Home</Link>
+        <NavLink to='/about'>About</Link>
+        <NavLink to='/users'>Users</Link>
+      </nav>
+
+      <main>
+        <Routes>
+          <Route path='/' element={<Home />} exact />
+          <Route path='/about' element={<About />} />
+          <Route path='/users' element={<Users />} />
+          <Route path='*' element={<Navigate to='/' replace />} />
+        </Routes>
+      </main>
+    </div>
+  </BrowserRouter>
+);
+```
