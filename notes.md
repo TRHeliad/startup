@@ -1099,3 +1099,25 @@ const Clicker = () => {
 ```
 
 *both of which will rerender the component when changed*. This is reactivity.
+
+# Toolchains
+Here are some common pieces in a web application tool chain:
+**Code repository** - Stores code in a shared, versioned, location.
+**Linter** - Removes, or warns, of non-idiomatic code usage.
+**Prettier** - Formats code according to a shared standard.
+**Transpiler** - Compiles code into a different format. For example, from JSX to JavaScript, TypeScript to JavaScript, or SCSS to CSS.
+**Polyfill** - Generates backward compatible code for supporting old browser versions that do not support the latest standards.
+**Bundler** - Packages code into bundles for delivery to the browser. This enables compatibility (for example with ES6 module support), or performance (with lazy loading).
+**Minifier** - Removes whitespace and renames variables in order to make code smaller and more efficient to deploy.
+**Testing** - Automated tests at multiple levels to ensure correctness.
+**Deployment** - Automated packaging and delivery of code from the development environment to the production environment.
+
+## Vite
+Vite is a toolchain that creates a development environment for quick iteration. You can configure it to work with JSX.
+To setup a new environment, all you have to do is use
+```bash
+npm create vite@latest demoVite -- --template react
+cd demoVite
+npm install
+```
+and then if you want to open the test CLI, you can use `npm run dev`. Once you are in the cli, you can enter `o` and it will open the hosted dev site in your browser. You can use `npm run build` to build a production distribution in the `dist` directory.
