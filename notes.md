@@ -1098,7 +1098,47 @@ const Clicker = () => {
 };
 ```
 
+### Hooks
+Hooks are a tool that allows you to add additional functionality to function style components. One example is the `useState` hook which allows you to track state of a function component.
+
+#### useEffect
+With `useEffect`, you can perform tasks when a component is rendered and when it is cleaned up or removed.
+```jsx
+function UseEffectHookDemo() {
+  const [count, updateCount] = React.useState(0);
+  React.useEffect(() => {
+    console.log('rendered');
+
+    return function cleanup() {
+      console.log('cleanup');
+    };
+  });
+
+  return <div onClick={() => updateCount(count + 1)}>useEffectExample {count}</div>;
+}
+```
+
 *both of which will rerender the component when changed*. This is reactivity.
+
+#### Dependencies
+You can change what triggers the `useEffect` hook by specifying a dependency. If the dependency is specified, then only the initial render will trigger the hook. You can pass a list of state variables and if any of those variables are updated, then the hook will be triggered.
+```jsx
+function UseEffectHookDemo() {
+  const [count1, updateCount1] = React.useState(0);
+  const [count2, updateCount2] = React.useState(0);
+
+  React.useEffect(() => {
+    console.log(`count1 effect triggered ${count1}`);
+  }, [count1]);
+
+  return (
+    <ol>
+      <li onClick={() => updateCount1(count1 + 1)}>Item 1 - {count1}</li>
+      <li onClick={() => updateCount2(count2 + 1)}>Item 2 - {count2}</li>
+    </ol>
+  );
+}
+```
 
 # Toolchains
 Here are some common pieces in a web application tool chain:
