@@ -18,7 +18,7 @@
 	font-family: "Cascadia Code";
 }
 
-body {
+.body {
 	background-color: var(--back-color);
 	margin: 0;
 	display: flex;
