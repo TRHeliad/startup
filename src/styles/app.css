@@ -18,6 +18,10 @@
 	font-family: "Cascadia Code";
 }
 
+body {
+	margin: 0;
+}
+
 .body {
 	background-color: var(--back-color);
 	margin: 0;
@@ -42,6 +46,9 @@ header > span.header-left {
 	justify-content: left;
 	align-items: center;
 }
+nav > span {
+	margin: 0 0.5vmin;
+}
 
 header > span.header-right {
 	flex: 0.25 0;
@@ -51,12 +58,9 @@ header > span.header-right {
 	align-items: center;
 }
 
-header span.checked-box {
+header span svg.checked-box {
 	flex: 0 50px;
 	margin: 15px 15px;
-}
-
-header span svg.checked-box {
 	width: 50px;
 	height: 50px;
 }
