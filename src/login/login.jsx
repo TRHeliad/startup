@@ -4,10 +4,11 @@ import { Unauthenticated } from './unauthenticated';
 import { Authenticated } from './authenticated';
 import { AuthState } from './authState';
 
+import './login.css';
+
 export function Login({ userName, authState, onAuthChange }) {
   return (
     <main>
-      <div>
         {authState === AuthState.Authenticated && (
           <Authenticated userName={userName} onLogout={() => onAuthChange(userName, AuthState.Unauthenticated)} />
         )}
@@ -19,7 +20,6 @@ export function Login({ userName, authState, onAuthChange }) {
             }}
           />
         )}
-      </div>
     </main>
   );
 }

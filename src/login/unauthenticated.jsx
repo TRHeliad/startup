@@ -28,7 +28,7 @@ export function Unauthenticated(props) {
 	
 		if (response.ok) {
 			localStorage.setItem("userName", username);
-			props.onLogin(userName);
+			props.onLogin(username);
 			navigate('/lists')
 		} else {
 			// error display

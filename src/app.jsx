@@ -1,7 +1,7 @@
 import React from 'react';
 import GithubIcon from "./GithubIcon.jsx"
 import CheckedBox from './CheckedBox.jsx';
-import './styles/app.css';
+import './app.css';
 
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
@@ -43,8 +43,11 @@ export default function App() {
 							userName={userName}
 							authState={authState}
 							onAuthChange={(userName, authState) => {
-							setAuthState(authState);
-							setUserName(userName);
+								setAuthState(authState);
+								if (authState === AuthState.Unauthenticated)
+									setUserName('');
+								else
+									setUserName(userName);
 							}}
 						/>
 					}
