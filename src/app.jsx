@@ -5,12 +5,17 @@ import './styles/app.css';
 
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
+import { AuthState } from './login/authState';
 import { Lists } from './lists/lists';
 import { List } from './list/list';
 import { Theme } from './theme/theme';
 import { About } from './about/about';
 
 export default function App() {
+	const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+	const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+	const [authState, setAuthState] = React.useState(currentAuthState);
+	
 	return (
 	<BrowserRouter>
 		<div className='body'>
@@ -26,12 +31,25 @@ export default function App() {
 					</menu>
 				</span>
 				<span className="header-right">
-					<p className="username">bmadsenonpc</p>
+					<p className="username">{userName}</p>
 				</span>
 			</header>
 
 			<Routes>
-				<Route path='/' element={<Login />} exact />
+				<Route
+					path='/'
+					element={
+						<Login
+							userName={userName}
+							authState={authState}
+							onAuthChange={(userName, authState) => {
+							setAuthState(authState);
+							setUserName(userName);
+							}}
+						/>
+					}
+					exact
+				/>
 				<Route path='/lists' element={<Lists />} />
 				<Route path='/theme' element={<Theme />} />
 				<Route path='/about' element={<About />} />
