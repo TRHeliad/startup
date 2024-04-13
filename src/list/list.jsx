@@ -17,23 +17,6 @@ async function getSelectedList() {
 	return list;
 }
 
-function clearList() {
-	const tbodyElement = document.querySelector("tbody");
-	// Clear out lists table
-	const listElements = document.querySelectorAll("tr:not(#table-header)");
-	for (const rowElement of listElements) {
-		tbodyElement.removeChild(rowElement);
-	}
-}
-
-function setCheckboxType(divElement, isChecked) {
-	if (isChecked) {
-		$(divElement).load("checked-box.html");
-	} else {
-		$(divElement).load("unchecked-box.html");
-	}
-}
-
 function postItemDone(itemIndex, isDone) {
 	fetch("/api/list/item/done", {
 		method: "POST",
@@ -44,17 +27,6 @@ function postItemDone(itemIndex, isDone) {
 			IsDone: isDone,
 		}),
 	});
-}
-
-function showSetAssigneeBox(assigneeIndex) {
-	setAssigneeIndex = assigneeIndex;
-	document.querySelector(".assignee-box input").value = "";
-	document.querySelector(".assignee-box").classList.add("show");
-}
-
-function verifyAssignee(assignee) {
-	// will add verification with database later
-	return assignee;
 }
 
 function postAssignee(itemIndex, assignee) {
@@ -69,109 +41,6 @@ function postAssignee(itemIndex, assignee) {
 	});
 }
 
-function setAssignee(itemIndex, assignee, localOnly) {
-	if (itemIndex !== null) {
-		if (list !== null) {
-			const listItem = list.items[itemIndex];
-			if (listItem !== undefined) {
-				listItem.Assignee = assignee;
-				if (!localOnly) {
-					fetch("/api/list/item/assignee", {
-						method: "POST",
-						headers: { "content-type": "application/json" },
-						body: JSON.stringify({
-							ListID: selectedListID,
-							ItemIndex: itemIndex,
-							Assignee: document.querySelector(
-								".assignee-box input"
-							).value,
-						}),
-					});
-				}
-				const assigneeElement = document.querySelector(
-					`#row${itemIndex} .assignee`
-				);
-				if (assigneeElement) assigneeElement.textContent = assignee;
-				// clearList();
-				// loadList();
-			}
-		}
-	}
-}
-
-function createRowFromItem(listItem, i) {
-	const newTaskCol = document.createElement("td");
-	newTaskCol.textContent = listItem.task;
-	const newAssigneeCol = document.createElement("td");
-	newAssigneeCol.textContent =
-		listItem.assignee === null ? "-" : listItem.assignee;
-	newAssigneeCol.className = "assignee";
-	const newDoneCol = document.createElement("td");
-	const checkboxElement = document.createElement("div");
-	newDoneCol.appendChild(checkboxElement);
-	setCheckboxType(checkboxElement, listItem.isDone);
-
-	newAssigneeCol.addEventListener("click", function (event) {
-		showSetAssigneeBox(i);
-	});
-
-	checkboxElement.addEventListener("click", function (event) {
-		const listItem = list.items[i];
-		const isDone = !listItem.isDone;
-		updateItemDone(i, isDone, false);
-		socket.send(
-			JSON.stringify({
-				type: "setIsDone",
-				listID: selectedListID,
-				itemIndex: i,
-				isDone: isDone,
-			})
-		);
-	});
-
-	const newRowElement = document.createElement("tr");
-	newRowElement.id = `row${i}`;
-	newRowElement.appendChild(newTaskCol);
-	newRowElement.appendChild(newAssigneeCol);
-	newRowElement.appendChild(newDoneCol);
-
-	return newRowElement;
-}
-
-let shareOpened = false;
-function openShare() {
-	document.querySelector(".share-box input").value = "";
-	document.querySelector(".share-box").classList.add("show");
-	shareOpened = true;
-}
-
-function closeShare() {
-	document.querySelector(".share-box").classList.remove("show");
-	shareOpened = false;
-}
-
-function toggleShareBox() {
-	(shareOpened ? closeShare : openShare)();
-}
-
-async function loadList() {
-	const tbodyElement = document.querySelector("tbody");
-	const nameLabelElement = document.querySelector(".list-header > h1");
-	const list = await getSelectedList();
-
-	if (list !== null) {
-		nameLabelElement.textContent = list.name;
-		rowElements = [];
-		list.items.forEach(function (listItem, i) {
-			const rowElement = createRowFromItem(listItem, i);
-			tbodyElement.appendChild(rowElement);
-			rowElements.push(rowElement);
-		});
-	} else {
-		nameLabelElement.textContent = "No List Selected";
-	}
-}
-
 async function addItem(task) {
 	const response = await fetch("/api/list/item/", {
 		method: "POST",
@@ -181,40 +50,6 @@ async function addItem(task) {
 			Task: task,
 		}),
 	});
-}
-
-function configureWebSocket(list, setList) {
-	const protocol = window.location.protocol === "http:" ? "ws" : "wss";
-	const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
-	return socket;
-}
-
-function connectWebSocket(socket, list, setList) {
-	socket.onopen = (event) => {
-		socket.send(
-			JSON.stringify({
-				type: "joinList",
-				listID: selectedListID,
-			})
-		);
-	};
-	socket.onclose = (event) => {
-		createModalMessage("error", "socket disconnected", 3);
-	};
-	socket.onmessage = async (event) => {
-		const msg = JSON.parse(await event.data.text());
-		if (msg.type === "setIsDone") {
-			list.items[msg.itemIndex].isDone = msg.isDone;
-			setList(list);
-		} else if (msg.type === "setAssignee") {
-			list.items[msg.itemIndex].assignee = msg.assignee;
-			setList(list);
-		} else if (msg.type === "addItem") {
-			getSelectedList().then((result) => {
-				setList(result);
-			});
-		}
-	};
 }
 
 let cache = [];
