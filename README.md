@@ -99,3 +99,6 @@ The required technologies will be used as such:
 	- When the WebSocket connection is made, the clint sends a `joinList` message to the server.
 	- The client sends messages `setAssignee`, `setIsDone`, and `addItem` for list changes.
 	- When the client receives these list change messages, it updates the data in the application interface.
+
+# React Deliverable
+All functionality is essentially the same, but the web application is now built in react.
