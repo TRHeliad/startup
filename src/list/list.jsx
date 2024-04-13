@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./list.css";
+import { ListRow } from "./listrow";
 
 let setAssigneeIndex = null;
 let rowElements = null;
@@ -209,7 +210,7 @@ async function addItem(task, localOnly) {
 
 function configureWebSocket() {
 	const protocol = window.location.protocol === "http:" ? "ws" : "wss";
-	socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+	const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 	socket.onopen = (event) => {
 		socket.send(
 			JSON.stringify({
@@ -231,10 +232,57 @@ function configureWebSocket() {
 			addItem(msg.task, true);
 		}
 	};
+
+	return socket
 }
 
 
+
+
 export function List() {
+	const [list, setList] = React.useState({});
+	const [socket, setSocket] = React.useState({});
+	const [assigneeVisible, setAssigneeVisible] = React.useState({});
+
+	React.useEffect(() => {
+		getSelectedList().then((result) => {
+			setList(result);
+		});
+		setSocket(configureWebSocket());
+	}, []);
+
+
+	const rowList = [];
+	if ("items" in list) {
+		list.items.forEach(function (listItem, i) {
+			rowList.push(<ListRow
+				key={i}
+				index={i}
+				task={listItem.task}
+				assignee={listItem.assignee}
+				isDone={listItem.isDone}
+				onAssigneeClick={() => {
+
+				}}
+				onIsDoneClick={() => {
+					const isDone = !listItem.isDone;
+					list.items[i].isDone = isDone;
+					setList(list);
+					socket.send(
+						JSON.stringify({
+							type: "setIsDone",
+							listID: selectedListID,
+							itemIndex: i,
+							isDone: isDone,
+						})
+					);
+				}}
+			/>)
+		})
+	}
+
+	const assigneeBoxClass = "assignee-box input-modal" + (assigneeVisible ? " show" : "")
+
 	return (
 		<main>
 			<div className="list-header">
@@ -244,28 +292,31 @@ export function List() {
 
 			<div className="table-container">
 				<table>
-					<tr id="table-header">
-						<th>Task</th>
-						<th>Assignee</th>
-						<th>Done</th>
-					</tr>
+					<thead>
+						<tr id="table-header">
+							<th>Task</th>
+							<th>Assignee</th>
+							<th>Done</th>
+						</tr>
+					</thead>
+					<tbody>{rowList}</tbody>
 				</table>
 			</div>
 
 			<div className="add-item-container">
-				<label for="text">New item: </label>
+				<label>New item: </label>
 				<input id="newItem" />
 				<button>Add</button>
 			</div>
 
-			<div className="assignee-box input-modal">
-				<label for="text">Set Assignee</label>
+			<div className={assigneeBoxClas}>
+				<label>Set Assignee</label>
 				<input id="assignee" />
 				<button>Set</button>
 			</div>
 
 			<div className="share-box input-modal">
-				<label for="text">Share list</label>
+				<label>Share list</label>
 				<input id="shareUsername" />
 				<button>Share</button>
 			</div>
