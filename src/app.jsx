@@ -54,6 +54,7 @@ export default function App() {
 					exact
 				/>
 				<Route path='/lists' element={<Lists />} />
+				<Route path='/list' element={<List />} />
 				<Route path='/theme' element={<Theme />} />
 				<Route path='/about' element={<About />} />
 				<Route path='*' element={<NotFound />} />
