@@ -70,7 +70,9 @@ export function Lists(props) {
 				<input id="newList" required pattern="\w{3,40}" />
 				<button onClick={async () => {
 					await createList();
-					setLists(getLists());
+					getLists().then((result) => {
+						setLists(result);
+					});
 				}}>Create</button>
 			</div>
 		</main>
