@@ -54,7 +54,7 @@ export function Lists(props) {
 	}
 
 	return (
-		<main>
+		<main className="lists-view">
 			<h1>Lists</h1>
 			<table>
 				<thead>

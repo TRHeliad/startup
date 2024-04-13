@@ -217,7 +217,7 @@ export function List({ }) {
 
 	return (
 		<>
-			<main>
+			<main className="list-view">
 				<div className="list-header">
 					<h1>Cleaning List</h1>
 					<button onClick={() => (setShareVisible(!shareVisible))}>Share</button>

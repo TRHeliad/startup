@@ -11,10 +11,41 @@ import { List } from './list/list';
 import { Theme } from './theme/theme';
 import { About } from './about/about';
 
+const root = document.querySelector(":root");
+const colorNames = [
+	"primary-color",
+	"secondary-color",
+	"tertiary-color",
+	"back-color",
+	"back2-color"
+]
+
+function getSavedTheme() {
+	let theme = JSON.parse(localStorage.getItem("theme"));
+	theme = theme === null ? {} : theme;
+	return theme;
+}
+
+function loadTheme(theme) {
+	for (const colorName of colorNames) {
+		const color = theme[colorName];
+		if (color !== undefined) {
+			root.style.setProperty("--" + colorName, "#" + color);
+		} else {
+			root.style.removeProperty("--" + colorName);
+		}
+	}
+}
+
 export default function App() {
 	const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
 	const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
 	const [authState, setAuthState] = React.useState(currentAuthState);
+	const [theme, setTheme] = React.useState(getSavedTheme());
+
+	React.useEffect(() => {
+		loadTheme(theme)
+	}, [theme])
 	
 	return (
 	<BrowserRouter>
@@ -55,7 +86,10 @@ export default function App() {
 				/>
 				<Route path='/lists' element={<Lists />} />
 				<Route path='/list' element={<List />} />
-				<Route path='/theme' element={<Theme />} />
+				<Route path='/theme' element={<Theme theme={theme} setTheme={(t) => {
+					setTheme(t)
+					localStorage.setItem("theme", JSON.stringify(t));
+				}}/>} />
 				<Route path='/about' element={<About />} />
 				<Route path='*' element={<NotFound />} />
 			</Routes>

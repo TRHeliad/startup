@@ -8,7 +8,7 @@ import './login.css';
 
 export function Login({ userName, authState, onAuthChange }) {
   return (
-    <main>
+    <main className="login-view">
         {authState === AuthState.Authenticated && (
           <Authenticated userName={userName} onLogout={() => onAuthChange(userName, AuthState.Unauthenticated)} />
         )}

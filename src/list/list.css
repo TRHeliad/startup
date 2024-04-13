@@ -1,84 +1,84 @@
-main {
+main.list-view {
 	display: flex;
 	flex-direction: column;
 	justify-content: start;
 	align-items: center;
 }
 
-.list-header {
+.list-view .list-header {
 	flex: 0 0;
 	display: flex;
 	flex-direction: row;
 	width: 100%
 }
 
-.list-header > h1 {
+.list-view .list-header > h1 {
 	flex: 1 1;
 	font-size: 3vmin;
 	text-align: left;
 	margin: 1vmin 0.5vmin;
 }
 
-.list-header > button {
+.list-view .list-header > button {
 	flex: 0 10vmin;
 	font-size: 2vmin;
 	margin: 1vmin 0.5vmin;
 }
 
-div.table-container {
+.list-view div.table-container {
 	flex: 1 0;
 	width: 100%;
 }
 
-table {
+.list-view table {
 	width: 100%;
 }
 
-tr {
+.list-view tr {
 	height: 5ex;
 }
 
-tbody tr:nth-child(odd) {
+.list-view tr:nth-child(even) {
 	background-color: var(--back2-color);
 }
 
-thead tr:nth-child(1) {
+.list-view thead tr:nth-child(1) {
 	background-color: var(--back3-color);
 	height: 6ex;
 }
 
-th {
+.list-view th {
 	font-size: 2em;
 	color: var(--primary-color)
 }
 
-th:nth-child(1) {
+.list-view th:nth-child(1) {
 	width: 60%;
 }
-th:nth-child(2) {
+.list-view th:nth-child(2) {
 	width: 30%;
 }
 
-td {
+.list-view td {
 	font-size: 1.5em;
 	text-align: center;
 }
 
-td.assignee {
+.list-view td.assignee {
 	cursor: pointer;
 }
 
-td div {
+.list-view td div {
 	cursor: pointer;
 }
 
-td svg.checked-box, svg.unchecked-box {
+.list-view td svg.checked-box, svg.unchecked-box {
 	width: 1.2em;
 	height: 1.2em;
 	vertical-align: middle;
 }
 
-.add-item-container {
+.list-view .add-item-container {
 	flex: 0 7vmin;
 	display: flex;
 	flex-direction: row;
@@ -88,27 +88,27 @@ td svg.checked-box, svg.unchecked-box {
 	width: 100%;
 }
 
-.add-item-container label {
+.list-view .add-item-container label {
 	flex: 0 13vmin;
 	margin-left: 15px;
 	color: var(--secondary-color);
 	font-size: 2vmin;
 }
 
-.add-item-container input {
+.list-view .add-item-container input {
 	flex: 1 0;
 	height: 60%;
 	font-size: 2vmin;
 }
 
-.add-item-container button {
+.list-view .add-item-container button {
 	flex: 0 13vmin;
 	margin: 0 15px;
 	height: 60%;
 	font-size: 2vmin;
 }
 
-.input-modal {
+.list-view .input-modal {
 	visibility: hidden;
 	display: flex;
 	flex-direction: column;
@@ -126,24 +126,24 @@ td svg.checked-box, svg.unchecked-box {
 	margin-left: -15vmin;
 }
 
-.input-modal.show {
+.list-view .input-modal.show {
 	visibility: visible;
 }
 
-.input-modal label {
+.list-view .input-modal label {
 	color: var(--secondary-color);
 	font-size: 2vmin;
 	flex: 1 0;
 }
 
-.input-modal input {
+.list-view .input-modal input {
 	width: 90%;
 	flex: 1 0;
 	margin: 1vmin;
 	font-size: 2vmin;
 }
 
-.input-modal button {
+.list-view .input-modal button {
 	width: 40%;
 	flex: 0.7 0;
 	font-size: 2vmin;

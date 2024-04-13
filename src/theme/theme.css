@@ -1,25 +1,29 @@
-main {
+main.theme-view {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-.theme-container {
+.theme-view .theme-container {
 	position: relative;
 	width: 70vmin;
 }
 
-label {
-	color: var(--secondary-color)
+.theme-view label {
+	color: var(--secondary-color);
+	text-align: left;
 }
 
-.input {
+.theme-view .input {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 	margin: 2vmin;
 	font-size: 3vmin;
 }
 
-input {
+.theme-view input {
 	position: absolute;
 	right: 0;
 	font-size: 3vmin;
@@ -27,13 +31,13 @@ input {
 	text-align: right;
 }
 
-main > .button-container {
+main.theme-view > .button-container {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	width: 40vmin;
 }
 
-main button {
+main.theme-view button {
 	font-size: 3vmin;
 }

@@ -1,17 +1,17 @@
-main {
+main.about-view {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-main p {
+main.about-view p {
 	font-size: 3vmin;
 	text-align: center;
 	color: var(--primary-color)
 }
 
-main img {
+main.about-view img {
 	height: 30vmin;
 	width: 30vmin;
 }
