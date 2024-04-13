@@ -123,6 +123,8 @@ secureApiRouter.post("/list/share", async (req, res) => {
 				type: "bad request",
 				message: message,
 			});
+		} else {
+			res.send("success");
 		}
 	} catch (e) {
 		res.status(400).send({

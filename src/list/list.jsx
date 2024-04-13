@@ -153,27 +153,6 @@ function toggleShareBox() {
 	(shareOpened ? closeShare : openShare)();
 }
 
-async function shareList() {
-	const shareUsername = document.querySelector(".share-box input").value;
-	const response = await fetch("/api/list/share", {
-		method: "POST",
-		headers: { "content-type": "application/json" },
-		body: JSON.stringify({
-			ListID: selectedListID,
-			ShareUsername: shareUsername,
-		}),
-	});
-
-	if (response.ok) {
-		createModalMessage("Success", `Shared with ${shareUsername}`, 2);
-	} else {
-		const body = await response.json();
-		createModalMessage(body.type, body.message, 3);
-	}
-
-	closeShare();
-}
-
 async function loadList() {
 	const tbodyElement = document.querySelector("tbody");
 	const nameLabelElement = document.querySelector(".list-header > h1");
@@ -192,20 +171,15 @@ async function loadList() {
 	}
 }
 
-async function addItem(task, localOnly) {
-	if (!localOnly) {
-		const response = await fetch("/api/list/item/", {
-			method: "POST",
-			headers: { "content-type": "application/json" },
-			body: JSON.stringify({
-				ListID: list._id,
-				Task: task,
-			}),
-		});
-	}
-
-	clearList();
-	loadList();
+async function addItem(task) {
+	const response = await fetch("/api/list/item/", {
+		method: "POST",
+		headers: { "content-type": "application/json" },
+		body: JSON.stringify({
+			ListID: list._id,
+			Task: task,
+		}),
+	});
 }
 
 function configureWebSocket(list, setList) {
@@ -257,16 +231,23 @@ function replacer(key, value) {
 
 let assigneeIndex = 0;
 let newAssignee = "";
+let newTask = "";
+let shareUsername = "";
 export function List({ }) {
 	const protocol = window.location.protocol === "http:" ? "ws" : "wss";
 	const [list, setList] = React.useState({});
 	const [socket, setSocket] = React.useState(new WebSocket(`${protocol}://${window.location.host}/ws`));
 	const [assigneeVisible, setAssigneeVisible] = React.useState(false);
+	const [shareVisible, setShareVisible] = React.useState(false);
 
-	React.useEffect(() => {
+	function getFreshList() {
 		getSelectedList().then((result) => {
 			setList(result);
 		});
+	}
+
+	React.useEffect(() => {
+		getFreshList()
 	}, []);
 
 	React.useEffect(() => {
@@ -293,9 +274,7 @@ export function List({ }) {
 				newList.items[msg.itemIndex].assignee = msg.assignee;
 				setList(newList);
 			} else if (msg.type === "addItem") {
-				getSelectedList().then((result) => {
-					setList(result);
-				});
+				getFreshList()
 			}
 		};
 	}, [socket, list]);
@@ -314,8 +293,9 @@ export function List({ }) {
 					}}
 					onIsDoneClick={() => {
 						const isDone = !listItem.isDone;
-						list.items[i].isDone = isDone;
-						setList(list);
+						const newList = Object.assign({}, list);
+						newList.items[i].isDone = isDone;
+						setList(newList);
 						socket.send(
 							JSON.stringify({
 								type: "setIsDone",
@@ -333,6 +313,8 @@ export function List({ }) {
 
 	const assigneeBoxClass =
 		"assignee-box input-modal" + (assigneeVisible ? " show" : "");
+	const shareBoxClass =
+		"share-box input-modal" + (shareVisible ? " show" : "");
 
 	function setAssignee() {
 		list.items[assigneeIndex].assignee = newAssignee;
@@ -356,11 +338,39 @@ export function List({ }) {
 		newAssignee = e.target.value;
 	}
 
+	function onTaskChange(e) {
+		newTask = e.target.value;
+	}
+
+	function onShareChange(e){
+		shareUsername = e.target.value;
+	}
+
+	async function shareList() {
+		const response = await fetch("/api/list/share", {
+			method: "POST",
+			headers: { "content-type": "application/json" },
+			body: JSON.stringify({
+				ListID: selectedListID,
+				ShareUsername: shareUsername,
+			}),
+		});
+	
+		// if (response.ok) {
+		// 	createModalMessage("Success", `Shared with ${shareUsername}`, 2);
+		// } else {
+		// 	const body = await response.json();
+		// 	createModalMessage(body.type, body.message, 3);
+		// }
+	
+		setShareVisible(false);
+	}
+
 	return (
 		<main>
 			<div className="list-header">
 				<h1>Cleaning List</h1>
-				<button>Share</button>
+				<button onClick={() => (setShareVisible(!shareVisible))}>Share</button>
 			</div>
 
 			<div className="table-container">
@@ -378,8 +388,18 @@ export function List({ }) {
 
 			<div className="add-item-container">
 				<label>New item: </label>
-				<input id="newItem" />
-				<button>Add</button>
+				<input id="newItem" onChange={(e) => onTaskChange(e)}/>
+				<button onClick={async () => {
+					await addItem(newTask)
+					socket.send(
+						JSON.stringify({
+							type: "addItem",
+							listID: selectedListID,
+							task: newTask,
+						})
+					);
+					getFreshList()
+				}}>Add</button>
 			</div>
 
 			<div className={assigneeBoxClass}>
@@ -388,10 +408,10 @@ export function List({ }) {
 				<button onClick={() => setAssignee()}>Set</button>
 			</div>
 
-			<div className="share-box input-modal">
+			<div className={shareBoxClass}>
 				<label>Share list</label>
-				<input id="shareUsername" />
-				<button>Share</button>
+				<input id="shareUsername" onChange={(e) => onShareChange(e)} />
+				<button onClick={() => (shareList())}>Share</button>
 			</div>
 		</main>
 	);
