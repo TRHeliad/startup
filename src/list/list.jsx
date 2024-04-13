@@ -2,6 +2,7 @@ import React from "react";
 
 import "./list.css";
 import { ListRow } from "./listrow";
+import { ModalMessage } from "../modalmessage";
 
 let setAssigneeIndex = null;
 let rowElements = null;
@@ -239,6 +240,19 @@ export function List({ }) {
 	const [socket, setSocket] = React.useState(new WebSocket(`${protocol}://${window.location.host}/ws`));
 	const [assigneeVisible, setAssigneeVisible] = React.useState(false);
 	const [shareVisible, setShareVisible] = React.useState(false);
+	const [modalMessage, setModalMessage] = React.useState({
+		title: "",
+		description: "",
+		duration: 1
+	});
+
+	function createModalMessage(title, description, duration) {
+		setModalMessage({
+			title: title,
+			description: description,
+			duration: duration
+		})
+	}
 
 	function getFreshList() {
 		getSelectedList().then((result) => {
@@ -356,63 +370,70 @@ export function List({ }) {
 			}),
 		});
 	
-		// if (response.ok) {
-		// 	createModalMessage("Success", `Shared with ${shareUsername}`, 2);
-		// } else {
-		// 	const body = await response.json();
-		// 	createModalMessage(body.type, body.message, 3);
-		// }
+		if (response.ok) {
+			createModalMessage("Success", `Shared with ${shareUsername}`, 2);
+		} else {
+			const body = await response.json();
+			createModalMessage(body.type, body.message, 3);
+		}
 	
 		setShareVisible(false);
 	}
 
 	return (
-		<main>
-			<div className="list-header">
-				<h1>Cleaning List</h1>
-				<button onClick={() => (setShareVisible(!shareVisible))}>Share</button>
-			</div>
+		<>
+			<main>
+				<div className="list-header">
+					<h1>Cleaning List</h1>
+					<button onClick={() => (setShareVisible(!shareVisible))}>Share</button>
+				</div>
 
-			<div className="table-container">
-				<table>
-					<thead>
-						<tr id="table-header">
-							<th>Task</th>
-							<th>Assignee</th>
-							<th>Done</th>
-						</tr>
-					</thead>
-					<tbody>{rowList}</tbody>
-				</table>
-			</div>
+				<div className="table-container">
+					<table>
+						<thead>
+							<tr id="table-header">
+								<th>Task</th>
+								<th>Assignee</th>
+								<th>Done</th>
+							</tr>
+						</thead>
+						<tbody>{rowList}</tbody>
+					</table>
+				</div>
 
-			<div className="add-item-container">
-				<label>New item: </label>
-				<input id="newItem" onChange={(e) => onTaskChange(e)}/>
-				<button onClick={async () => {
-					await addItem(newTask)
-					socket.send(
-						JSON.stringify({
-							type: "addItem",
-							listID: selectedListID,
-							task: newTask,
-						})
-					);
-					getFreshList()
-				}}>Add</button>
-			</div>
+				<div className="add-item-container">
+					<label>New item: </label>
+					<input id="newItem" onChange={(e) => onTaskChange(e)}/>
+					<button onClick={async () => {
+						await addItem(newTask)
+						socket.send(
+							JSON.stringify({
+								type: "addItem",
+								listID: selectedListID,
+								task: newTask,
+							})
+						);
+						getFreshList()
+					}}>Add</button>
+				</div>
 
-			<div className={assigneeBoxClass}>
-				<label>Set Assignee</label>
-				<input id="assignee" onChange={(e) => onAssigneeChange(e)} />
-				<button onClick={() => setAssignee()}>Set</button>
-			</div>
+				<div className={assigneeBoxClass}>
+					<label>Set Assignee</label>
+					<input id="assignee" onChange={(e) => onAssigneeChange(e)} />
+					<button onClick={() => setAssignee()}>Set</button>
+				</div>
 
-			<div className={shareBoxClass}>
-				<label>Share list</label>
-				<input id="shareUsername" onChange={(e) => onShareChange(e)} />
-				<button onClick={() => (shareList())}>Share</button>
-			</div>
-		</main>
+				<div className={shareBoxClass}>
+					<label>Share list</label>
+					<input id="shareUsername" onChange={(e) => onShareChange(e)} />
+					<button onClick={() => (shareList())}>Share</button>
+				</div>
+			</main>
+			<ModalMessage
+				title={modalMessage.title}
+				description={modalMessage.description}
+				duration={modalMessage.duration}
+			/>
+		</>
 	);
 }
