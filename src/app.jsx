@@ -63,7 +63,7 @@ export default function App() {
 				<p>Author: Ben Madsen</p>
 				<GithubIcon />
 			</footer>
-		</div>;
+		</div>
 	</BrowserRouter>
 	);
 }
