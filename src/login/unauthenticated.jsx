@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 export function Unauthenticated(props) {
 	const navigate = useNavigate();
-	const [userName, setUserName] = React.useState(props.userName);
-	const [password, setPassword] = React.useState('');
 
 	async function login() {
 		loginOrCreate(`/api/auth/login`);
