@@ -4,19 +4,20 @@ import CheckedBox from "../CheckedBox";
 import Uncheckedbox from "../UncheckedBox";
 
 export function ListRow(props) {
-	const [isDone, setIsDone] = React.useState(props.isDone);
+	let listItem = {task: "", assignee: "", isDone: false};
+	if ("items" in props.list && props.list.items.length > props.index)
+		listItem = props.list.items[props.index];
 	
 	return (
 		<tr key={props.index}>
-			<td id="task">{props.task}</td>
+			<td id="task">{listItem.task}</td>
 			<td id="assignee" onClick={() => (props.onAssigneeClick())}>
-				{props.assignee}
+				{listItem.assignee}
 			</td>
 			<td id="isDone" onClick={() => {
-					setIsDone(!isDone);
 					props.onIsDoneClick();
 				}}>
-				{isDone ? <CheckedBox/> : <Uncheckedbox/>}
+				{listItem.isDone ? <CheckedBox/> : <Uncheckedbox/>}
 			</td>
 		</tr>
 	)

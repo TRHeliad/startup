@@ -208,9 +208,13 @@ async function addItem(task, localOnly) {
 	loadList();
 }
 
-function configureWebSocket() {
+function configureWebSocket(list, setList) {
 	const protocol = window.location.protocol === "http:" ? "ws" : "wss";
 	const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+	return socket;
+}
+
+function connectWebSocket(socket, list, setList) {
 	socket.onopen = (event) => {
 		socket.send(
 			JSON.stringify({
@@ -225,63 +229,137 @@ function configureWebSocket() {
 	socket.onmessage = async (event) => {
 		const msg = JSON.parse(await event.data.text());
 		if (msg.type === "setIsDone") {
-			updateItemDone(msg.itemIndex, msg.isDone, true);
+			list.items[msg.itemIndex].isDone = msg.isDone;
+			setList(list);
 		} else if (msg.type === "setAssignee") {
-			setAssignee(msg.itemIndex, msg.assignee, true);
+			console.log("setting new assignee", msg.assignee)
+			list.items[msg.itemIndex].assignee = msg.assignee;
+			setList(list);
 		} else if (msg.type === "addItem") {
-			addItem(msg.task, true);
+			getSelectedList().then((result) => {
+				setList(result);
+			});
 		}
 	};
-
-	return socket
 }
 
+let cache = [];
+function replacer(key, value) {
+	if (typeof value === "object" && value !== null) {
+		if (cache.indexOf(value) !== -1) {
+			// Circular reference found, discard key
+			return;
+		}
+		// Store value in our collection
+		cache.push(value);
+	}
+	return value;
+}
 
-
-
-export function List() {
+let assigneeIndex = 0;
+let newAssignee = "";
+export function List({ }) {
+	const protocol = window.location.protocol === "http:" ? "ws" : "wss";
 	const [list, setList] = React.useState({});
-	const [socket, setSocket] = React.useState({});
-	const [assigneeVisible, setAssigneeVisible] = React.useState({});
+	const [socket, setSocket] = React.useState(new WebSocket(`${protocol}://${window.location.host}/ws`));
+	const [assigneeVisible, setAssigneeVisible] = React.useState(false);
 
 	React.useEffect(() => {
 		getSelectedList().then((result) => {
 			setList(result);
 		});
-		setSocket(configureWebSocket());
 	}, []);
 
+	React.useEffect(() => {
+		// Websocket
+		socket.onopen = (event) => {
+			socket.send(
+				JSON.stringify({
+					type: "joinList",
+					listID: selectedListID,
+				})
+			);
+		};
+		socket.onclose = (event) => {
+			createModalMessage("error", "socket disconnected", 3);
+		};
+		socket.onmessage = async (event) => {
+			const msg = JSON.parse(await event.data.text());
+			if (msg.type === "setIsDone") {
+				const newList = Object.assign({}, list);
+				newList.items[msg.itemIndex].isDone = msg.isDone;
+				setList(newList);
+			} else if (msg.type === "setAssignee") {
+				console.log("setting new assignee", msg.assignee)
+				const newList = Object.assign({}, list);
+				console.log(list);
+				console.log(newList)
+				newList.items[msg.itemIndex].assignee = msg.assignee;
+				setList(newList);
+			} else if (msg.type === "addItem") {
+				getSelectedList().then((result) => {
+					setList(result);
+				});
+			}
+		};
+	}, [socket, list]);
+
+	console.log("rendering")
 
 	const rowList = [];
 	if ("items" in list) {
 		list.items.forEach(function (listItem, i) {
-			rowList.push(<ListRow
-				key={i}
-				index={i}
-				task={listItem.task}
-				assignee={listItem.assignee}
-				isDone={listItem.isDone}
-				onAssigneeClick={() => {
-
-				}}
-				onIsDoneClick={() => {
-					const isDone = !listItem.isDone;
-					list.items[i].isDone = isDone;
-					setList(list);
-					socket.send(
-						JSON.stringify({
-							type: "setIsDone",
-							listID: selectedListID,
-							itemIndex: i,
-							isDone: isDone,
-						})
-					);
-				}}
-			/>)
-		})
+			console.log('adding row', listItem.isDone)
+			rowList.push(
+				<ListRow
+					key={i}
+					index={i}
+					list={list}
+					onAssigneeClick={() => {
+						assigneeIndex = i;
+						setAssigneeVisible(true);
+					}}
+					onIsDoneClick={() => {
+						const isDone = !listItem.isDone;
+						list.items[i].isDone = isDone;
+						setList(list);
+						socket.send(
+							JSON.stringify({
+								type: "setIsDone",
+								listID: selectedListID,
+								itemIndex: i,
+								isDone: isDone,
+							}, replacer)
+						);
+					}}
+				/>
+			);
+		});
 	}
 
-	const assigneeBoxClass = "assignee-box input-modal" + (assigneeVisible ? " show" : "")
+	const assigneeBoxClass =
+		"assignee-box input-modal" + (assigneeVisible ? " show" : "");
+
+	function setAssignee() {
+		list.items[assigneeIndex].assignee = newAssignee;
+		setList(list);
+		socket.send(
+			JSON.stringify(
+				{
+					type: "setAssignee",
+					listID: selectedListID,
+					itemIndex: assigneeIndex,
+					assignee: newAssignee,
+				},
+				replacer
+			)
+		);
+		setAssigneeVisible(false);
+	}
+
+	function onAssigneeChange(e) {
+		newAssignee = e.target.value;
+	}
 
 	return (
 		<main>
@@ -309,10 +387,10 @@ export function List() {
 				<button>Add</button>
 			</div>
 
-			<div className={assigneeBoxClas}>
+			<div className={assigneeBoxClass}>
 				<label>Set Assignee</label>
-				<input id="assignee" />
-				<button>Set</button>
+				<input id="assignee" onChange={(e) => onAssigneeChange(e)} />
+				<button onClick={() => setAssignee()}>Set</button>
 			</div>
 
 			<div className="share-box input-modal">
