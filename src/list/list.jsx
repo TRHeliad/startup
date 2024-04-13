@@ -33,28 +33,16 @@ function setCheckboxType(divElement, isChecked) {
 	}
 }
 
-function updateItemDone(itemIndex, isDone, localOnly) {
-	if (list !== null) {
-		const listItem = list.items[itemIndex];
-		if (listItem !== undefined) {
-			listItem.isDone = isDone;
-			setCheckboxType(
-				rowElements[itemIndex].querySelector("td > div"),
-				listItem.isDone
-			);
-			if (!localOnly) {
-				fetch("/api/list/item/done", {
-					method: "POST",
-					headers: { "content-type": "application/json" },
-					body: JSON.stringify({
-						ListID: selectedListID,
-						ItemIndex: itemIndex,
-						IsDone: isDone,
-					}),
-				});
-			}
-		}
-	}
+function postItemDone(itemIndex, isDone) {
+	fetch("/api/list/item/done", {
+		method: "POST",
+		headers: { "content-type": "application/json" },
+		body: JSON.stringify({
+			ListID: selectedListID,
+			ItemIndex: itemIndex,
+			IsDone: isDone,
+		}),
+	});
 }
 
 function showSetAssigneeBox(assigneeIndex) {
@@ -66,6 +54,18 @@ function showSetAssigneeBox(assigneeIndex) {
 function verifyAssignee(assignee) {
 	// will add verification with database later
 	return assignee;
+}
+
+function postAssignee(itemIndex, assignee) {
+	fetch("/api/list/item/assignee", {
+		method: "POST",
+		headers: { "content-type": "application/json" },
+		body: JSON.stringify({
+			ListID: selectedListID,
+			ItemIndex: itemIndex,
+			Assignee: assignee
+		}),
+	});
 }
 
 function setAssignee(itemIndex, assignee, localOnly) {
@@ -232,7 +232,6 @@ function connectWebSocket(socket, list, setList) {
 			list.items[msg.itemIndex].isDone = msg.isDone;
 			setList(list);
 		} else if (msg.type === "setAssignee") {
-			console.log("setting new assignee", msg.assignee)
 			list.items[msg.itemIndex].assignee = msg.assignee;
 			setList(list);
 		} else if (msg.type === "addItem") {
@@ -290,10 +289,7 @@ export function List({ }) {
 				newList.items[msg.itemIndex].isDone = msg.isDone;
 				setList(newList);
 			} else if (msg.type === "setAssignee") {
-				console.log("setting new assignee", msg.assignee)
 				const newList = Object.assign({}, list);
-				console.log(list);
-				console.log(newList)
 				newList.items[msg.itemIndex].assignee = msg.assignee;
 				setList(newList);
 			} else if (msg.type === "addItem") {
@@ -304,12 +300,9 @@ export function List({ }) {
 		};
 	}, [socket, list]);
 
-	console.log("rendering")
-
 	const rowList = [];
 	if ("items" in list) {
 		list.items.forEach(function (listItem, i) {
-			console.log('adding row', listItem.isDone)
 			rowList.push(
 				<ListRow
 					key={i}
@@ -331,6 +324,7 @@ export function List({ }) {
 								isDone: isDone,
 							}, replacer)
 						);
+						postItemDone(i, isDone);
 					}}
 				/>
 			);
@@ -354,6 +348,7 @@ export function List({ }) {
 				replacer
 			)
 		);
+		postAssignee(assigneeIndex, newAssignee);
 		setAssigneeVisible(false);
 	}
 
