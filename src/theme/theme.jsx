@@ -48,60 +48,14 @@ async function getRandomPalette() {
 	return rgbPalette.map((rgb) => rgbToHex(...rgb));
 }
 
-function setRandomTheme() {
-	getRandomPalette().then(function (randomPalette) {
-		randomPalette.forEach(function (hex, i) {
-			const colorName = colorNames[i];
-			updateColor(colorName, hex);
-		});
-		loadTheme();
-		setInputToTheme();
+async function getRandomTheme() {
+	const randomPalette = await getRandomPalette();
+	const theme = {}
+	randomPalette.forEach(function (hex, i) {
+		const colorName = colorNames[i];
+		theme[colorName] = hex;
 	});
-}
-
-function getSavedTheme() {
-	let theme = JSON.parse(localStorage.getItem("theme"));
-	theme = theme === null ? {} : theme;
-	return theme;
-}
-
-function updateColor(colorName, value) {
-	const theme = getSavedTheme();
-	theme[colorName] = value.toLowerCase();
-	localStorage.setItem("theme", JSON.stringify(theme));
-}
-
-function updateTheme() {
-	for (const colorName of colorNames) {
-		const matches = document
-			.querySelector("#" + colorName)
-			.value.match(/[a-f0-9]{6}/i);
-		if (matches.length > 0) {
-			updateColor(colorName, matches[0]);
-		}
-	}
-	loadTheme();
-}
-
-function loadTheme() {
-	const theme = getSavedTheme();
-	for (const colorName of colorNames) {
-		const color = theme[colorName];
-		if (color !== undefined) {
-			root.style.setProperty("--" + colorName, "#" + color);
-		}
-	}
-}
-
-function setInputToTheme() {
-	const theme = getSavedTheme();
-	for (const colorName of colorNames) {
-		const color = theme[colorName];
-		if (color !== undefined) {
-			const inputElement = document.querySelector("#" + colorName);
-			if (inputElement !== null) inputElement.value = color;
-		}
-	}
+	return theme
 }
 
 export function Theme({ theme, setTheme }) {
@@ -179,7 +133,7 @@ export function Theme({ theme, setTheme }) {
 				<button onClick={() => setTheme(newTheme)} id="updateButton">
 					Update
 				</button>
-				<button onClick={() => setRandomTheme()} id="randomButton">
+				<button onClick={async () => setTheme(await getRandomTheme())} id="randomButton">
 					Random Theme
 				</button>
 			</div>
